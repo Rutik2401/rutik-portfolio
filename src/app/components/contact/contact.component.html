@@ -7,10 +7,10 @@
     </div>
   </div>
 
-  <div class="container-custom px-6 mx-auto">
+  <div class="container-custom px-4 sm:px-6 mx-auto">
 
     <!-- Header -->
-    <div #header class="text-center mb-16 max-w-2xl mx-auto">
+    <div #header class="text-center mb-10 md:mb-16 max-w-2xl mx-auto">
       <p class="section-label mx-auto justify-center">Get In Touch</p>
       <h2 class="section-title mb-4">Let's build something<br><span class="gradient-text">remarkable.</span></h2>
       <p class="text-muted text-[1.05rem] leading-relaxed">
@@ -28,7 +28,7 @@
         <div>
           <p class="text-xs font-mono text-muted tracking-widest uppercase mb-3">Email me directly</p>
           <a href="mailto:rutikpimpale2401@gmail.com"
-            class="group flex items-center gap-3 text-white text-lg font-medium hover:text-accent transition-colors duration-200">
+            class="group flex items-center gap-3 text-white text-sm sm:text-base font-medium hover:text-accent transition-colors duration-200 break-all sm:break-normal">
             <span class="w-10 h-10 rounded-xl glass flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-200 border border-white/10">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -81,7 +81,7 @@
       </div>
 
       <!-- Right: Contact Form -->
-      <div #formCard class="glass rounded-2xl p-7">
+      <div #formCard class="glass rounded-2xl p-5 sm:p-7">
         <h3 class="text-white font-semibold text-lg mb-6">Send a message</h3>
 
         @if (!formSent()) {

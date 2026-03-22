@@ -53,45 +53,88 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   // ─── Entrance Timeline ────────────────────────────────────────────────────
   private runIntroTimeline(): void {
-    // Ensure all animated text starts clipped (translateY 100%)
-    gsap.set(
-      [this.hiLine.nativeElement, this.nameLine1.nativeElement, this.nameLine2.nativeElement, this.roleText.nativeElement],
-      { y: '105%' }
-    );
+    // ── 1. Split text into animated units ──────────────────────────────────
+    // Name → per-character  (mask-reveal + blur)
+    // Target inner .name-line span so gradient-text class is preserved
+    const nameSpan1 = this.nameLine1.nativeElement.querySelector('.name-line') as HTMLElement;
+    const nameSpan2 = this.nameLine2.nativeElement.querySelector('.name-line') as HTMLElement;
+    const chars1    = this.splitIntoChars(nameSpan1, true);
+    const chars2    = this.splitIntoChars(nameSpan2, true);
+    // Role → per-word
+    const roleWords = this.splitIntoWords(this.roleText.nativeElement);
 
-    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    // ── 2. Set initial hidden states ───────────────────────────────────────
+    // "Hi, I'm" — whole-line mask (outer .line-clip already clips it)
+    gsap.set(this.hiLine.nativeElement, { y: '105%' });
+
+    // Name chars — below their individual char-mask clips, with blur
+    gsap.set([...chars1, ...chars2], { y: '115%', filter: 'blur(12px)' });
+
+    // Role words — same treatment, lighter blur
+    gsap.set(roleWords, { y: '110%', filter: 'blur(8px)' });
+
+    // ── 3. Master timeline ─────────────────────────────────────────────────
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
     tl
-      // Orbs
+      // Ambient orbs fade in (slow, atmospheric)
       .to([this.orb1.nativeElement, this.orb2.nativeElement],
-        { opacity: 1, duration: 2, ease: 'power1.inOut' }, 0)
+        { opacity: 1, duration: 2.2, ease: 'power1.inOut' }, 0)
 
-      // Badge
+      // Availability badge
       .to(this.badge.nativeElement,
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.3)
+        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }, 0.25)
 
-      // Text lines clip-reveal
-      .to(this.hiLine.nativeElement,   { y: '0%', duration: 0.9 }, 0.5)
-      .to(this.nameLine1.nativeElement, { y: '0%', duration: 1.1 }, 0.65)
-      .to(this.nameLine2.nativeElement, { y: '0%', duration: 1.1 }, 0.78)
-      .to(this.roleText.nativeElement,  { y: '0%', duration: 0.9 }, 0.95)
+      // "Hi, I'm" — single line mask reveal
+      .to(this.hiLine.nativeElement,
+        { y: '0%', duration: 0.85 }, 0.42)
 
-      // Description, buttons, social, stats
+      // "Rutik" — character reveal with stagger + blur clear
+      .to(chars1, {
+        y: '0%',
+        filter: 'blur(0px)',
+        duration: 1.0,
+        stagger: 0.048,
+      }, 0.58)
+
+      // "Pimpale." — character reveal, starts before "Rutik" finishes
+      .to(chars2, {
+        y: '0%',
+        filter: 'blur(0px)',
+        duration: 1.0,
+        stagger: 0.044,
+      }, 0.72)
+
+      // "Full Stack Developer" — word reveal
+      .to(roleWords, {
+        y: '0%',
+        filter: 'blur(0px)',
+        duration: 0.82,
+        stagger: 0.09,
+      }, 1.08)
+
+      // Description
       .to(this.description.nativeElement,
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.1)
+        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }, 1.28)
+
+      // CTA buttons
       .to(this.buttons.nativeElement,
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.25)
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.42)
+
+      // Social links
       .to(this.social.nativeElement,
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.38)
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.54)
+
+      // Stats row
       .to(this.statsRow.nativeElement,
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.5)
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.65)
 
       // Orbital sphere
       .to(this.orbitalContainer.nativeElement,
-        { opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out' }, 1.2);
+        { opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out' }, 1.3);
 
-    // Floating orbs (loop)
-    gsap.to(this.orb1.nativeElement, { y: '-=25', duration: 9, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+    // Floating orbs (infinite loop — atmospheric depth)
+    gsap.to(this.orb1.nativeElement, { y: '-=25', duration: 9,  ease: 'sine.inOut', yoyo: true, repeat: -1 });
     gsap.to(this.orb2.nativeElement, { y: '+=30', duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
   }
 
@@ -135,6 +178,56 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     };
 
     gsap.ticker.add(this.tickerFn);
+  }
+
+  // ─── Split Helpers ────────────────────────────────────────────────────────
+
+  /** Wraps every character in <span class="char-mask"><span class="char-inner"> */
+  private splitIntoChars(el: HTMLElement, addGradient = false): HTMLElement[] {
+    const text = el.innerText;
+    el.innerHTML = '';
+    const inners: HTMLElement[] = [];
+
+    for (const char of text) {
+      const mask = document.createElement('span');
+      mask.className = 'char-mask';
+
+      const inner = document.createElement('span');
+      inner.className = addGradient ? 'char-inner gradient-text' : 'char-inner';
+      inner.textContent = char === ' ' ? '\u00A0' : char;
+
+      mask.appendChild(inner);
+      el.appendChild(mask);
+      inners.push(inner);
+    }
+
+    return inners;
+  }
+
+  /** Wraps every word in <span class="char-mask"><span class="char-inner"> */
+  private splitIntoWords(el: HTMLElement): HTMLElement[] {
+    const words = el.innerText.split(' ');
+    el.innerHTML = '';
+    const inners: HTMLElement[] = [];
+
+    words.forEach((word, i) => {
+      const mask = document.createElement('span');
+      mask.className = 'char-mask';
+
+      const inner = document.createElement('span');
+      inner.className = 'char-inner';
+      inner.textContent = word;
+
+      mask.appendChild(inner);
+      el.appendChild(mask);
+      inners.push(inner);
+
+      if (i < words.length - 1) {
+        el.appendChild(document.createTextNode('\u00A0'));
+      }
+    });
+
+    return inners;
   }
 
   scrollTo(target: string): void {

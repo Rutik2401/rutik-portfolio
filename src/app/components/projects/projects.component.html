@@ -7,10 +7,10 @@
     </div>
   </div>
 
-  <div class="container-custom px-6 mx-auto">
+  <div class="container-custom px-4 sm:px-6 mx-auto">
 
     <!-- ─── Header ─── -->
-    <div #header class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+    <div #header class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
       <div>
         <!-- Label badge -->
         <span class="section-badge">Selected Work</span>
@@ -35,7 +35,7 @@
     </div>
 
     <!-- ─── Projects Grid ─── -->
-    <div #projectsGrid class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div #projectsGrid class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
       @for (project of projects; track project.id) {
         <div class="project-card group" [style.--accent]="project.accentColor">
 

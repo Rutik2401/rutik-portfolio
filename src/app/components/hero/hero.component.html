@@ -7,7 +7,7 @@
   <div #orb1 class="orb orb-left"></div>
   <div #orb2 class="orb orb-right"></div>
 
-  <div class="container-custom px-6 mx-auto">
+  <div class="container-custom px-4 sm:px-6 mx-auto">
     <div class="hero-grid">
 
       <!-- ─── LEFT: Text Content ─── -->
@@ -27,10 +27,14 @@
             <span #hiLine class="hi-line">Hi, I'm</span>
           </div>
           <div class="line-clip">
-            <span #nameLine1 class="name-line gradient-text">Rutik</span>
+            <div #nameLine1 class="name-line-wrap">
+              <span class="name-line">Rutik</span>
+            </div>
           </div>
           <div class="line-clip">
-            <span #nameLine2 class="name-line gradient-text">Pimpale.</span>
+            <div #nameLine2 class="name-line-wrap">
+              <span class="name-line">Pimpale.</span>
+            </div>
           </div>
         </h1>
 

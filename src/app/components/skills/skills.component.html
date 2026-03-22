@@ -7,10 +7,10 @@
     </div>
   </div>
 
-  <div class="container-custom px-6 mx-auto">
+  <div class="container-custom px-4 sm:px-6 mx-auto">
 
     <!-- Header -->
-    <div #header class="text-center mb-16">
+    <div #header class="text-center mb-10 md:mb-16">
       <p class="section-label mx-auto justify-center">Skills &amp; Stack</p>
       <h2 class="section-title">Tools I work with</h2>
       <p class="mt-4 text-muted max-w-xl mx-auto text-[1.05rem]">
@@ -19,7 +19,7 @@
     </div>
 
     <!-- Skill categories grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16" #categoriesGrid>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10 md:mb-16" #categoriesGrid>
       @for (cat of skillCategories; track cat.name) {
         <div class="category-card glass rounded-2xl p-6 glass-hover">
           <div class="flex items-center gap-3 mb-6">

@@ -18,11 +18,16 @@
   gap: 3rem;
   align-items: center;
   min-height: 100vh;
-  padding: 6rem 0 3rem;
+  padding: 5rem 0 2.5rem;
+
+  @media (min-width: 768px) {
+    padding: 6rem 0 3rem;
+  }
 
   @media (min-width: 1024px) {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
+    padding: 6rem 0 3rem;
   }
 }
 
@@ -120,15 +125,19 @@
 
 .hi-line {
   display: block;
-  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-size: clamp(1.4rem, 3.5vw, 2.25rem);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.92);
   letter-spacing: -0.01em;
 }
 
+.name-line-wrap {
+  display: block;
+}
+
 .name-line {
   display: block;
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(3.5rem, 11vw, 8rem);
   font-weight: 900;
   letter-spacing: -0.04em;
 }
@@ -385,6 +394,26 @@
   letter-spacing: 0.1em;
 }
 
+/* =============================================
+   CHAR / WORD SPLIT ANIMATION
+   ============================================= */
+.char-mask {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  /* tiny offset so descenders (like 'p','g') aren't clipped */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.char-inner {
+  display: inline-block;
+  will-change: transform, filter;
+}
+
+/* =============================================
+   ORBITING BADGES
+   ============================================= */
 /* Orbiting badges */
 .orbit-badge {
   position: absolute;
