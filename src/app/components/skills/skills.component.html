@@ -1,0 +1,66 @@
+<section id="skills" #skillsSection class="section-padding relative overflow-hidden">
+
+  <!-- Background accent -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.04]"
+      style="background: radial-gradient(circle, #818cf8, transparent);">
+    </div>
+  </div>
+
+  <div class="container-custom px-6 mx-auto">
+
+    <!-- Header -->
+    <div #header class="text-center mb-16">
+      <p class="section-label mx-auto justify-center">Skills &amp; Stack</p>
+      <h2 class="section-title">Tools I work with</h2>
+      <p class="mt-4 text-muted max-w-xl mx-auto text-[1.05rem]">
+        A curated set of technologies I use to build full-stack, production-ready applications.
+      </p>
+    </div>
+
+    <!-- Skill categories grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16" #categoriesGrid>
+      @for (cat of skillCategories; track cat.name) {
+        <div class="category-card glass rounded-2xl p-6 glass-hover">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-2xl">{{ cat.icon }}</span>
+            <h3 class="font-semibold text-white">{{ cat.name }}</h3>
+          </div>
+          <div class="space-y-4">
+            @for (skill of cat.skills; track skill.name) {
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <span class="text-sm text-white/70 font-medium">{{ skill.name }}</span>
+                  <span class="text-xs font-mono text-muted">{{ skill.level }}%</span>
+                </div>
+                <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                  <div
+                    class="skill-bar h-full rounded-full"
+                    [attr.data-level]="skill.level"
+                    [style.background]="skill.color"
+                    style="width: 0%;"
+                  ></div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Floating tech badges -->
+    <div #badgeCloud class="flex flex-wrap justify-center gap-3">
+      @for (tech of allTech; track tech.name) {
+        <span
+          class="tech-pill glass px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+          [style.color]="tech.color"
+          [style.borderColor]="tech.color + '30'"
+          style="border-width: 1px;"
+        >
+          {{ tech.name }}
+        </span>
+      }
+    </div>
+
+  </div>
+</section>

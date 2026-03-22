@@ -1,0 +1,84 @@
+<nav
+  [ngClass]="{
+    'scrolled': isScrolled(),
+    'hidden-nav': isHidden()
+  }"
+  class="navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <div class="container-custom flex items-center justify-between px-6 py-4 mx-auto">
+    <!-- Logo -->
+    <a (click)="scrollTo('#hero')" class="logo group flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-accent-cyan flex items-center justify-center text-sm font-black text-white">
+        R
+      </div>
+      <span class="font-bold text-white/80 group-hover:text-white transition-colors">
+        rutik<span class="text-accent">.</span>dev
+      </span>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <ul class="hidden md:flex items-center gap-8">
+      @for (link of navLinks; track link.href) {
+        <li>
+          <a
+            (click)="scrollTo(link.href)"
+            [ngClass]="{ 'active-link': activeSection() === link.href.slice(1) }"
+            class="nav-link text-sm font-medium text-muted hover:text-white transition-colors relative"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- CTA + Hamburger -->
+    <div class="flex items-center gap-4">
+      <a
+        href="https://github.com/Rutik2401"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden md:inline-flex btn-secondary !py-2 !px-4 text-sm"
+      >
+        GitHub
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button
+        (click)="toggleMobileMenu()"
+        class="md:hidden flex flex-col gap-1.5 p-2 group"
+        aria-label="Toggle menu"
+      >
+        <span
+          [ngClass]="{ 'rotate-45 translate-y-2.5': mobileOpen() }"
+          class="block w-5 h-0.5 bg-white transition-all duration-300"
+        ></span>
+        <span
+          [ngClass]="{ 'opacity-0': mobileOpen() }"
+          class="block w-5 h-0.5 bg-white transition-all duration-300"
+        ></span>
+        <span
+          [ngClass]="{ '-rotate-45 -translate-y-2.5': mobileOpen() }"
+          class="block w-5 h-0.5 bg-white transition-all duration-300"
+        ></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (mobileOpen()) {
+    <div class="mobile-menu md:hidden px-6 pb-6 pt-2">
+      <ul class="flex flex-col gap-4">
+        @for (link of navLinks; track link.href) {
+          <li>
+            <a
+              (click)="scrollTo(link.href); closeMobileMenu()"
+              class="block text-lg font-medium text-white/70 hover:text-white transition-colors py-2 border-b border-white/5"
+            >
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</nav>

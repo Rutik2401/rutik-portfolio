@@ -1,0 +1,158 @@
+<section id="contact" #contactSection class="section-padding relative overflow-hidden">
+
+  <!-- Background orb -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full blur-[120px] opacity-[0.07]"
+      style="background: radial-gradient(ellipse, #818cf8, transparent);">
+    </div>
+  </div>
+
+  <div class="container-custom px-6 mx-auto">
+
+    <!-- Header -->
+    <div #header class="text-center mb-16 max-w-2xl mx-auto">
+      <p class="section-label mx-auto justify-center">Get In Touch</p>
+      <h2 class="section-title mb-4">Let's build something<br><span class="gradient-text">remarkable.</span></h2>
+      <p class="text-muted text-[1.05rem] leading-relaxed">
+        I'm open to full-time roles, freelance projects, and collaborations.
+        Whether it's a product idea or just a conversation &mdash; I'd love to hear from you.
+      </p>
+    </div>
+
+    <div #contentGrid class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
+
+      <!-- Left: Contact Info -->
+      <div class="space-y-8">
+
+        <!-- Direct email CTA -->
+        <div>
+          <p class="text-xs font-mono text-muted tracking-widest uppercase mb-3">Email me directly</p>
+          <a href="mailto:rutikpimpale2401@gmail.com"
+            class="group flex items-center gap-3 text-white text-lg font-medium hover:text-accent transition-colors duration-200">
+            <span class="w-10 h-10 rounded-xl glass flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-200 border border-white/10">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </span>
+            rutikpimpale2401&#64;gmail.com
+          </a>
+        </div>
+
+        <!-- Social links -->
+        <div>
+          <p class="text-xs font-mono text-muted tracking-widest uppercase mb-4">Find me on</p>
+          <div class="space-y-3">
+            @for (social of socialLinks; track social.label) {
+              <a
+                [href]="social.href"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link group flex items-center gap-4 p-3 rounded-xl glass glass-hover transition-all duration-200"
+              >
+                <div
+                  class="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200"
+                  [style.background]="social.color + '15'"
+                  [style.borderColor]="social.color + '30'"
+                  style="border-width: 1px;"
+                >
+                  <span [innerHTML]="social.icon" [style.color]="social.color"></span>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-medium group-hover:text-white transition-colors">{{ social.label }}</p>
+                </div>
+                <svg class="w-4 h-4 text-white/20 ml-auto group-hover:text-white/40 group-hover:translate-x-1 transition-all duration-200"
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            }
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="flex items-center gap-3 text-muted text-sm">
+          <svg class="w-4 h-4 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          Pune, Maharashtra, India 411058
+        </div>
+      </div>
+
+      <!-- Right: Contact Form -->
+      <div #formCard class="glass rounded-2xl p-7">
+        <h3 class="text-white font-semibold text-lg mb-6">Send a message</h3>
+
+        @if (!formSent()) {
+          <form (ngSubmit)="submitForm()" class="space-y-5">
+            <div>
+              <label class="block text-xs font-mono text-muted uppercase tracking-wider mb-2">Name</label>
+              <input
+                [(ngModel)]="formName"
+                name="name"
+                type="text"
+                placeholder="Your name"
+                required
+                class="form-input w-full"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-muted uppercase tracking-wider mb-2">Email</label>
+              <input
+                [(ngModel)]="formEmail"
+                name="email"
+                type="email"
+                placeholder="your&#64;email.com"
+                required
+                class="form-input w-full"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-muted uppercase tracking-wider mb-2">Message</label>
+              <textarea
+                [(ngModel)]="formMessage"
+                name="message"
+                rows="4"
+                placeholder="What's on your mind?"
+                required
+                class="form-input w-full resize-none"
+              ></textarea>
+            </div>
+
+            @if (formError()) {
+              <p class="text-red-400 text-xs">{{ formError() }}</p>
+            }
+
+            <button
+              type="submit"
+              class="btn-primary w-full justify-center"
+              [disabled]="sending()"
+            >
+              @if (sending()) {
+                <span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                Sending...
+              } @else {
+                Send Message
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                </svg>
+              }
+            </button>
+          </form>
+        } @else {
+          <div class="flex flex-col items-center justify-center text-center py-8 gap-4">
+            <div class="w-14 h-14 rounded-full bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center">
+              <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <h4 class="text-white font-semibold text-lg">Message sent!</h4>
+            <p class="text-muted text-sm">Thanks for reaching out. I'll get back to you soon.</p>
+          </div>
+        }
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+:host { display: block; background: #030712; }
+
+.form-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+
+  &::placeholder {
+    color: rgba(255,255,255,0.2);
+  }
+
+  &:focus {
+    border-color: rgba(129, 140, 248, 0.5);
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
+  }
+}
+
+.social-link {
+  text-decoration: none;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
