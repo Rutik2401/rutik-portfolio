@@ -66,6 +66,7 @@ export class SkillsComponent implements AfterViewInit {
         { name: 'Postman', level: 80, color: 'linear-gradient(90deg, #ff6c37, #e55a2b)' },
         { name: 'Maven', level: 72, color: 'linear-gradient(90deg, #c71a36, #a01228)' },
         { name: 'Bootstrap', level: 88, color: 'linear-gradient(90deg, #7952b3, #6330a0)' },
+        { name: 'Docker', level: 70, color: 'linear-gradient(90deg, #2496ed, #1a7bc4)' },
       ],
     },
   ];
@@ -85,6 +86,7 @@ export class SkillsComponent implements AfterViewInit {
     { name: 'Git', color: '#f05032' },
     { name: 'Postman', color: '#ff6c37' },
     { name: 'Maven', color: '#c71a36' },
+    { name: 'Docker', color: '#2496ed' },
   ];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}

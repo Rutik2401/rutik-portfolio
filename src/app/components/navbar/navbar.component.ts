@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   activeSection = signal('hero');
 
   private lastScrollY = 0;
-  private scrollThreshold = 80;
+  private scrollThreshold = 150;
   private sectionObserver?: IntersectionObserver;
 
   constructor(

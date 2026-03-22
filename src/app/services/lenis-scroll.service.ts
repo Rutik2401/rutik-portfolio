@@ -38,6 +38,9 @@ export class LenisScrollService implements OnDestroy {
 
       // Sync Lenis scroll with ScrollTrigger
       this.lenis.on('scroll', ScrollTrigger.update);
+
+      // Recalculate all scroll positions after Lenis is ready
+      setTimeout(() => ScrollTrigger.refresh(), 300);
     } catch (e) {
       // Lenis not available — fall back to native scroll
       console.warn('Lenis smooth scroll not available, using native scroll.');
