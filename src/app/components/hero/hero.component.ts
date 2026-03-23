@@ -35,7 +35,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   constructor(
     private lenisScroll: LenisScrollService,
     @Inject(PLATFORM_ID) private platformId: Object,
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -51,8 +51,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     // Target inner .name-line span so gradient-text class is preserved
     const nameSpan1 = this.nameLine1.nativeElement.querySelector('.name-line') as HTMLElement;
     const nameSpan2 = this.nameLine2.nativeElement.querySelector('.name-line') as HTMLElement;
-    const chars1    = this.splitIntoChars(nameSpan1, true);
-    const chars2    = this.splitIntoChars(nameSpan2, true);
+    const chars1 = this.splitIntoChars(nameSpan1, true);
+    const chars2 = this.splitIntoChars(nameSpan2, true);
     // Role → per-word
     const roleWords = this.splitIntoWords(this.roleText.nativeElement);
 
@@ -127,7 +127,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
         { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.3);
 
     // Floating orbs (infinite loop — atmospheric depth)
-    gsap.to(this.orb1.nativeElement, { y: '-=25', duration: 9,  ease: 'sine.inOut', yoyo: true, repeat: -1 });
+    gsap.to(this.orb1.nativeElement, { y: '-=25', duration: 9, ease: 'sine.inOut', yoyo: true, repeat: -1 });
     gsap.to(this.orb2.nativeElement, { y: '+=30', duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
   }
 
@@ -185,5 +185,5 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.lenisScroll.scrollTo(target);
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 }

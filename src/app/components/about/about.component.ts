@@ -28,7 +28,7 @@ export class AboutComponent implements AfterViewInit {
   @ViewChild('statsCol') statsCol!: ElementRef;
 
   stats: Stat[] = [
-    { value: '1+', label: 'Years Experience', accent: '#818cf8' },
+    { value: '1.5+', label: 'Years Experience', accent: '#818cf8' },
     { value: '4+', label: 'Projects Built', accent: '#22d3ee' },
     { value: '3+', label: 'Tech Stacks', accent: '#a78bfa' },
     { value: '2', label: 'Certifications', accent: '#34d399' },
