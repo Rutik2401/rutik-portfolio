@@ -30,13 +30,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   @ViewChild('buttons') buttons!: ElementRef;
   @ViewChild('social') social!: ElementRef;
   @ViewChild('statsRow') statsRow!: ElementRef;
-  @ViewChild('orbitalContainer') orbitalContainer!: ElementRef;
-
-  outerBadges = ['Angular', 'Spring Boot', 'TypeScript'];
-  innerBadges = ['Java', 'React', 'SQL'];
-
-  private tickerFn!: () => void;
-  private orbitAngle = 0;
+  @ViewChild('heroCard') heroCard!: ElementRef;
 
   constructor(
     private lenisScroll: LenisScrollService,
@@ -47,7 +41,6 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     if (!isPlatformBrowser(this.platformId)) return;
     setTimeout(() => {
       this.runIntroTimeline();
-      this.startOrbital();
     }, 150);
   }
 
@@ -129,55 +122,13 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       .to(this.statsRow.nativeElement,
         { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.65)
 
-      // Orbital sphere
-      .to(this.orbitalContainer.nativeElement,
-        { opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out' }, 1.3);
+      // Code card
+      .to(this.heroCard.nativeElement,
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.3);
 
     // Floating orbs (infinite loop — atmospheric depth)
     gsap.to(this.orb1.nativeElement, { y: '-=25', duration: 9,  ease: 'sine.inOut', yoyo: true, repeat: -1 });
     gsap.to(this.orb2.nativeElement, { y: '+=30', duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-  }
-
-  // ─── Orbital Animation (GSAP ticker) ─────────────────────────────────────
-  private startOrbital(): void {
-    const container = this.orbitalContainer.nativeElement;
-    const outerEls  = Array.from(container.querySelectorAll('.badge-outer'))       as HTMLElement[];
-    const innerEls  = Array.from(container.querySelectorAll('.badge-inner-orbit')) as HTMLElement[];
-
-    // Radii (elliptical for 3-D feel)
-    const R_OUT_X = 170;
-    const R_OUT_Y = 62;   // ellipse Y = 3D tilt
-    const R_IN_X  = 116;
-    const R_IN_Y  = 42;
-
-    this.tickerFn = () => {
-      this.orbitAngle += 0.006;
-      const neg = -this.orbitAngle * 0.65;
-
-      outerEls.forEach((el, i) => {
-        const a = this.orbitAngle + (i / outerEls.length) * Math.PI * 2;
-        gsap.set(el, {
-          x:       Math.cos(a) * R_OUT_X,
-          y:       Math.sin(a) * R_OUT_Y,
-          opacity: 0.55 + Math.sin(a) * 0.4,
-          scale:   0.88 + Math.sin(a) * 0.12,
-          zIndex:  Math.sin(a) > 0 ? 20 : 2,
-        });
-      });
-
-      innerEls.forEach((el, i) => {
-        const a = neg + (i / innerEls.length) * Math.PI * 2;
-        gsap.set(el, {
-          x:       Math.cos(a) * R_IN_X,
-          y:       Math.sin(a) * R_IN_Y,
-          opacity: 0.5 + Math.sin(a) * 0.4,
-          scale:   0.85 + Math.sin(a) * 0.12,
-          zIndex:  Math.sin(a) > 0 ? 20 : 2,
-        });
-      });
-    };
-
-    gsap.ticker.add(this.tickerFn);
   }
 
   // ─── Split Helpers ────────────────────────────────────────────────────────
@@ -234,7 +185,5 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.lenisScroll.scrollTo(target);
   }
 
-  ngOnDestroy(): void {
-    if (this.tickerFn) gsap.ticker.remove(this.tickerFn);
-  }
+  ngOnDestroy(): void {}
 }

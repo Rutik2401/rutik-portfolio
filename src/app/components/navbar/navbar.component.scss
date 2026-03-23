@@ -5,6 +5,22 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  /* Specific transitions — avoids opacity conflict with GSAP */
+  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease,
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* CSS entrance animation — reliable, no GSAP conflict */
+  animation: navbarEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes navbarEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .navbar.scrolled {

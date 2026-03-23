@@ -112,36 +112,38 @@
 
       </div>
 
-      <!-- ─── RIGHT: Orbital Sphere ─── -->
-      <div #orbitalContainer class="hero-orbital opacity-0">
-        <div class="orbital-wrapper">
+      <!-- ─── RIGHT: Code Card ─── -->
+      <div #heroCard class="hero-visual opacity-0">
+        <div class="card-orb card-orb-1"></div>
+        <div class="card-orb card-orb-2"></div>
 
-          <!-- Outer orbit ring -->
-          <div class="orbit-ring ring-outer"></div>
-          <!-- Inner orbit ring -->
-          <div class="orbit-ring ring-inner"></div>
-
-          <!-- Glowing dots on rings -->
-          <div class="orbit-glow-dot dot-a"></div>
-          <div class="orbit-glow-dot dot-b"></div>
-          <div class="orbit-glow-dot dot-c"></div>
-
-          <!-- Center sphere -->
-          <div class="orbit-center">
-            <span class="initials">RP</span>
-            <span class="version-tag">v1.0</span>
+        <div class="code-window">
+          <!-- Window chrome -->
+          <div class="cw-header">
+            <div class="cw-dots">
+              <span class="cw-dot cw-red"></span>
+              <span class="cw-dot cw-yellow"></span>
+              <span class="cw-dot cw-green"></span>
+            </div>
+            <span class="cw-title">portfolio.ts</span>
           </div>
 
-          <!-- Outer ring badges -->
-          @for (b of outerBadges; track b) {
-            <div class="orbit-badge badge-outer">{{ b }}</div>
-          }
-
-          <!-- Inner ring badges -->
-          @for (b of innerBadges; track b) {
-            <div class="orbit-badge badge-inner-orbit">{{ b }}</div>
-          }
-
+          <!-- Code body -->
+          <div class="cw-body">
+            <div class="cw-line"><span class="ln">1</span><span class="tok-dec">&#64;Component</span><span class="tok-p">(&#123;</span></div>
+            <div class="cw-line"><span class="ln">2</span>&nbsp;&nbsp;<span class="tok-prop">selector</span><span class="tok-p">:</span> <span class="tok-str">'app-rutik'</span><span class="tok-p">,</span></div>
+            <div class="cw-line"><span class="ln">3</span>&nbsp;&nbsp;<span class="tok-prop">standalone</span><span class="tok-p">:</span> <span class="tok-bool">true</span></div>
+            <div class="cw-line"><span class="ln">4</span><span class="tok-p">&#125;)</span></div>
+            <div class="cw-line"><span class="ln">5</span><span class="tok-kw">class</span> <span class="tok-cls">RutikPimpale</span> <span class="tok-p">&#123;</span></div>
+            <div class="cw-line"><span class="ln">6</span>&nbsp;&nbsp;<span class="tok-prop">name</span> <span class="tok-p">=</span> <span class="tok-str">'Rutik Pimpale'</span><span class="tok-p">;</span></div>
+            <div class="cw-line"><span class="ln">7</span>&nbsp;&nbsp;<span class="tok-prop">role</span> <span class="tok-p">=</span> <span class="tok-str">'Full Stack Dev'</span><span class="tok-p">;</span></div>
+            <div class="cw-line"><span class="ln">8</span>&nbsp;&nbsp;<span class="tok-prop">skills</span> <span class="tok-p">= [</span></div>
+            <div class="cw-line"><span class="ln">9</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-str">'Angular'</span><span class="tok-p">,</span> <span class="tok-str">'TypeScript'</span><span class="tok-p">,</span></div>
+            <div class="cw-line"><span class="ln">10</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-str">'Spring Boot'</span><span class="tok-p">,</span> <span class="tok-str">'Java'</span></div>
+            <div class="cw-line"><span class="ln">11</span>&nbsp;&nbsp;<span class="tok-p">];</span></div>
+            <div class="cw-line"><span class="ln">12</span>&nbsp;&nbsp;<span class="tok-prop">status</span> <span class="tok-p">=</span> <span class="tok-str">'🟢 Available'</span><span class="tok-p">;</span></div>
+            <div class="cw-line cw-line--cursor"><span class="ln">13</span><span class="tok-p">&#125;</span><span class="cw-cursor"></span></div>
+          </div>
         </div>
       </div>
 

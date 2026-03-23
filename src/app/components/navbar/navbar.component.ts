@@ -53,13 +53,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   private initNavbarAnimation(): void {
-    gsap.from('nav', {
-      y: -80,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.5,
-    });
+    // CSS animation handles the entrance — no GSAP needed here
+    // (avoids opacity:0 inline-style conflict with transition-all)
   }
 
   private initSectionObserver(): void {
