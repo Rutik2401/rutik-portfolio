@@ -29,7 +29,6 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   @ViewChild('description') description!: ElementRef;
   @ViewChild('buttons') buttons!: ElementRef;
   @ViewChild('social') social!: ElementRef;
-  @ViewChild('statsRow') statsRow!: ElementRef;
   @ViewChild('heroCard') heroCard!: ElementRef;
 
   constructor(
@@ -117,10 +116,6 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       // Social links
       .to(this.social.nativeElement,
         { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.54)
-
-      // Stats row
-      .to(this.statsRow.nativeElement,
-        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.65)
 
       // Code card
       .to(this.heroCard.nativeElement,
