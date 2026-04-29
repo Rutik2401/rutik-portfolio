@@ -129,10 +129,12 @@
   font-weight: 700;
   color: rgba(255, 255, 255, 0.92);
   letter-spacing: -0.01em;
+  opacity: 0;
 }
 
 .name-line-wrap {
   display: block;
+  opacity: 0;
 }
 
 .name-line {
@@ -150,6 +152,15 @@
   color: #818cf8;
   margin: 0;
   letter-spacing: -0.01em;
+  opacity: 0;
+}
+
+/* Fallback: if JS fails or takes too long, force show after 2.5s */
+@keyframes hero-fallback-reveal {
+  to { opacity: 1; }
+}
+.hi-line, .name-line-wrap, .role-text {
+  animation: hero-fallback-reveal 0.4s 2.5s forwards;
 }
 
 /* Description */

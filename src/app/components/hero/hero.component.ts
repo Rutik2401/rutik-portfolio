@@ -38,9 +38,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    setTimeout(() => {
-      this.runIntroTimeline();
-    }, 150);
+    // Wait one frame so styles are applied, then run timeline immediately
+    requestAnimationFrame(() => this.runIntroTimeline());
   }
 
   // ─── Entrance Timeline ────────────────────────────────────────────────────
@@ -64,6 +63,17 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
     // Role words — same treatment, lighter blur
     gsap.set(roleWords, { y: '110%', filter: 'blur(8px)' });
+
+    // CSS keeps these parents at opacity:0 until JS runs, preventing FOUC on reload.
+    // Now that chars are positioned off-screen and ready, reveal the parents.
+    const parents = [
+      this.hiLine.nativeElement,
+      this.nameLine1.nativeElement,
+      this.nameLine2.nativeElement,
+      this.roleText.nativeElement,
+    ];
+    parents.forEach((el) => (el.style.animation = 'none')); // disable CSS fallback
+    gsap.set(parents, { opacity: 1 });
 
     // ── 3. Master timeline ─────────────────────────────────────────────────
     const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
