@@ -76,13 +76,13 @@ export class ExperienceComponent {
       degree: 'HSC – Science (12th)',
       institution: 'Shri Chhatrapati Shivaji Mahavidyalaya',
       period: 'Jun 2018 – Apr 2019',
-      location: 'Shrigonda, Ahmednagar',
+      location: 'Shrigonda, Ahilyanagar',
     },
     {
       degree: 'SSC – Semi-English (10th)',
       institution: 'Shri Aranyeshwar Vidyalaya, Arangoan',
       period: 'Jun 2016 – Apr 2017',
-      location: 'Jamkhed, Ahmednagar',
+      location: 'Jamkhed, Ahilyanagar',
     },
   ];
 }

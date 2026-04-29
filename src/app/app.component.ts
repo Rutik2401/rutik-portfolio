@@ -4,6 +4,8 @@ import { LenisScrollService } from './services/lenis-scroll.service';
 import { RevealService } from './services/reveal.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CursorComponent } from './components/cursor/cursor.component';
+import { BootScreenComponent } from './components/boot-screen/boot-screen.component';
+import { ScrollProgressComponent } from './components/scroll-progress/scroll-progress.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { AboutComponent } from './components/about/about.component';
 import { SkillsComponent } from './components/skills/skills.component';
@@ -15,6 +17,8 @@ import { ContactComponent } from './components/contact/contact.component';
   selector: 'app-root',
   standalone: true,
   imports: [
+    BootScreenComponent,
+    ScrollProgressComponent,
     NavbarComponent,
     CursorComponent,
     HeroComponent,
@@ -25,6 +29,8 @@ import { ContactComponent } from './components/contact/contact.component';
     ContactComponent,
   ],
   template: `
+    <app-boot-screen />
+    <app-scroll-progress />
     <app-cursor />
     <app-navbar />
     <main>

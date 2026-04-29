@@ -28,6 +28,7 @@ export class SkillsComponent {
         { name: 'HTML5 / CSS3', level: 92, color: 'linear-gradient(90deg, #e44d26, #f16529)' },
         { name: 'React.js', level: 72, color: 'linear-gradient(90deg, #61dafb, #20b2d8)' },
         { name: 'Tailwind CSS', level: 85, color: 'linear-gradient(90deg, #06b6d4, #0891b2)' },
+        { name: 'Bootstrap', level: 88, color: 'linear-gradient(90deg, #7952b3, #6330a0)' },
       ],
     },
     {

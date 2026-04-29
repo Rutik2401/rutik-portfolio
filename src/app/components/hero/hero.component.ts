@@ -1,12 +1,14 @@
 import { Component, OnInit, PLATFORM_ID, Inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { LenisScrollService } from '../../services/lenis-scroll.service';
+import { MagneticDirective } from '../../directives/magnetic.directive';
 
 const COUNTER_KEY = 'rutik.profile.visits';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
+  imports: [MagneticDirective],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
 })

@@ -32,78 +32,111 @@
       </a>
     </div>
 
-    <!-- ─── GALAXIES LIST ─── -->
-    <div class="projects-list">
-      @for (project of projects; track project.id; let i = $index) {
-        <article class="project-row reveal"
-                 [attr.data-reveal-delay]="i * 100"
-                 [style.--accent]="project.accentColor">
+    <!-- ─── MASTER-DETAIL EXPLORER ─── -->
+    <div class="explorer reveal" data-reveal-delay="120">
 
-          <!-- Index + Status -->
-          <header class="project-meta">
-            <span class="project-index">{{ '00' + (i + 1) }}</span>
-            <span class="project-rule"></span>
-            <span class="project-status"
-                  [class.is-active]="project.live && !project.status"
-                  [class.is-progress]="project.status">
-              <span class="status-dot"></span>
-              {{ project.status ?? (project.live ? 'LIVE' : 'ARCHIVED') }}
-            </span>
-          </header>
+      <!-- LEFT: file-list -->
+      <aside class="explorer-sidebar">
+        <div class="sidebar-head">
+          <span class="sidebar-prompt">$</span>
+          <span class="sidebar-cmd">ls ~/projects</span>
+        </div>
+        <ul class="file-list" role="tablist" aria-label="Projects">
+          @for (p of projects; track p.id; let i = $index) {
+            <li>
+              <button
+                type="button"
+                role="tab"
+                [attr.aria-selected]="selectedIndex() === i"
+                [ngClass]="{ 'is-active': selectedIndex() === i }"
+                (click)="select(i)"
+                class="file-item"
+                [style.--accent]="p.accentColor"
+              >
+                <span class="file-index">{{ '00' + (i + 1) }}</span>
+                <span class="file-arrow">{{ selectedIndex() === i ? '▸' : ' ' }}</span>
+                <span class="file-name">{{ p.shortName }}</span>
+                <span class="file-status"
+                      [ngClass]="statusClass(p)">
+                  <span class="file-status-dot"></span>
+                </span>
+              </button>
+            </li>
+          }
+          <li class="file-meta">
+            <span class="meta-key">total</span>
+            <span class="meta-val">{{ projects.length }} projects</span>
+          </li>
+        </ul>
+      </aside>
 
-          <!-- Body grid: title + description on left, sidebar on right -->
-          <div class="project-body">
+      <!-- RIGHT: details -->
+      <article class="explorer-detail" [style.--accent]="selected().accentColor">
+        <header class="detail-head">
+          <span class="detail-path">~/projects/{{ selected().shortName }}.md</span>
+          <span class="detail-status"
+                [ngClass]="statusClass(selected())">
+            <span class="detail-status-dot"></span>
+            {{ statusLabel(selected()) }}
+          </span>
+        </header>
 
-            <div class="project-content">
-              <p class="project-category">{{ project.category }}</p>
-              <h3 class="project-title">
-                <span class="title-icon">{{ project.icon }}</span>
-                {{ project.title }}
-              </h3>
-              <p class="project-description">{{ project.description }}</p>
+        <div class="detail-body" [attr.data-key]="selected().id">
+          <p class="detail-category">
+            <span class="cat-prompt">#</span>
+            {{ selected().category }}
+            <span class="cat-year">·  {{ selected().year }}</span>
+          </p>
 
-              <div class="project-tags">
-                @for (tag of project.tags; track tag) {
-                  <span class="project-tag">{{ tag }}</span>
-                }
+          <h3 class="detail-title">
+            <span class="detail-icon">{{ selected().icon }}</span>
+            {{ selected().title }}
+            @if (selected().featured) {
+              <span class="detail-featured">★ FEATURED</span>
+            }
+          </h3>
+
+          <p class="detail-description">{{ selected().description }}</p>
+
+          <div class="detail-stats">
+            @for (stat of selected().stats; track stat.label) {
+              <div class="stat-cell">
+                <div class="stat-cell-val">{{ stat.value }}</div>
+                <div class="stat-cell-key">{{ stat.label }}</div>
               </div>
-
-              <div class="project-links">
-                @if (project.live) {
-                  <a [href]="project.live" target="_blank" rel="noopener noreferrer" class="project-live-link">
-                    <span>VIEW LIVE</span>
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                    </svg>
-                  </a>
-                }
-                <a [href]="project.github" target="_blank" rel="noopener noreferrer" class="source-link">
-                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-                  </svg>
-                  source
-                </a>
-              </div>
-            </div>
-
-            <!-- Right-side stat block -->
-            <aside class="project-stats">
-              @for (stat of project.stats; track stat.label) {
-                <div class="stat-row">
-                  <span class="stat-key">{{ stat.label }}</span>
-                  <span class="stat-val">{{ stat.value }}</span>
-                </div>
-              }
-              @if (project.featured) {
-                <div class="featured-flag">
-                  <span>★</span> FEATURED
-                </div>
-              }
-            </aside>
-
+            }
           </div>
-        </article>
-      }
+
+          <div class="detail-tags">
+            @for (tag of selected().tags; track tag) {
+              <span class="detail-tag">{{ tag }}</span>
+            }
+          </div>
+
+          <div class="detail-links">
+            @if (selected().live) {
+              <a [href]="selected().live!" target="_blank" rel="noopener noreferrer"
+                 class="detail-cta primary">
+                <span class="cta-prompt">&gt;</span>
+                <span>VIEW LIVE</span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+              </a>
+            }
+            <a [href]="selected().github" target="_blank" rel="noopener noreferrer"
+               class="detail-cta ghost">
+              <span class="cta-prompt">&gt;</span>
+              <span>SOURCE</span>
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
     </div>
 
   </div>
