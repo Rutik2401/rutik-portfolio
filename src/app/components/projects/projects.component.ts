@@ -1,16 +1,5 @@
-import {
-  Component,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  PLATFORM_ID,
-  Inject,
-} from '@angular/core';
-import { isPlatformBrowser, NgClass } from '@angular/common';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { AnimationService } from '../../services/animation.service';
+import { Component } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 interface ProjectStat {
   value: string;
@@ -40,13 +29,7 @@ interface Project {
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
-export class ProjectsComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('projectsSection') projectsSection!: ElementRef;
-  @ViewChild('header') header!: ElementRef;
-  @ViewChild('projectsGrid') projectsGrid!: ElementRef;
-
-  private tiltCleanup: (() => void)[] = [];
-
+export class ProjectsComponent {
   projects: Project[] = [
     {
       id: 1,
@@ -125,51 +108,4 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
       featured: false,
     },
   ];
-
-  constructor(
-    private animationService: AnimationService,
-    @Inject(PLATFORM_ID) private platformId: Object,
-  ) {}
-
-  ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    gsap.registerPlugin(ScrollTrigger);
-    this.animateSection();
-    this.initTiltEffects();
-  }
-
-  private animateSection(): void {
-    gsap.from(this.header.nativeElement.children, {
-      scrollTrigger: { trigger: this.header.nativeElement, start: 'top 82%', once: true },
-      y: 30,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.1,
-      ease: 'power3.out',
-    });
-
-    const cards = this.projectsGrid.nativeElement.querySelectorAll('.project-card');
-    gsap.from(cards, {
-      scrollTrigger: { trigger: this.projectsGrid.nativeElement, start: 'top 82%', once: true },
-      y: 60,
-      opacity: 0,
-      duration: 0.75,
-      stagger: 0.1,
-      ease: 'power3.out',
-    });
-  }
-
-  private initTiltEffects(): void {
-    setTimeout(() => {
-      const cards = this.projectsGrid.nativeElement.querySelectorAll('.project-card');
-      cards.forEach((card: HTMLElement) => {
-        const cleanup = this.animationService.addTiltEffect(card, 4);
-        this.tiltCleanup.push(cleanup);
-      });
-    }, 500);
-  }
-
-  ngOnDestroy(): void {
-    this.tiltCleanup.forEach((fn) => fn());
-  }
 }

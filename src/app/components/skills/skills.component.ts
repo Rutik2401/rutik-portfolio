@@ -1,14 +1,4 @@
-import {
-  Component,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  PLATFORM_ID,
-  Inject,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Component } from '@angular/core';
 
 interface Skill {
   name: string;
@@ -28,12 +18,7 @@ interface SkillCategory {
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
 })
-export class SkillsComponent implements AfterViewInit {
-  @ViewChild('skillsSection') skillsSection!: ElementRef;
-  @ViewChild('header') header!: ElementRef;
-  @ViewChild('categoriesGrid') categoriesGrid!: ElementRef;
-  @ViewChild('badgeCloud') badgeCloud!: ElementRef;
-
+export class SkillsComponent {
   skillCategories: SkillCategory[] = [
     {
       name: 'Frontend',
@@ -88,73 +73,4 @@ export class SkillsComponent implements AfterViewInit {
     { name: 'Maven', color: '#c71a36' },
     { name: 'Docker', color: '#2496ed' },
   ];
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    gsap.registerPlugin(ScrollTrigger);
-    this.animateSection();
-  }
-
-  private animateSection(): void {
-    // Header
-    gsap.from(this.header.nativeElement.children, {
-      scrollTrigger: {
-        trigger: this.header.nativeElement,
-        start: 'top 82%',
-        once: true,
-      },
-      y: 30,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.1,
-      ease: 'power3.out',
-    });
-
-    // Category cards stagger
-    const cards = this.categoriesGrid.nativeElement.querySelectorAll('.category-card');
-    gsap.from(cards, {
-      scrollTrigger: {
-        trigger: this.categoriesGrid.nativeElement,
-        start: 'top 82%',
-        once: true,
-      },
-      y: 50,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: 'power3.out',
-      onComplete: () => this.animateBars(),
-    });
-
-    // Badge cloud
-    const pills = this.badgeCloud.nativeElement.querySelectorAll('.tech-pill');
-    gsap.from(pills, {
-      scrollTrigger: {
-        trigger: this.badgeCloud.nativeElement,
-        start: 'top 88%',
-        once: true,
-      },
-      y: 20,
-      opacity: 0,
-      duration: 0.5,
-      stagger: 0.04,
-      ease: 'power2.out',
-    });
-  }
-
-  private animateBars(): void {
-    const bars = document.querySelectorAll('.skill-bar');
-    bars.forEach((bar) => {
-      const el = bar as HTMLElement;
-      const level = el.getAttribute('data-level') ?? '0';
-      gsap.to(el, {
-        width: `${level}%`,
-        duration: 1.2,
-        ease: 'power2.out',
-        delay: Math.random() * 0.3,
-      });
-    });
-  }
 }

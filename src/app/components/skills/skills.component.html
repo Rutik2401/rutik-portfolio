@@ -10,18 +10,18 @@
   <div class="container-custom px-4 sm:px-6 mx-auto">
 
     <!-- Header -->
-    <div #header class="text-center mb-10 md:mb-16">
-      <p class="section-label mx-auto justify-center">Skills &amp; Stack</p>
-      <h2 class="section-title">Tools I work with</h2>
-      <p class="mt-4 text-muted max-w-xl mx-auto text-[1.05rem]">
+    <div class="text-center mb-10 md:mb-16">
+      <p class="section-label mx-auto justify-center reveal">Skills &amp; Stack</p>
+      <h2 class="section-title reveal" data-reveal-delay="80">Tools I work with</h2>
+      <p class="mt-4 text-muted max-w-xl mx-auto text-[1.05rem] reveal" data-reveal-delay="160">
         A curated set of technologies I use to build full-stack, production-ready applications.
       </p>
     </div>
 
     <!-- Skill categories grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10 md:mb-16" #categoriesGrid>
-      @for (cat of skillCategories; track cat.name) {
-        <div class="category-card glass rounded-2xl p-6 glass-hover">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10 md:mb-16">
+      @for (cat of skillCategories; track cat.name; let i = $index) {
+        <div class="category-card glass rounded-2xl p-6 glass-hover reveal" [attr.data-reveal-delay]="i * 100">
           <div class="flex items-center gap-3 mb-6">
             <span class="text-2xl">{{ cat.icon }}</span>
             <h3 class="font-semibold text-white">{{ cat.name }}</h3>
@@ -35,10 +35,9 @@
                 </div>
                 <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
                   <div
-                    class="skill-bar h-full rounded-full"
-                    [attr.data-level]="skill.level"
+                    class="skill-bar h-full rounded-full reveal-bar"
+                    [style.--level.%]="skill.level"
                     [style.background]="skill.color"
-                    style="width: 0%;"
                   ></div>
                 </div>
               </div>
@@ -49,10 +48,11 @@
     </div>
 
     <!-- Floating tech badges -->
-    <div #badgeCloud class="flex flex-wrap justify-center gap-3">
-      @for (tech of allTech; track tech.name) {
+    <div class="flex flex-wrap justify-center gap-3">
+      @for (tech of allTech; track tech.name; let i = $index) {
         <span
-          class="tech-pill glass px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+          class="tech-pill glass px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 reveal"
+          [attr.data-reveal-delay]="i * 30"
           [style.color]="tech.color"
           [style.borderColor]="tech.color + '30'"
           style="border-width: 1px;"

@@ -4,8 +4,8 @@
   <div class="grid-bg absolute inset-0 pointer-events-none"></div>
 
   <!-- Ambient orbs -->
-  <div #orb1 class="orb orb-left"></div>
-  <div #orb2 class="orb orb-right"></div>
+  <div class="orb orb-left"></div>
+  <div class="orb orb-right"></div>
 
   <div class="container-custom px-4 sm:px-6 mx-auto">
     <div class="hero-grid">
@@ -14,7 +14,7 @@
       <div class="hero-content">
 
         <!-- Availability badge -->
-        <div #badge class="availability-badge opacity-0">
+        <div class="availability-badge intro" style="--intro-delay: 0.1s">
           <span class="badge-dot">
             <span class="badge-dot-ping"></span>
           </span>
@@ -24,15 +24,15 @@
         <!-- Heading -->
         <h1 class="hero-heading">
           <div class="line-clip">
-            <span #hiLine class="hi-line">Hi, I'm</span>
+            <span class="hi-line intro" style="--intro-delay: 0.2s">Hi, I'm</span>
           </div>
           <div class="line-clip">
-            <div #nameLine1 class="name-line-wrap">
+            <div class="name-line-wrap intro" style="--intro-delay: 0.3s">
               <span class="name-line">Rutik</span>
             </div>
           </div>
           <div class="line-clip">
-            <div #nameLine2 class="name-line-wrap">
+            <div class="name-line-wrap intro" style="--intro-delay: 0.4s">
               <span class="name-line">Pimpale.</span>
             </div>
           </div>
@@ -40,17 +40,17 @@
 
         <!-- Role -->
         <div class="line-clip">
-          <p #roleText class="role-text">Full Stack Developer</p>
+          <p class="role-text intro" style="--intro-delay: 0.55s">Full Stack Developer</p>
         </div>
 
         <!-- Description -->
-        <p #description class="hero-description opacity-0">
+        <p class="hero-description intro" style="--intro-delay: 0.7s">
           I build robust full-stack applications with Angular, Spring Boot &amp; Java.
           <strong>1.5+ years</strong> delivering production-grade systems at software companies in Pune.
         </p>
 
         <!-- CTA Buttons -->
-        <div #buttons class="hero-buttons opacity-0">
+        <div class="hero-buttons intro" style="--intro-delay: 0.85s">
           <button (click)="scrollTo('#projects')" class="btn-cta-primary">
             View Projects
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@
         </div>
 
         <!-- Social links -->
-        <div #social class="hero-social opacity-0">
+        <div class="hero-social intro" style="--intro-delay: 1s">
           <span class="social-label">FIND ME ON</span>
           <div class="social-icons">
             <a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer"
@@ -96,7 +96,7 @@
       </div>
 
       <!-- ─── RIGHT: Code Card ─── -->
-      <div #heroCard class="hero-visual opacity-0">
+      <div class="hero-visual intro" style="--intro-delay: 0.5s">
         <div class="card-orb card-orb-1"></div>
         <div class="card-orb card-orb-2"></div>
 

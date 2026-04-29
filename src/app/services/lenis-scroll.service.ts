@@ -1,7 +1,5 @@
 import { Injectable, PLATFORM_ID, Inject, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Injectable({ providedIn: 'root' })
 export class LenisScrollService implements OnDestroy {
@@ -29,16 +27,11 @@ export class LenisScrollService implements OnDestroy {
         touchMultiplier: 2,
       });
 
-      // Connect Lenis to GSAP ticker for perfect sync
-      gsap.ticker.add((time) => {
-        this.lenis?.raf(time * 1000);
-      });
-
-      // Sync Lenis scroll with ScrollTrigger
-      this.lenis.on('scroll', ScrollTrigger.update);
-
-      // Recalculate all scroll positions after Lenis is ready
-      setTimeout(() => ScrollTrigger.refresh(), 300);
+      const raf = (time: number) => {
+        this.lenis?.raf(time);
+        this.rafId = requestAnimationFrame(raf);
+      };
+      this.rafId = requestAnimationFrame(raf);
     } catch (e) {
       // Lenis not available — fall back to native scroll
       console.warn('Lenis smooth scroll not available, using native scroll.');
@@ -66,6 +59,7 @@ export class LenisScrollService implements OnDestroy {
   }
 
   destroy(): void {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
     this.lenis?.destroy();
     this.lenis = null;
   }

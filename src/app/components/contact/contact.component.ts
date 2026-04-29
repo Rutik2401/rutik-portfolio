@@ -1,16 +1,5 @@
-import {
-  Component,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  PLATFORM_ID,
-  Inject,
-  signal,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { EmailService } from '../../services/email.service';
 
 interface SocialLink {
@@ -27,11 +16,7 @@ interface SocialLink {
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
-export class ContactComponent implements AfterViewInit {
-  @ViewChild('contactSection') contactSection!: ElementRef;
-  @ViewChild('header') header!: ElementRef;
-  @ViewChild('contentGrid') contentGrid!: ElementRef;
-
+export class ContactComponent {
   formName = '';
   formEmail = '';
   formMessage = '';
@@ -54,37 +39,7 @@ export class ContactComponent implements AfterViewInit {
     },
   ];
 
-  constructor(
-    private emailService: EmailService,
-    @Inject(PLATFORM_ID) private platformId: Object,
-  ) {}
-
-  ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    gsap.registerPlugin(ScrollTrigger);
-    this.animateSection();
-  }
-
-  private animateSection(): void {
-    gsap.from(this.header.nativeElement.children, {
-      scrollTrigger: { trigger: this.header.nativeElement, start: 'top 82%', once: true },
-      y: 30,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.1,
-      ease: 'power3.out',
-    });
-
-    const cols = this.contentGrid.nativeElement.children;
-    gsap.from(cols, {
-      scrollTrigger: { trigger: this.contentGrid.nativeElement, start: 'top 80%', once: true },
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-    });
-  }
+  constructor(private emailService: EmailService) {}
 
   async submitForm(): Promise<void> {
     if (!this.formName.trim() || !this.formEmail.trim() || !this.formMessage.trim()) return;

@@ -1,14 +1,4 @@
-import {
-  Component,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  PLATFORM_ID,
-  Inject,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Component } from '@angular/core';
 
 interface Experience {
   role: string;
@@ -36,12 +26,7 @@ interface Education {
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.scss',
 })
-export class ExperienceComponent implements AfterViewInit {
-  @ViewChild('expSection') expSection!: ElementRef;
-  @ViewChild('header') header!: ElementRef;
-  @ViewChild('expTimeline') expTimeline!: ElementRef;
-  @ViewChild('eduTimeline') eduTimeline!: ElementRef;
-
+export class ExperienceComponent {
   experiences: Experience[] = [
     {
       role: 'Angular Developer',
@@ -100,58 +85,4 @@ export class ExperienceComponent implements AfterViewInit {
       location: 'Jamkhed, Ahmednagar',
     },
   ];
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    gsap.registerPlugin(ScrollTrigger);
-    this.animateSection();
-  }
-
-  private animateSection(): void {
-    // Header
-    gsap.from(this.header.nativeElement.children, {
-      scrollTrigger: { trigger: this.header.nativeElement, start: 'top 82%', once: true },
-      y: 30,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.1,
-      ease: 'power3.out',
-    });
-
-    // Timeline line draw effect
-    const line = this.expTimeline.nativeElement.querySelector('.timeline-line') as HTMLElement;
-    if (line) {
-      gsap.from(line, {
-        scrollTrigger: { trigger: this.expTimeline.nativeElement, start: 'top 75%', once: true },
-        scaleY: 0,
-        transformOrigin: 'top center',
-        duration: 1.5,
-        ease: 'power2.out',
-      });
-    }
-
-    // Experience items
-    const expItems = this.expTimeline.nativeElement.querySelectorAll('.exp-item');
-    gsap.from(expItems, {
-      scrollTrigger: { trigger: this.expTimeline.nativeElement, start: 'top 78%', once: true },
-      x: -30,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.15,
-      ease: 'power3.out',
-    });
-
-    // Education items
-    const eduItems = this.eduTimeline.nativeElement.querySelectorAll('.edu-item');
-    gsap.from(eduItems, {
-      scrollTrigger: { trigger: this.eduTimeline.nativeElement, start: 'top 78%', once: true },
-      x: -30,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: 'power3.out',
-    });
-  }
 }

@@ -1,4 +1,4 @@
-<section id="contact" #contactSection class="section-padding relative overflow-hidden">
+<section id="contact" class="section-padding relative overflow-hidden">
 
   <!-- Background orb -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -10,19 +10,19 @@
   <div class="container-custom px-4 sm:px-6 mx-auto">
 
     <!-- Header -->
-    <div #header class="text-center mb-10 md:mb-16 max-w-2xl mx-auto">
-      <p class="section-label mx-auto justify-center">Get In Touch</p>
-      <h2 class="section-title mb-4">Let's build something<br><span class="gradient-text">remarkable.</span></h2>
-      <p class="text-muted text-[1.05rem] leading-relaxed">
+    <div class="text-center mb-10 md:mb-16 max-w-2xl mx-auto">
+      <p class="section-label mx-auto justify-center reveal">Get In Touch</p>
+      <h2 class="section-title mb-4 reveal" data-reveal-delay="80">Let's build something<br><span class="gradient-text">remarkable.</span></h2>
+      <p class="text-muted text-[1.05rem] leading-relaxed reveal" data-reveal-delay="160">
         I'm open to full-time roles, freelance projects, and collaborations.
         Whether it's a product idea or just a conversation &mdash; I'd love to hear from you.
       </p>
     </div>
 
-    <div #contentGrid class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
 
       <!-- Left: Contact Info -->
-      <div class="space-y-8">
+      <div class="space-y-8 reveal">
 
         <!-- Direct email CTA -->
         <div>
@@ -81,7 +81,7 @@
       </div>
 
       <!-- Right: Contact Form -->
-      <div #formCard class="glass rounded-2xl p-5 sm:p-7">
+      <div class="glass rounded-2xl p-5 sm:p-7 reveal" data-reveal-delay="120">
         <h3 class="text-white font-semibold text-lg mb-6">Send a message</h3>
 
         @if (!formSent()) {

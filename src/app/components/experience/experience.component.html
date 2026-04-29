@@ -1,4 +1,4 @@
-<section id="experience" #expSection class="section-padding relative overflow-hidden">
+<section id="experience" class="section-padding relative overflow-hidden">
 
   <div class="absolute inset-0 pointer-events-none">
     <div class="absolute top-1/4 left-0 w-[300px] h-[300px] rounded-full blur-[120px] opacity-[0.04]"
@@ -9,9 +9,9 @@
   <div class="container-custom px-4 sm:px-6 mx-auto">
 
     <!-- Header -->
-    <div #header class="mb-10 md:mb-16">
-      <p class="section-label">Career</p>
-      <h2 class="section-title">Experience &amp; Education</h2>
+    <div class="mb-10 md:mb-16">
+      <p class="section-label reveal">Career</p>
+      <h2 class="section-title reveal" data-reveal-delay="80">Experience &amp; Education</h2>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
@@ -20,12 +20,12 @@
       <div>
         <h3 class="text-sm font-mono text-muted tracking-widest uppercase mb-8">Work Experience</h3>
 
-        <div #expTimeline class="relative">
+        <div class="relative">
           <!-- Vertical line -->
           <div class="timeline-line absolute left-3.5 top-3 bottom-3 w-px bg-gradient-to-b from-accent/40 via-accent-cyan/30 to-transparent"></div>
 
-          @for (exp of experiences; track exp.company) {
-            <div class="exp-item relative pl-12 mb-10 last:mb-0">
+          @for (exp of experiences; track exp.company; let i = $index) {
+            <div class="exp-item relative pl-12 mb-10 last:mb-0 reveal-x" [attr.data-reveal-delay]="i * 120">
 
               <!-- Timeline dot -->
               <div class="timeline-dot absolute left-0 top-1 w-7 h-7 rounded-full border-2 flex items-center justify-center"
@@ -77,11 +77,11 @@
       <div>
         <h3 class="text-sm font-mono text-muted tracking-widest uppercase mb-8">Education</h3>
 
-        <div #eduTimeline class="relative">
+        <div class="relative">
           <div class="timeline-line absolute left-3.5 top-3 bottom-3 w-px bg-gradient-to-b from-accent-cyan/40 via-accent/20 to-transparent"></div>
 
-          @for (edu of education; track edu.institution) {
-            <div class="edu-item relative pl-12 mb-8 last:mb-0">
+          @for (edu of education; track edu.institution; let i = $index) {
+            <div class="edu-item relative pl-12 mb-8 last:mb-0 reveal-x" [attr.data-reveal-delay]="i * 100">
               <div class="absolute left-0 top-1 w-7 h-7 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center">
                 <span class="w-2 h-2 rounded-full bg-accent-cyan/50"></span>
               </div>

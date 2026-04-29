@@ -40,6 +40,22 @@
   pointer-events: none;
   filter: blur(100px);
   opacity: 0;
+  animation: orb-float-in 2.4s ease-out 0.1s forwards,
+             orb-drift 12s ease-in-out 2s infinite alternate;
+}
+
+@keyframes orb-float-in {
+  to { opacity: 1; }
+}
+
+@keyframes orb-drift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-22px); }
+}
+
+.orb-right {
+  animation: orb-float-in 2.4s ease-out 0.1s forwards,
+             orb-drift 14s ease-in-out 2s infinite alternate-reverse;
 }
 
 .orb-left {
@@ -129,12 +145,10 @@
   font-weight: 700;
   color: rgba(255, 255, 255, 0.92);
   letter-spacing: -0.01em;
-  opacity: 0;
 }
 
 .name-line-wrap {
   display: block;
-  opacity: 0;
 }
 
 .name-line {
@@ -152,15 +166,26 @@
   color: #818cf8;
   margin: 0;
   letter-spacing: -0.01em;
-  opacity: 0;
 }
 
-/* Fallback: if JS fails or takes too long, force show after 2.5s */
-@keyframes hero-fallback-reveal {
-  to { opacity: 1; }
+/* =============================================
+   INTRO ANIMATION — staggered via --intro-delay inline var
+   ============================================= */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.hi-line, .name-line-wrap, .role-text {
-  animation: hero-fallback-reveal 0.4s 2.5s forwards;
+
+.intro {
+  opacity: 0;
+  animation: hero-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--intro-delay, 0s) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* Description */

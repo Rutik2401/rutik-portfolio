@@ -1,16 +1,19 @@
 import {
   Component,
-  OnInit,
+  AfterViewInit,
   OnDestroy,
   ElementRef,
   ViewChild,
-  AfterViewInit,
   PLATFORM_ID,
   Inject,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
 
+/**
+ * Custom cursor — pure CSS positioning via translate3d on a single
+ * requestAnimationFrame loop with smooth lerp on the outer ring.
+ * No GSAP, no per-event tweens.
+ */
 @Component({
   selector: 'app-cursor',
   standalone: true,
@@ -21,33 +24,33 @@ import { gsap } from 'gsap';
   styles: [`
     :host { display: block; pointer-events: none; }
 
-    .cursor-dot {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 8px;
-      height: 8px;
-      background: #818cf8;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, background 0.2s;
-      mix-blend-mode: screen;
-    }
-
+    .cursor-dot,
     .cursor-ring {
       position: fixed;
       top: 0;
       left: 0;
+      pointer-events: none;
+      transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+      will-change: transform;
+    }
+
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background: #818cf8;
+      border-radius: 50%;
+      z-index: 9999;
+      transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s;
+      mix-blend-mode: screen;
+    }
+
+    .cursor-ring {
       width: 40px;
       height: 40px;
       border: 1.5px solid rgba(129, 140, 248, 0.5);
       border-radius: 50%;
-      pointer-events: none;
       z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.2s;
     }
 
     :host-context(body.cursor-hover) .cursor-dot {
@@ -61,12 +64,20 @@ import { gsap } from 'gsap';
       height: 60px;
       border-color: rgba(34, 211, 238, 0.4);
     }
+
+    .cursor-dot.is-hidden,
+    .cursor-ring.is-hidden { opacity: 0; }
   `],
 })
 export class CursorComponent implements AfterViewInit, OnDestroy {
   @ViewChild('cursorDot') cursorDot!: ElementRef<HTMLDivElement>;
   @ViewChild('cursorRing') cursorRing!: ElementRef<HTMLDivElement>;
 
+  private mouseX = -100;
+  private mouseY = -100;
+  private ringX = -100;
+  private ringY = -100;
+  private rafId = 0;
   private listeners: (() => void)[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
@@ -81,21 +92,21 @@ export class CursorComponent implements AfterViewInit, OnDestroy {
     const ring = this.cursorRing.nativeElement;
 
     const onMove = (e: MouseEvent) => {
-      gsap.to(dot, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: 'power2.out',
-      });
-      gsap.to(ring, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.35,
-        ease: 'power2.out',
-      });
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
     };
 
-    document.addEventListener('mousemove', onMove);
+    const tick = () => {
+      // Dot snaps to cursor, ring lerps for smooth trail
+      dot.style.transform = `translate3d(${this.mouseX}px, ${this.mouseY}px, 0) translate(-50%, -50%)`;
+
+      this.ringX += (this.mouseX - this.ringX) * 0.18;
+      this.ringY += (this.mouseY - this.ringY) * 0.18;
+      ring.style.transform = `translate3d(${this.ringX}px, ${this.ringY}px, 0) translate(-50%, -50%)`;
+
+      this.rafId = requestAnimationFrame(tick);
+    };
+    this.rafId = requestAnimationFrame(tick);
 
     // Event delegation: one listener handles all interactive elements,
     // including ones added later. No MutationObserver = no scroll jank.
@@ -112,12 +123,19 @@ export class CursorComponent implements AfterViewInit, OnDestroy {
         document.body.classList.remove('cursor-hover');
       }
     };
+
+    const onLeave = () => {
+      dot.classList.add('is-hidden');
+      ring.classList.add('is-hidden');
+    };
+    const onEnter = () => {
+      dot.classList.remove('is-hidden');
+      ring.classList.remove('is-hidden');
+    };
+
+    document.addEventListener('mousemove', onMove);
     document.addEventListener('pointerover', onPointerOver);
     document.addEventListener('pointerout', onPointerOut);
-
-    // Hide cursor when leaving window
-    const onLeave = () => gsap.to([dot, ring], { opacity: 0, duration: 0.2 });
-    const onEnter = () => gsap.to([dot, ring], { opacity: 1, duration: 0.2 });
     document.addEventListener('mouseleave', onLeave);
     document.addEventListener('mouseenter', onEnter);
 
@@ -131,6 +149,7 @@ export class CursorComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
     this.listeners.forEach((remove) => remove());
   }
 }

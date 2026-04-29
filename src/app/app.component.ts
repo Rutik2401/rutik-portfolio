@@ -1,6 +1,7 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { LenisScrollService } from './services/lenis-scroll.service';
+import { RevealService } from './services/reveal.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CursorComponent } from './components/cursor/cursor.component';
 import { HeroComponent } from './components/hero/hero.component';
@@ -36,7 +37,7 @@ import { ContactComponent } from './components/contact/contact.component';
     </main>
     <footer class="border-t border-white/5 py-8 text-center">
       <p class="text-muted text-sm font-mono">
-        Crafted with <span class="text-accent">Angular</span> + <span class="text-accent-cyan">GSAP</span>
+        Crafted with <span class="text-accent">Angular</span> + <span class="text-accent-cyan">Tailwind</span>
         &nbsp;·&nbsp; &copy; 2025 Rutik Pimpale
       </p>
     </footer>
@@ -47,9 +48,10 @@ import { ContactComponent } from './components/contact/contact.component';
     footer { background: #030712; }
   `],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private lenisScroll: LenisScrollService,
+    private reveal: RevealService,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
@@ -57,5 +59,11 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.lenisScroll.init();
     }
+  }
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    // All section components have rendered by now — start watching reveals.
+    this.reveal.init();
   }
 }
