@@ -1,0 +1,102 @@
+<footer class="site-footer">
+
+  <!-- ─── MARQUEE STRIP ─── -->
+  <div class="footer-marquee" aria-hidden="true">
+    <div class="marquee-track">
+      @for (phrase of marqueeLoop; track $index) {
+        <span class="marquee-item">
+          <span class="marquee-bullet">★</span>
+          {{ phrase }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- ─── BIG CTA + SOCIALS ─── -->
+  <div class="container-custom mx-auto px-6">
+    <div class="footer-grid">
+
+      <!-- Left: huge CTA -->
+      <div class="footer-cta">
+        <p class="footer-pretitle">// READY TO COLLAB?</p>
+        <h2 class="footer-headline">
+          Let's build<br>
+          <span class="hl">something good.</span>
+        </h2>
+        <a href="mailto:rutikpimpale2401@gmail.com" class="footer-mail" appMagnetic>
+          <span class="mail-prompt">&gt;</span>
+          rutikpimpale2401&#64;gmail.com
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right: socials grid + status -->
+      <div class="footer-side">
+        <p class="side-label">// FIND ME ON</p>
+        <ul class="social-grid" role="list">
+          @for (s of socials; track s.id) {
+            <li>
+              <a [href]="s.href"
+                 [target]="s.id === 'email' ? '_self' : '_blank'"
+                 rel="noopener noreferrer"
+                 [attr.aria-label]="s.label"
+                 class="social-card"
+                 [style.--brand]="s.brand">
+                <span class="social-bg"></span>
+                <svg class="social-icon"
+                     [attr.viewBox]="s.iconViewBox ?? '0 0 24 24'"
+                     [attr.fill]="s.iconStrokePath ? 'none' : 'currentColor'"
+                     [attr.stroke]="s.iconStrokePath ? 'currentColor' : 'none'"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     width="20" height="20">
+                  @if (s.iconStrokePath) {
+                    <path [attr.d]="s.iconStrokePath"></path>
+                  } @else {
+                    <path [attr.d]="s.iconPath"></path>
+                  }
+                </svg>
+                <span class="social-tooltip">{{ s.label }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+
+        <div class="status-block">
+          <span class="status-dot"></span>
+          <span class="status-text">AVAILABLE FOR HIRE</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── BOTTOM BAR ─── -->
+    <div class="footer-bottom">
+      <p class="bottom-meta">
+        <span class="meta-eof">// EOF</span>
+        <span class="meta-sep">·</span>
+        <span>&copy; {{ year }}</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-name">RUTIK PIMPALE</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-handcoded">HAND-CODED IN ANGULAR + TAILWIND</span>
+      </p>
+
+      <button (click)="scrollTop()" class="back-top" appMagnetic aria-label="Back to top">
+        <span class="back-top-text">BACK TO TOP</span>
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 15l7-7 7 7"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Decorative big background name -->
+  <div class="footer-bg-name" aria-hidden="true">RUTIK PIMPALE.</div>
+
+</footer>

@@ -32,6 +32,14 @@ export class ContactComponent {
       label: 'github.com/Rutik2401',
       href: 'https://github.com/Rutik2401',
     },
+    {
+      label: 'instagram.com/rutik_pimpale',
+      href: 'https://instagram.com/',
+    },
+    {
+      label: 'twitter.com/rutik_pimpale',
+      href: 'https://twitter.com/',
+    },
   ];
 
   constructor(private emailService: EmailService) {}

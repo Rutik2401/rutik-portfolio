@@ -20,7 +20,10 @@
    HEADER
    ============================================= */
 .log-header {
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
+
+  @media (min-width: 768px) { margin-bottom: 3.5rem; }
+  @media (min-width: 1024px) { margin-bottom: 4rem; }
 }
 
 .log-title {

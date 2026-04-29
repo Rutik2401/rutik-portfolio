@@ -35,8 +35,10 @@
   pointer-events: none;
   filter: blur(120px);
   opacity: 0;
-  animation: orb-fade-in 2.5s ease-out 0.2s forwards,
-             orb-drift 14s ease-in-out 2.5s infinite alternate;
+  /* Parallax shift comes in via CSS custom props set by the host TS */
+  transform: translate3d(var(--orb-x, 0), var(--orb-y, 0), 0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: orb-fade-in 2.5s ease-out 0.2s forwards;
 }
 
 .orb-left {
@@ -53,22 +55,14 @@
   top: -10%;
   right: -10%;
   background: radial-gradient(circle, rgba(34, 211, 238, 0.18), transparent 70%);
-  animation-name: orb-fade-in, orb-drift-reverse;
+  /* Right orb moves opposite direction for depth */
+  transform: translate3d(calc(var(--orb-x, 0) * -0.6), calc(var(--orb-y, 0) * -0.6), 0);
 }
 
 @keyframes orb-fade-in {
   to { opacity: 1; }
 }
 
-@keyframes orb-drift {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-26px); }
-}
-
-@keyframes orb-drift-reverse {
-  from { transform: translateY(0); }
-  to   { transform: translateY(26px); }
-}
 
 /* =============================================
    BOOT BLOCK

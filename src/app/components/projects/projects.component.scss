@@ -24,14 +24,16 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 
   @media (min-width: 768px) {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
   }
+
+  @media (min-width: 1024px) { margin-bottom: 4rem; }
 }
 
 .projects-title {

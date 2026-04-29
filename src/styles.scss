@@ -100,9 +100,17 @@ body {
   }
 
   .section-padding {
-    padding: 4rem 0;
-    @media (min-width: 768px) { padding: 5.5rem 0; }
-    @media (min-width: 1024px) { padding: 7rem 0; }
+    padding: 5rem 0;
+    @media (min-width: 768px) { padding: 6.5rem 0; }
+    @media (min-width: 1024px) { padding: 8rem 0; }
+  }
+
+  /* Standard section header rhythm — used by every section after Hero.
+     Components can extend this but should keep the bottom margin uniform. */
+  .section-head {
+    margin-bottom: 2.5rem;
+    @media (min-width: 768px) { margin-bottom: 3.5rem; }
+    @media (min-width: 1024px) { margin-bottom: 4rem; }
   }
 
   .container-custom {
