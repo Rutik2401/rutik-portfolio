@@ -2,7 +2,7 @@ import { Component, OnInit, PLATFORM_ID, Inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { LenisScrollService } from '../../services/lenis-scroll.service';
 
-const COUNTER_KEY = 'rutik.transmissions';
+const COUNTER_KEY = 'rutik.profile.visits';
 
 @Component({
   selector: 'app-hero',

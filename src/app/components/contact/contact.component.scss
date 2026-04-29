@@ -1,6 +1,6 @@
 :host { display: block; background: #050505; }
 
-.transmit-section {
+.contact-section {
   position: relative;
   overflow: hidden;
 }
@@ -20,12 +20,12 @@
 /* =============================================
    HEADER
    ============================================= */
-.transmit-header {
+.contact-header {
   margin-bottom: 3rem;
   max-width: 38rem;
 }
 
-.transmit-title {
+.contact-title {
   font-family: 'JetBrains Mono', monospace;
   font-size: clamp(1.85rem, 4.5vw, 3rem);
   font-weight: 800;
@@ -48,7 +48,7 @@
   .title-mute { display: block; }
 }
 
-.transmit-sub {
+.contact-sub {
   font-size: 1rem;
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.5);
@@ -57,7 +57,7 @@
 /* =============================================
    GRID
    ============================================= */
-.transmit-grid {
+.contact-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
@@ -192,7 +192,7 @@
 /* =============================================
    FORM PANEL
    ============================================= */
-.transmit-form {
+.contact-form {
   background: #0a0a0a;
   border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;

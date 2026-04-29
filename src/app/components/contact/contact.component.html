@@ -1,4 +1,4 @@
-<section id="contact" class="section-padding transmit-section">
+<section id="contact" class="section-padding contact-section">
 
   <!-- Background orb -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -8,18 +8,18 @@
   <div class="container-custom px-4 sm:px-6 mx-auto relative z-10">
 
     <!-- Header -->
-    <div class="transmit-header">
-      <p class="signal-label reveal">05 / TRANSMIT SIGNAL</p>
-      <h2 class="transmit-title reveal" data-reveal-delay="80">
-        Open <span class="title-mute">/&nbsp;a channel</span>
+    <div class="contact-header">
+      <p class="signal-label reveal">05 / CONTACT</p>
+      <h2 class="contact-title reveal" data-reveal-delay="80">
+        Get <span class="title-mute">/&nbsp;in touch</span>
       </h2>
-      <p class="transmit-sub reveal" data-reveal-delay="160">
+      <p class="contact-sub reveal" data-reveal-delay="160">
         Open to full-time roles, freelance projects, and collaborations.
-        Drop a message &mdash; or hit me on any of the channels below.
+        Drop a message &mdash; or reach me on any of the channels below.
       </p>
     </div>
 
-    <div class="transmit-grid">
+    <div class="contact-grid">
 
       <!-- Left: contact channels (terminal style) -->
       <div class="channels reveal">
@@ -29,7 +29,7 @@
             <span class="dot dot-y"></span>
             <span class="dot dot-g"></span>
           </span>
-          <span class="panel-title">~/contact/channels.txt</span>
+          <span class="panel-title">~/contact/links.txt</span>
         </div>
 
         <div class="channels-body">
@@ -60,7 +60,7 @@
             <span class="channel-key">STATUS</span>
             <span class="channel-val status-open">
               <span class="status-pulse"></span>
-              OPEN FOR TRANSMISSIONS
+              AVAILABLE FOR HIRE
             </span>
           </div>
 
@@ -68,14 +68,14 @@
       </div>
 
       <!-- Right: form -->
-      <div class="transmit-form reveal" data-reveal-delay="120">
+      <div class="contact-form reveal" data-reveal-delay="120">
         <div class="panel-header">
           <span class="panel-dots">
             <span class="dot dot-r"></span>
             <span class="dot dot-y"></span>
             <span class="dot dot-g"></span>
           </span>
-          <span class="panel-title">~/contact/transmit.sh</span>
+          <span class="panel-title">~/contact/sendmessage.sh</span>
         </div>
 
         <div class="form-body">
@@ -133,10 +133,10 @@
               <button type="submit" class="form-submit" [disabled]="sending()">
                 @if (sending()) {
                   <span class="spinner"></span>
-                  TRANSMITTING...
+                  SENDING...
                 } @else {
                   <span class="cta-prompt">&gt;</span>
-                  TRANSMIT
+                  SEND&nbsp;MESSAGE
                   <span class="cta-arrow">→</span>
                 }
               </button>
@@ -149,7 +149,7 @@
                   <path d="M5 13l4 4L19 7"/>
                 </svg>
               </div>
-              <h4 class="success-title">SIGNAL RECEIVED</h4>
+              <h4 class="success-title">MESSAGE SENT</h4>
               <p class="success-desc">Thanks for reaching out. I'll get back within 24h.</p>
             </div>
           }

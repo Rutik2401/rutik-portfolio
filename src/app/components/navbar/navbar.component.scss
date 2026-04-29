@@ -105,9 +105,9 @@
 }
 
 /* =============================================
-   TRANSMIT BUTTON
+   GITHUB BUTTON
    ============================================= */
-.transmit-btn {
+.github-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -129,11 +129,11 @@
     border-color: #fafafa;
     transform: translateY(-1px);
 
-    .transmit-prompt { color: rgba(5, 5, 5, 0.6); }
+    .btn-prompt { color: rgba(5, 5, 5, 0.6); }
   }
 }
 
-.transmit-prompt {
+.btn-prompt {
   color: #c9a86a;
   font-weight: 700;
   transition: color 0.2s ease;

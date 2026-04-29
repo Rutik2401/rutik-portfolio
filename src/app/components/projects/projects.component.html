@@ -1,4 +1,4 @@
-<section id="projects" class="section-padding galaxies-section">
+<section id="projects" class="section-padding projects-section">
 
   <!-- Subtle background accent -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -8,23 +8,24 @@
   <div class="container-custom px-4 sm:px-6 mx-auto relative z-10">
 
     <!-- ─── SECTION HEADER ─── -->
-    <div class="galaxies-header">
+    <div class="projects-header">
       <div>
-        <p class="signal-label reveal">03 / GALAXIES</p>
-        <h2 class="galaxies-title reveal" data-reveal-delay="80">
+        <p class="signal-label reveal">03 / PROJECTS</p>
+        <h2 class="projects-title reveal" data-reveal-delay="80">
           Selected <span class="title-strike">work</span>
-          <span class="title-mono">/&nbsp;galaxies&nbsp;visited</span>
+          <span class="title-mono">/&nbsp;projects&nbsp;shipped</span>
         </h2>
-        <p class="galaxies-sub reveal" data-reveal-delay="160">
-          Each project is a system &mdash; shipped, scaffolded, and shaped by real constraints.
+        <p class="projects-sub reveal" data-reveal-delay="160">
+          Real applications built with real constraints &mdash; shipped at companies and
+          personal explorations.
           <br class="hidden md:block">
-          No templates, no shortcuts.
+          Each one solves a concrete problem.
         </p>
       </div>
       <a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer"
         class="github-pill reveal" data-reveal-delay="240">
         <span class="pill-prompt">&gt;</span>
-        ALL_REPOS
+        VIEW_ALL_REPOS
         <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
         </svg>
@@ -32,45 +33,45 @@
     </div>
 
     <!-- ─── GALAXIES LIST ─── -->
-    <div class="galaxies-list">
+    <div class="projects-list">
       @for (project of projects; track project.id; let i = $index) {
-        <article class="galaxy reveal"
+        <article class="project-row reveal"
                  [attr.data-reveal-delay]="i * 100"
                  [style.--accent]="project.accentColor">
 
           <!-- Index + Status -->
-          <header class="galaxy-meta">
-            <span class="galaxy-index">{{ '00' + (i + 1) }}</span>
-            <span class="galaxy-rule"></span>
-            <span class="galaxy-status"
+          <header class="project-meta">
+            <span class="project-index">{{ '00' + (i + 1) }}</span>
+            <span class="project-rule"></span>
+            <span class="project-status"
                   [class.is-active]="project.live && !project.status"
                   [class.is-progress]="project.status">
               <span class="status-dot"></span>
-              {{ project.status ?? (project.live ? 'TRANSMITTING' : 'ARCHIVED') }}
+              {{ project.status ?? (project.live ? 'LIVE' : 'ARCHIVED') }}
             </span>
           </header>
 
           <!-- Body grid: title + description on left, sidebar on right -->
-          <div class="galaxy-body">
+          <div class="project-body">
 
-            <div class="galaxy-content">
-              <p class="galaxy-category">{{ project.category }}</p>
-              <h3 class="galaxy-title">
+            <div class="project-content">
+              <p class="project-category">{{ project.category }}</p>
+              <h3 class="project-title">
                 <span class="title-icon">{{ project.icon }}</span>
                 {{ project.title }}
               </h3>
-              <p class="galaxy-description">{{ project.description }}</p>
+              <p class="project-description">{{ project.description }}</p>
 
-              <div class="galaxy-tags">
+              <div class="project-tags">
                 @for (tag of project.tags; track tag) {
-                  <span class="galaxy-tag">{{ tag }}</span>
+                  <span class="project-tag">{{ tag }}</span>
                 }
               </div>
 
-              <div class="galaxy-links">
+              <div class="project-links">
                 @if (project.live) {
-                  <a [href]="project.live" target="_blank" rel="noopener noreferrer" class="enter-galaxy">
-                    <span>ENTER GALAXY</span>
+                  <a [href]="project.live" target="_blank" rel="noopener noreferrer" class="project-live-link">
+                    <span>VIEW LIVE</span>
                     <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
@@ -86,7 +87,7 @@
             </div>
 
             <!-- Right-side stat block -->
-            <aside class="galaxy-stats">
+            <aside class="project-stats">
               @for (stat of project.stats; track stat.label) {
                 <div class="stat-row">
                   <span class="stat-key">{{ stat.label }}</span>

@@ -39,7 +39,7 @@ import { ContactComponent } from './components/contact/contact.component';
       <div class="container-custom mx-auto px-6">
         <div class="footer-grid">
           <div>
-            <p class="footer-label">// END OF TRANSMISSION</p>
+            <p class="footer-label">// EOF</p>
             <p class="footer-name">RUTIK PIMPALE</p>
           </div>
           <div class="footer-links">
