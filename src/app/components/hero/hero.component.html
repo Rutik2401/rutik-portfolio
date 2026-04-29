@@ -1,136 +1,102 @@
-<section id="hero" class="hero-section">
+<section #section id="hero" class="hero-section">
 
-  <!-- Background grid -->
+  <!-- Background grid + ambient orbs -->
   <div class="grid-bg absolute inset-0 pointer-events-none"></div>
+  <div class="orb orb-left"></div>
+  <div class="orb orb-right"></div>
 
-  <!-- Ambient orbs -->
-  <div #orb1 class="orb orb-left"></div>
-  <div #orb2 class="orb orb-right"></div>
+  <div class="container-custom px-4 sm:px-6 mx-auto relative z-10">
 
-  <div class="container-custom px-4 sm:px-6 mx-auto">
-    <div class="hero-grid">
-
-      <!-- ─── LEFT: Text Content ─── -->
-      <div class="hero-content">
-
-        <!-- Availability badge -->
-        <div #badge class="availability-badge opacity-0">
-          <span class="badge-dot">
-            <span class="badge-dot-ping"></span>
-          </span>
-          Available for opportunities
-        </div>
-
-        <!-- Heading -->
-        <h1 class="hero-heading">
-          <div class="line-clip">
-            <span #hiLine class="hi-line">Hi, I'm</span>
-          </div>
-          <div class="line-clip">
-            <div #nameLine1 class="name-line-wrap">
-              <span class="name-line">Rutik</span>
-            </div>
-          </div>
-          <div class="line-clip">
-            <div #nameLine2 class="name-line-wrap">
-              <span class="name-line">Pimpale.</span>
-            </div>
-          </div>
-        </h1>
-
-        <!-- Role -->
-        <div class="line-clip">
-          <p #roleText class="role-text">Full Stack Developer</p>
-        </div>
-
-        <!-- Description -->
-        <p #description class="hero-description opacity-0">
-          I build robust full-stack applications with Angular, Spring Boot &amp; Java.
-          <strong>1.5+ years</strong> delivering production-grade systems at software companies in Pune.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div #buttons class="hero-buttons opacity-0">
-          <button (click)="scrollTo('#projects')" class="btn-cta-primary">
-            View Projects
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-            </svg>
-          </button>
-          <button (click)="scrollTo('#contact')" class="btn-cta-secondary">
-            Get in Touch
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Social links -->
-        <div #social class="hero-social opacity-0">
-          <span class="social-label">FIND ME ON</span>
-          <div class="social-icons">
-            <a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer"
-              class="social-icon" title="GitHub">
-              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-              </svg>
-            </a>
-            <a href="https://www.linkedin.com/in/rutik-pimpale/" target="_blank" rel="noopener noreferrer"
-              class="social-icon" title="LinkedIn">
-              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-            </a>
-            <a href="mailto:rutikpimpale2401@gmail.com" class="social-icon" title="Email">
-              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-
+    <!-- ─── BOOT BLOCK ─── -->
+    <div class="boot-block ascii-frame intro" style="--intro-delay: 0.05s">
+      <div class="boot-line">
+        <span class="boot-prompt">&gt;</span>
+        <span>INITIALIZING PROFILE</span>
+        <span class="boot-dots"></span>
       </div>
-
-      <!-- ─── RIGHT: Code Card ─── -->
-      <div #heroCard class="hero-visual opacity-0">
-        <div class="card-orb card-orb-1"></div>
-        <div class="card-orb card-orb-2"></div>
-
-        <div class="code-window">
-          <!-- Window chrome -->
-          <div class="cw-header">
-            <div class="cw-dots">
-              <span class="cw-dot cw-red"></span>
-              <span class="cw-dot cw-yellow"></span>
-              <span class="cw-dot cw-green"></span>
-            </div>
-            <span class="cw-title">portfolio.ts</span>
-          </div>
-
-          <!-- Code body -->
-          <div class="cw-body">
-            <div class="cw-line"><span class="ln">1</span><span class="tok-dec">&#64;Component</span><span class="tok-p">(&#123;</span></div>
-            <div class="cw-line"><span class="ln">2</span>&nbsp;&nbsp;<span class="tok-prop">selector</span><span class="tok-p">:</span> <span class="tok-str">'app-rutik'</span><span class="tok-p">,</span></div>
-            <div class="cw-line"><span class="ln">3</span>&nbsp;&nbsp;<span class="tok-prop">standalone</span><span class="tok-p">:</span> <span class="tok-bool">true</span></div>
-            <div class="cw-line"><span class="ln">4</span><span class="tok-p">&#125;)</span></div>
-            <div class="cw-line"><span class="ln">5</span><span class="tok-kw">class</span> <span class="tok-cls">RutikPimpale</span> <span class="tok-p">&#123;</span></div>
-            <div class="cw-line"><span class="ln">6</span>&nbsp;&nbsp;<span class="tok-prop">name</span> <span class="tok-p">=</span> <span class="tok-str">'Rutik Pimpale'</span><span class="tok-p">;</span></div>
-            <div class="cw-line"><span class="ln">7</span>&nbsp;&nbsp;<span class="tok-prop">role</span> <span class="tok-p">=</span> <span class="tok-str">'Full Stack Dev'</span><span class="tok-p">;</span></div>
-            <div class="cw-line"><span class="ln">8</span>&nbsp;&nbsp;<span class="tok-prop">skills</span> <span class="tok-p">= [</span></div>
-            <div class="cw-line"><span class="ln">9</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-str">'Angular'</span><span class="tok-p">,</span> <span class="tok-str">'TypeScript'</span><span class="tok-p">,</span></div>
-            <div class="cw-line"><span class="ln">10</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-str">'Spring Boot'</span><span class="tok-p">,</span> <span class="tok-str">'Java'</span></div>
-            <div class="cw-line"><span class="ln">11</span>&nbsp;&nbsp;<span class="tok-p">];</span></div>
-            <div class="cw-line"><span class="ln">12</span>&nbsp;&nbsp;<span class="tok-prop">status</span> <span class="tok-p">=</span> <span class="tok-str">'🟢 Available'</span><span class="tok-p">;</span></div>
-            <div class="cw-line cw-line--cursor"><span class="ln">13</span><span class="tok-p">&#125;</span><span class="cw-cursor"></span></div>
-          </div>
-        </div>
+      <div class="boot-line">
+        <span class="boot-prompt">&gt;</span>
+        <span class="boot-key">NAME:</span>
+        <span class="boot-val">RUTIK PIMPALE</span>
       </div>
-
+      <div class="boot-line">
+        <span class="boot-prompt">&gt;</span>
+        <span class="boot-key">LOCATION:</span>
+        <span class="boot-val">PUNE / IN</span>
+      </div>
+      <div class="boot-line">
+        <span class="boot-prompt">&gt;</span>
+        <span class="boot-key">STATUS:</span>
+        <span class="boot-status">
+          <span class="status-pulse"></span>
+          AVAILABLE FOR HIRE
+        </span>
+      </div>
     </div>
+
+    <!-- ─── BIG NAME (glitch) ─── -->
+    <h1 class="hero-name intro" style="--intro-delay: 0.4s">
+      <span class="line-1">
+        <span class="glitch" data-text="RUTIK">RUTIK</span>
+      </span>
+      <span class="line-2">
+        <span class="glitch" data-text="PIMPALE.">PIMPALE.</span>
+      </span>
+    </h1>
+
+    <!-- ─── ROLE STRIP ─── -->
+    <div class="role-strip intro" style="--intro-delay: 0.7s">
+      <span class="role-bar"></span>
+      <span class="role-text">FULL&nbsp;STACK&nbsp;DEVELOPER</span>
+      <span class="role-divider">·</span>
+      <span class="role-text">ANGULAR&nbsp;/&nbsp;SPRING&nbsp;BOOT&nbsp;/&nbsp;JAVA</span>
+    </div>
+
+    <!-- ─── BIO ─── -->
+    <p class="hero-bio intro" style="--intro-delay: 0.9s">
+      I build full-stack web applications &mdash; clean architecture,
+      maintainable code, and UI that actually feels good.
+      <strong>1.5+ years</strong> shipping production software with
+      engineering teams in Pune.
+    </p>
+
+    <!-- ─── TERMINAL CTAs ─── -->
+    <div class="hero-actions intro" style="--intro-delay: 1.05s">
+      <button appMagnetic (click)="scrollTo('#projects')" class="cta-primary">
+        <span class="cta-prompt">&gt;</span>
+        <span>VIEW&nbsp;PROJECTS</span>
+        <span class="cta-arrow">→</span>
+      </button>
+      <button appMagnetic (click)="scrollTo('#contact')" class="cta-secondary">
+        <span class="cta-prompt">&gt;</span>
+        <span>GET&nbsp;IN&nbsp;TOUCH</span>
+      </button>
+    </div>
+
+    <!-- ─── BOTTOM META ─── -->
+    <div class="hero-meta intro" style="--intro-delay: 1.25s">
+      <div class="meta-block">
+        <span class="meta-label">FIND ME ON</span>
+        <div class="meta-links">
+          <a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer" class="meta-link">github</a>
+          <span class="meta-sep">/</span>
+          <a href="https://www.linkedin.com/in/rutik-pimpale/" target="_blank" rel="noopener noreferrer" class="meta-link">linkedin</a>
+          <span class="meta-sep">/</span>
+          <a href="mailto:rutikpimpale2401@gmail.com" class="meta-link">email</a>
+        </div>
+      </div>
+      <div class="meta-block meta-counter">
+        <span class="meta-label">PROFILE VISITS</span>
+        <span class="counter-value">{{ visitorCount() }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">SCROLL</span>
+    <span class="scroll-hint-line"></span>
   </div>
 
 </section>

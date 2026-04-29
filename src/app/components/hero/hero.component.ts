@@ -1,194 +1,122 @@
 import {
   Component,
+  OnInit,
   AfterViewInit,
   OnDestroy,
-  ViewChild,
-  ElementRef,
   PLATFORM_ID,
   Inject,
+  ViewChild,
+  ElementRef,
+  signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { gsap } from 'gsap';
 import { LenisScrollService } from '../../services/lenis-scroll.service';
+import { MagneticDirective } from '../../directives/magnetic.directive';
+
+const COUNTER_KEY = 'rutik.profile.visits';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
+  imports: [MagneticDirective],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
 })
-export class HeroComponent implements AfterViewInit, OnDestroy {
+export class HeroComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('section') sectionRef!: ElementRef<HTMLElement>;
 
-  @ViewChild('orb1') orb1!: ElementRef;
-  @ViewChild('orb2') orb2!: ElementRef;
-  @ViewChild('badge') badge!: ElementRef;
-  @ViewChild('hiLine') hiLine!: ElementRef;
-  @ViewChild('nameLine1') nameLine1!: ElementRef;
-  @ViewChild('nameLine2') nameLine2!: ElementRef;
-  @ViewChild('roleText') roleText!: ElementRef;
-  @ViewChild('description') description!: ElementRef;
-  @ViewChild('buttons') buttons!: ElementRef;
-  @ViewChild('social') social!: ElementRef;
-  @ViewChild('heroCard') heroCard!: ElementRef;
+  visitorCount = signal('0000');
+
+  private rafId = 0;
+  private targetX = 0;
+  private targetY = 0;
+  private currentX = 0;
+  private currentY = 0;
+  private mouseListener?: () => void;
 
   constructor(
     private lenisScroll: LenisScrollService,
     @Inject(PLATFORM_ID) private platformId: Object,
-  ) { }
+  ) {}
+
+  ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.bumpCounter();
+  }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    // Wait one frame so styles are applied, then run timeline immediately
-    requestAnimationFrame(() => this.runIntroTimeline());
-  }
-
-  // ─── Entrance Timeline ────────────────────────────────────────────────────
-  private runIntroTimeline(): void {
-    // ── 1. Split text into animated units ──────────────────────────────────
-    // Name → per-character  (mask-reveal + blur)
-    // Target inner .name-line span so gradient-text class is preserved
-    const nameSpan1 = this.nameLine1.nativeElement.querySelector('.name-line') as HTMLElement;
-    const nameSpan2 = this.nameLine2.nativeElement.querySelector('.name-line') as HTMLElement;
-    const chars1 = this.splitIntoChars(nameSpan1, true);
-    const chars2 = this.splitIntoChars(nameSpan2, true);
-    // Role → per-word
-    const roleWords = this.splitIntoWords(this.roleText.nativeElement);
-
-    // ── 2. Set initial hidden states ───────────────────────────────────────
-    // "Hi, I'm" — whole-line mask (outer .line-clip already clips it)
-    gsap.set(this.hiLine.nativeElement, { y: '105%' });
-
-    // Name chars — below their individual char-mask clips, with blur
-    gsap.set([...chars1, ...chars2], { y: '115%', filter: 'blur(12px)' });
-
-    // Role words — same treatment, lighter blur
-    gsap.set(roleWords, { y: '110%', filter: 'blur(8px)' });
-
-    // CSS keeps these parents at opacity:0 until JS runs, preventing FOUC on reload.
-    // Now that chars are positioned off-screen and ready, reveal the parents.
-    const parents = [
-      this.hiLine.nativeElement,
-      this.nameLine1.nativeElement,
-      this.nameLine2.nativeElement,
-      this.roleText.nativeElement,
-    ];
-    parents.forEach((el) => (el.style.animation = 'none')); // disable CSS fallback
-    gsap.set(parents, { opacity: 1 });
-
-    // ── 3. Master timeline ─────────────────────────────────────────────────
-    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-
-    tl
-      // Ambient orbs fade in (slow, atmospheric)
-      .to([this.orb1.nativeElement, this.orb2.nativeElement],
-        { opacity: 1, duration: 2.2, ease: 'power1.inOut' }, 0)
-
-      // Availability badge
-      .to(this.badge.nativeElement,
-        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }, 0.25)
-
-      // "Hi, I'm" — single line mask reveal
-      .to(this.hiLine.nativeElement,
-        { y: '0%', duration: 0.85 }, 0.42)
-
-      // "Rutik" — character reveal with stagger + blur clear
-      .to(chars1, {
-        y: '0%',
-        filter: 'blur(0px)',
-        duration: 1.0,
-        stagger: 0.048,
-      }, 0.58)
-
-      // "Pimpale." — character reveal, starts before "Rutik" finishes
-      .to(chars2, {
-        y: '0%',
-        filter: 'blur(0px)',
-        duration: 1.0,
-        stagger: 0.044,
-      }, 0.72)
-
-      // "Full Stack Developer" — word reveal
-      .to(roleWords, {
-        y: '0%',
-        filter: 'blur(0px)',
-        duration: 0.82,
-        stagger: 0.09,
-      }, 1.08)
-
-      // Description
-      .to(this.description.nativeElement,
-        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }, 1.28)
-
-      // CTA buttons
-      .to(this.buttons.nativeElement,
-        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.42)
-
-      // Social links
-      .to(this.social.nativeElement,
-        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 1.54)
-
-      // Code card
-      .to(this.heroCard.nativeElement,
-        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.3);
-
-    // Floating orbs (infinite loop — atmospheric depth)
-    gsap.to(this.orb1.nativeElement, { y: '-=25', duration: 9, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-    gsap.to(this.orb2.nativeElement, { y: '+=30', duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-  }
-
-  // ─── Split Helpers ────────────────────────────────────────────────────────
-
-  /** Wraps every character in <span class="char-mask"><span class="char-inner"> */
-  private splitIntoChars(el: HTMLElement, addGradient = false): HTMLElement[] {
-    const text = el.innerText;
-    el.innerHTML = '';
-    const inners: HTMLElement[] = [];
-
-    for (const char of text) {
-      const mask = document.createElement('span');
-      mask.className = 'char-mask';
-
-      const inner = document.createElement('span');
-      inner.className = addGradient ? 'char-inner gradient-text' : 'char-inner';
-      inner.textContent = char === ' ' ? '\u00A0' : char;
-
-      mask.appendChild(inner);
-      el.appendChild(mask);
-      inners.push(inner);
-    }
-
-    return inners;
-  }
-
-  /** Wraps every word in <span class="char-mask"><span class="char-inner"> */
-  private splitIntoWords(el: HTMLElement): HTMLElement[] {
-    const words = el.innerText.split(' ');
-    el.innerHTML = '';
-    const inners: HTMLElement[] = [];
-
-    words.forEach((word, i) => {
-      const mask = document.createElement('span');
-      mask.className = 'char-mask';
-
-      const inner = document.createElement('span');
-      inner.className = 'char-inner';
-      inner.textContent = word;
-
-      mask.appendChild(inner);
-      el.appendChild(mask);
-      inners.push(inner);
-
-      if (i < words.length - 1) {
-        el.appendChild(document.createTextNode('\u00A0'));
-      }
-    });
-
-    return inners;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    this.setupOrbParallax();
   }
 
   scrollTo(target: string): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     this.lenisScroll.scrollTo(target);
   }
 
-  ngOnDestroy(): void { }
+  private bumpCounter(): void {
+    try {
+      const prev = Number(localStorage.getItem(COUNTER_KEY) ?? '0');
+      const next = prev + 1;
+      localStorage.setItem(COUNTER_KEY, String(next));
+      // 4-digit zero-padded display, capped at 9999
+      this.visitorCount.set(String(Math.min(next, 9999)).padStart(4, '0'));
+    } catch {
+      this.visitorCount.set('0001');
+    }
+  }
+
+  /** Subtle parallax: hero ambient orbs drift toward the cursor. */
+  private setupOrbParallax(): void {
+    const sectionEl = this.sectionRef?.nativeElement;
+    if (!sectionEl) return;
+
+    const onMove = (e: MouseEvent) => {
+      const rect = sectionEl.getBoundingClientRect();
+      // -1 to 1 range, normalized to section center
+      const x = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+      const y = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+      this.targetX = x * 18; // max 18px drift
+      this.targetY = y * 12;
+      if (!this.rafId) this.rafId = requestAnimationFrame(() => this.tick(sectionEl));
+    };
+
+    const onLeave = () => {
+      this.targetX = 0;
+      this.targetY = 0;
+      if (!this.rafId) this.rafId = requestAnimationFrame(() => this.tick(sectionEl));
+    };
+
+    sectionEl.addEventListener('mousemove', onMove);
+    sectionEl.addEventListener('mouseleave', onLeave);
+    this.mouseListener = () => {
+      sectionEl.removeEventListener('mousemove', onMove);
+      sectionEl.removeEventListener('mouseleave', onLeave);
+    };
+  }
+
+  private tick(sectionEl: HTMLElement): void {
+    this.currentX += (this.targetX - this.currentX) * 0.08;
+    this.currentY += (this.targetY - this.currentY) * 0.08;
+
+    // Apply via CSS custom properties — orb-* selectors read these
+    sectionEl.style.setProperty('--orb-x', `${this.currentX.toFixed(2)}px`);
+    sectionEl.style.setProperty('--orb-y', `${this.currentY.toFixed(2)}px`);
+
+    const stillMoving =
+      Math.abs(this.targetX - this.currentX) > 0.05 ||
+      Math.abs(this.targetY - this.currentY) > 0.05;
+
+    if (stillMoving) {
+      this.rafId = requestAnimationFrame(() => this.tick(sectionEl));
+    } else {
+      this.rafId = 0;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    this.mouseListener?.();
+  }
 }

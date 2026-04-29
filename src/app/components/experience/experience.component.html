@@ -1,130 +1,134 @@
-<section id="experience" #expSection class="section-padding relative overflow-hidden">
+<section id="experience" class="section-padding log-section">
 
+  <!-- Background accent -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-1/4 left-0 w-[300px] h-[300px] rounded-full blur-[120px] opacity-[0.04]"
-      style="background: radial-gradient(circle, #818cf8, transparent);">
-    </div>
+    <div class="bg-glow-left"></div>
   </div>
 
-  <div class="container-custom px-4 sm:px-6 mx-auto">
+  <div class="container-custom px-4 sm:px-6 mx-auto relative z-10">
 
     <!-- Header -->
-    <div #header class="mb-10 md:mb-16">
-      <p class="section-label">Career</p>
-      <h2 class="section-title">Experience &amp; Education</h2>
+    <div class="log-header">
+      <p class="signal-label reveal">04 / EXPERIENCE</p>
+      <h2 class="log-title reveal" data-reveal-delay="80">
+        Career <span class="title-mute">/&nbsp;work history</span>
+      </h2>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
+    <div class="log-grid">
 
       <!-- Experience Column -->
-      <div>
-        <h3 class="text-sm font-mono text-muted tracking-widest uppercase mb-8">Work Experience</h3>
+      <div class="log-col">
+        <div class="col-head">
+          <span class="col-prompt">$</span>
+          <span class="col-name">cat work.log</span>
+          <span class="col-rule"></span>
+        </div>
 
-        <div #expTimeline class="relative">
-          <!-- Vertical line -->
-          <div class="timeline-line absolute left-3.5 top-3 bottom-3 w-px bg-gradient-to-b from-accent/40 via-accent-cyan/30 to-transparent"></div>
-
-          @for (exp of experiences; track exp.company) {
-            <div class="exp-item relative pl-12 mb-10 last:mb-0">
-
-              <!-- Timeline dot -->
-              <div class="timeline-dot absolute left-0 top-1 w-7 h-7 rounded-full border-2 flex items-center justify-center"
-                [style.borderColor]="exp.current ? '#818cf8' : 'rgba(255,255,255,0.15)'"
-                [style.background]="exp.current ? 'rgba(129,140,248,0.15)' : 'rgba(255,255,255,0.03)'">
-                @if (exp.current) {
-                  <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-                } @else {
-                  <span class="w-2 h-2 rounded-full bg-white/20"></span>
-                }
+        <div class="timeline">
+          <div class="timeline-spine"></div>
+          @for (exp of experiences; track exp.company; let i = $index) {
+            <article class="log-entry reveal-x" [attr.data-reveal-delay]="i * 120">
+              <div class="entry-marker" [class.is-current]="exp.current">
+                <span class="marker-dot"></span>
               </div>
 
-              <!-- Content -->
-              <div class="glass rounded-xl p-5 glass-hover group">
-                <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
-                  <div>
-                    <h4 class="font-semibold text-white text-base">{{ exp.role }}</h4>
-                    <p class="text-accent text-sm font-medium">{{ exp.company }}</p>
-                  </div>
-                  <div class="text-right shrink-0">
-                    <p class="text-xs font-mono text-muted">{{ exp.period }}</p>
-                    <p class="text-xs text-white/30">{{ exp.location }}</p>
-                  </div>
-                </div>
+              <div class="entry-card">
+                <header class="entry-meta">
+                  <span class="entry-period">{{ exp.period }}</span>
+                  <span class="entry-loc">&#64;&nbsp;{{ exp.location }}</span>
+                </header>
 
-                <p class="text-white/55 text-sm leading-relaxed mb-4">{{ exp.description }}</p>
+                <h3 class="entry-role">
+                  <span>{{ exp.role }}</span>
+                  @if (exp.current) {
+                    <span class="current-flag">
+                      <span class="status-pulse"></span>
+                      ACTIVE
+                    </span>
+                  }
+                </h3>
 
-                <ul class="space-y-1.5 mb-4">
+                <p class="entry-company">
+                  <span class="company-prompt">&gt;</span> {{ exp.company }}
+                </p>
+
+                <p class="entry-desc">{{ exp.description }}</p>
+
+                <ul class="entry-bullets">
                   @for (h of exp.highlights; track h) {
-                    <li class="flex items-start gap-2 text-sm text-white/50">
-                      <span class="text-accent mt-0.5 shrink-0">›</span>
-                      {{ h }}
+                    <li>
+                      <span class="bullet-mark">▸</span>
+                      <span>{{ h }}</span>
                     </li>
                   }
                 </ul>
 
-                <div class="flex flex-wrap gap-2">
+                <div class="entry-tags">
                   @for (tag of exp.tags; track tag) {
-                    <span class="tag-badge">{{ tag }}</span>
+                    <span class="entry-tag">{{ tag }}</span>
                   }
                 </div>
               </div>
-            </div>
+            </article>
           }
         </div>
       </div>
 
-      <!-- Education Column -->
-      <div>
-        <h3 class="text-sm font-mono text-muted tracking-widest uppercase mb-8">Education</h3>
+      <!-- Education + Certifications Column -->
+      <div class="log-col">
+        <div class="col-head">
+          <span class="col-prompt">$</span>
+          <span class="col-name">cat education.log</span>
+          <span class="col-rule"></span>
+        </div>
 
-        <div #eduTimeline class="relative">
-          <div class="timeline-line absolute left-3.5 top-3 bottom-3 w-px bg-gradient-to-b from-accent-cyan/40 via-accent/20 to-transparent"></div>
-
-          @for (edu of education; track edu.institution) {
-            <div class="edu-item relative pl-12 mb-8 last:mb-0">
-              <div class="absolute left-0 top-1 w-7 h-7 rounded-full border border-white/15 bg-white/[0.03] flex items-center justify-center">
-                <span class="w-2 h-2 rounded-full bg-accent-cyan/50"></span>
+        <div class="timeline">
+          <div class="timeline-spine spine-cyan"></div>
+          @for (edu of education; track edu.institution; let i = $index) {
+            <article class="log-entry reveal-x" [attr.data-reveal-delay]="i * 100">
+              <div class="entry-marker marker-cyan">
+                <span class="marker-dot"></span>
               </div>
-              <div class="glass rounded-xl p-5 glass-hover">
-                <div class="flex flex-wrap items-start justify-between gap-2 mb-1">
-                  <h4 class="font-semibold text-white text-sm">{{ edu.degree }}</h4>
-                  <span class="text-xs font-mono text-muted shrink-0">{{ edu.period }}</span>
-                </div>
-                <p class="text-accent-cyan text-sm font-medium mb-0.5">{{ edu.institution }}</p>
-                <p class="text-xs text-white/35">{{ edu.location }}</p>
+
+              <div class="entry-card edu-card">
+                <header class="entry-meta">
+                  <span class="entry-period">{{ edu.period }}</span>
+                  <span class="entry-loc">&#64;&nbsp;{{ edu.location }}</span>
+                </header>
+
+                <h3 class="entry-role">{{ edu.degree }}</h3>
+                <p class="entry-company cyan">
+                  <span class="company-prompt">&gt;</span> {{ edu.institution }}
+                </p>
                 @if (edu.grade) {
-                  <p class="text-xs text-white/40 mt-2">{{ edu.grade }}</p>
+                  <p class="entry-grade">{{ edu.grade }}</p>
                 }
               </div>
-            </div>
+            </article>
           }
+        </div>
 
-          <!-- Certifications -->
-          <h3 class="text-sm font-mono text-muted tracking-widest uppercase mt-12 mb-6">Certifications</h3>
+        <!-- Certifications -->
+        <div class="col-head cert-head">
+          <span class="col-prompt">$</span>
+          <span class="col-name">cat certifications.log</span>
+          <span class="col-rule"></span>
+        </div>
 
-          <div class="space-y-3">
-            <div class="glass rounded-xl p-4 flex items-start gap-3 glass-hover">
-              <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500/20 to-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                </svg>
-              </div>
-              <div>
-                <p class="text-white text-sm font-medium">Java Full Stack Developer</p>
-                <p class="text-muted text-xs">Giri's TechHub Pvt. Ltd., Pune &middot; 2024</p>
-              </div>
+        <div class="cert-list reveal" data-reveal-delay="200">
+          <div class="cert-item">
+            <span class="cert-mark">✓</span>
+            <div>
+              <p class="cert-name">Java Full Stack Developer</p>
+              <p class="cert-meta">Giri's TechHub Pvt. Ltd., Pune &middot; 2024</p>
             </div>
-
-            <div class="glass rounded-xl p-4 flex items-start gap-3 glass-hover">
-              <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4 text-accent-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                </svg>
-              </div>
-              <div>
-                <p class="text-white text-sm font-medium">Introduction to Generative AI</p>
-                <p class="text-muted text-xs">Google Cloud Skills Boost &middot; 2024</p>
-              </div>
+          </div>
+          <div class="cert-item">
+            <span class="cert-mark">✓</span>
+            <div>
+              <p class="cert-name">Introduction to Generative AI</p>
+              <p class="cert-meta">Google Cloud Skills Boost &middot; 2024</p>
             </div>
           </div>
         </div>

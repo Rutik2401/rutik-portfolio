@@ -8,7 +8,6 @@ import {
   signal,
 } from '@angular/core';
 import { isPlatformBrowser, NgClass } from '@angular/common';
-import { gsap } from 'gsap';
 import { LenisScrollService } from '../../services/lenis-scroll.service';
 
 interface NavLink {
@@ -49,13 +48,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    this.initNavbarAnimation();
     this.initSectionObserver();
-  }
-
-  private initNavbarAnimation(): void {
-    // CSS animation handles the entrance — no GSAP needed here
-    // (avoids opacity:0 inline-style conflict with transition-all)
   }
 
   private initSectionObserver(): void {

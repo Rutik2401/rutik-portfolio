@@ -1,158 +1,142 @@
-<section id="projects" #projectsSection class="section-padding relative overflow-hidden">
+<section id="projects" class="section-padding projects-section">
 
-  <!-- Background accent -->
+  <!-- Subtle background accent -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[160px] opacity-[0.05]"
-      style="background: radial-gradient(circle, #22d3ee, transparent);">
-    </div>
+    <div class="bg-orb"></div>
   </div>
 
-  <div class="container-custom px-4 sm:px-6 mx-auto">
+  <div class="container-custom px-4 sm:px-6 mx-auto relative z-10">
 
-    <!-- ─── Header ─── -->
-    <div #header class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
+    <!-- ─── SECTION HEADER ─── -->
+    <div class="projects-header">
       <div>
-        <!-- Label badge -->
-        <span class="section-badge">Selected Work</span>
-        <h2 class="projects-title">
-          Projects I've <span class="title-accent">built</span>
+        <p class="signal-label reveal">03 / PROJECTS</p>
+        <h2 class="projects-title reveal" data-reveal-delay="80">
+          Selected <span class="title-strike">work</span>
+          <span class="title-mono">/&nbsp;projects&nbsp;shipped</span>
         </h2>
-        <p class="projects-subtitle">
-          Real-world applications shipped at companies and personal explorations<br class="hidden md:block">
-          &mdash; each solving a concrete problem.
+        <p class="projects-sub reveal" data-reveal-delay="160">
+          Real applications built under real constraints &mdash; shipped at companies
+          and explored as personal builds.
+          <br class="hidden md:block">
+          Each one solves a concrete problem.
         </p>
       </div>
       <a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer"
-        class="view-github-btn shrink-0">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-        </svg>
-        View GitHub
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        class="github-pill reveal" data-reveal-delay="240">
+        <span class="pill-prompt">&gt;</span>
+        VIEW_ALL_REPOS
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
         </svg>
       </a>
     </div>
 
-    <!-- ─── Projects Grid ─── -->
-    <div #projectsGrid class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-      @for (project of projects; track project.id) {
-        <div class="project-card group" [style.--accent]="project.accentColor">
+    <!-- ─── MASTER-DETAIL EXPLORER ─── -->
+    <div class="explorer reveal" data-reveal-delay="120">
 
-          <!-- ─── Preview Area ─── -->
-          <div class="card-preview" [style.background]="project.previewGradient">
+      <!-- LEFT: file-list -->
+      <aside class="explorer-sidebar">
+        <div class="sidebar-head">
+          <span class="sidebar-prompt">$</span>
+          <span class="sidebar-cmd">ls ~/projects</span>
+        </div>
+        <ul class="file-list" role="tablist" aria-label="Projects">
+          @for (p of projects; track p.id; let i = $index) {
+            <li>
+              <button
+                type="button"
+                role="tab"
+                [attr.aria-selected]="selectedIndex() === i"
+                [ngClass]="{ 'is-active': selectedIndex() === i }"
+                (click)="select(i)"
+                class="file-item"
+                [style.--accent]="p.accentColor"
+              >
+                <span class="file-index">{{ '00' + (i + 1) }}</span>
+                <span class="file-arrow">{{ selectedIndex() === i ? '▸' : ' ' }}</span>
+                <span class="file-name">{{ p.shortName }}</span>
+                <span class="file-status"
+                      [ngClass]="statusClass(p)">
+                  <span class="file-status-dot"></span>
+                </span>
+              </button>
+            </li>
+          }
+          <li class="file-meta">
+            <span class="meta-key">total</span>
+            <span class="meta-val">{{ projects.length }} projects</span>
+          </li>
+        </ul>
+      </aside>
 
-            <!-- Top row: badges + icon -->
-            <div class="preview-topbar">
-              <div class="flex items-center gap-2">
-                @if (project.featured) {
-                  <span class="featured-badge">Featured</span>
-                }
-                @if (project.status) {
-                  <span class="status-badge">
-                    <span class="status-dot"></span>
-                    {{ project.status }}
-                  </span>
-                }
+      <!-- RIGHT: details -->
+      <article class="explorer-detail" [style.--accent]="selected().accentColor">
+        <header class="detail-head">
+          <span class="detail-path">~/projects/{{ selected().shortName }}.md</span>
+          <span class="detail-status"
+                [ngClass]="statusClass(selected())">
+            <span class="detail-status-dot"></span>
+            {{ statusLabel(selected()) }}
+          </span>
+        </header>
+
+        <div class="detail-body" [attr.data-key]="selected().id">
+          <p class="detail-category">
+            <span class="cat-prompt">#</span>
+            {{ selected().category }}
+            <span class="cat-year">·  {{ selected().year }}</span>
+          </p>
+
+          <h3 class="detail-title">
+            <span class="detail-icon">{{ selected().icon }}</span>
+            {{ selected().title }}
+            @if (selected().featured) {
+              <span class="detail-featured">★ FEATURED</span>
+            }
+          </h3>
+
+          <p class="detail-description">{{ selected().description }}</p>
+
+          <div class="detail-stats">
+            @for (stat of selected().stats; track stat.label) {
+              <div class="stat-cell">
+                <div class="stat-cell-val">{{ stat.value }}</div>
+                <div class="stat-cell-key">{{ stat.label }}</div>
               </div>
-              <span class="card-icon">{{ project.icon }}</span>
-            </div>
-
-            <!-- Mockup UI bars -->
-            <div class="mockup-ui">
-              <div class="mockup-row">
-                <div class="mockup-bar bar-wide" [style.background]="project.accentColor + '40'"></div>
-                <div class="mockup-bar bar-short" [style.background]="project.accentColor + '25'"></div>
-              </div>
-              <div class="mockup-row">
-                <div class="mockup-block" [style.background]="project.accentColor + '15'">
-                  <div class="mockup-line" [style.background]="project.accentColor + '50'"></div>
-                  <div class="mockup-line short" [style.background]="project.accentColor + '30'"></div>
-                </div>
-                <div class="mockup-block" [style.background]="project.accentColor + '10'">
-                  <div class="mockup-dot" [style.background]="project.accentColor"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Hover action buttons -->
-            <div class="preview-actions">
-              @if (project.live) {
-                <a [href]="project.live" target="_blank" rel="noopener noreferrer" class="action-btn action-primary">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                  </svg>
-                  Live Demo
-                </a>
-              }
-              <a [href]="project.github" target="_blank" rel="noopener noreferrer" class="action-btn action-secondary">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-                </svg>
-                GitHub
-              </a>
-            </div>
+            }
           </div>
 
-          <!-- ─── Card Content ─── -->
-          <div class="card-content">
+          <div class="detail-tags">
+            @for (tag of selected().tags; track tag) {
+              <span class="detail-tag">{{ tag }}</span>
+            }
+          </div>
 
-            <!-- Category + arrow -->
-            <div class="flex items-start justify-between mb-2">
-              <span class="card-category">{{ project.category }}</span>
-              <svg class="card-arrow w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors shrink-0 mt-0.5"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-              </svg>
-            </div>
-
-            <!-- Title -->
-            <h3 class="card-title" [style.color]="project.accentColor">{{ project.title }}</h3>
-
-            <!-- Description -->
-            <p class="card-description">{{ project.description }}</p>
-
-            <!-- Stats -->
-            <div class="stats-row">
-              @for (stat of project.stats; track stat.label) {
-                <div class="stat-box" [style.borderColor]="project.accentColor + '20'">
-                  <span class="stat-val" [style.color]="project.accentColor">{{ stat.value }}</span>
-                  <span class="stat-lbl">{{ stat.label }}</span>
-                </div>
-              }
-            </div>
-
-            <!-- Tags -->
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              @for (tag of project.tags; track tag) {
-                <span class="tag-badge">{{ tag }}</span>
-              }
-            </div>
-
-            <!-- Footer links -->
-            <div class="card-footer">
-              @if (project.live) {
-                <a [href]="project.live" target="_blank" rel="noopener noreferrer" class="footer-link">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                  </svg>
-                  Live Demo
-                </a>
-              }
-              <a [href]="project.github" target="_blank" rel="noopener noreferrer" class="footer-link">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          <div class="detail-links">
+            @if (selected().live) {
+              <a [href]="selected().live!" target="_blank" rel="noopener noreferrer"
+                 class="detail-cta primary">
+                <span class="cta-prompt">&gt;</span>
+                <span>VIEW LIVE</span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                 </svg>
-                GitHub
               </a>
-            </div>
-
+            }
+            <a [href]="selected().github" target="_blank" rel="noopener noreferrer"
+               class="detail-cta ghost">
+              <span class="cta-prompt">&gt;</span>
+              <span>SOURCE</span>
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </a>
           </div>
         </div>
-      }
+      </article>
+
     </div>
 
   </div>
