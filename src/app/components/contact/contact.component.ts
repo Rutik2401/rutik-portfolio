@@ -34,7 +34,7 @@ export class ContactComponent {
     },
     {
       label: 'instagram.com/rutik_pimpale',
-      href: 'https://instagram.com/',
+      href: 'https://www.instagram.com/rutik_pimpale/',
     },
     {
       label: 'twitter.com/rutik_pimpale',
