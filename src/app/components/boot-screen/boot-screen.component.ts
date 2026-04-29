@@ -8,8 +8,6 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-const SESSION_KEY = 'rutik.boot.shown';
-
 interface BootLine {
   text: string;
   delay: number;
@@ -213,13 +211,8 @@ export class BootScreenComponent implements OnInit {
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // Show only once per browser session (refreshes within the same tab skip).
-    let shown: string | null = null;
-    try { shown = sessionStorage.getItem(SESSION_KEY); } catch {}
-    if (shown) return;
-
+    // Show on every page load (no session gate).
     this.visible.set(true);
-    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch {}
 
     // Step through the loading lines
     this.LINES.forEach((line, i) => {
