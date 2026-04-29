@@ -29,9 +29,18 @@ body {
   background-size: 100% 3px;
 }
 
-/* Hide default cursor globally */
-*, *::before, *::after {
-  cursor: none !important;
+/* Hide default cursor globally — but ONLY when user has a fine pointer
+   (mouse/trackpad). On touch devices (phones, tablets) the custom cursor
+   makes no sense and breaks tap behaviour, so restore the native cursor. */
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto; }
+  app-cursor { display: none !important; }
 }
 
 /* =============================================

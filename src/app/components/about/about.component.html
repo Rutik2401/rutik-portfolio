@@ -1,65 +1,78 @@
-<section id="about" #aboutSection class="section-padding relative overflow-hidden">
+<section id="about" class="section-padding origin-section">
 
-  <!-- Subtle section divider glow -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-accent/30 to-transparent"></div>
+  <!-- Subtle divider glow -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-transparent via-white/15 to-transparent pointer-events-none"></div>
 
-  <div class="container-custom px-4 sm:px-6 mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
+  <div class="container-custom px-4 sm:px-6 mx-auto relative z-10">
 
-      <!-- Left: Text -->
-      <div>
-        <p class="section-label reveal">About Me</p>
-        <h2 class="section-title mb-6 reveal" data-reveal-delay="80">
-          Building the web,<br>
-          <span class="gradient-text">one pixel at a time.</span>
+    <div class="origin-grid">
+
+      <!-- Left: narrative -->
+      <div class="origin-narrative">
+        <p class="signal-label reveal">01 / SIGNAL ORIGIN</p>
+        <h2 class="origin-title reveal" data-reveal-delay="80">
+          Origin <span class="title-mute">/&nbsp;identity confirmed</span>
         </h2>
 
-        <div class="space-y-4 text-white/60 leading-relaxed text-[1.05rem] reveal" data-reveal-delay="160">
+        <div class="origin-body reveal" data-reveal-delay="160">
           <p>
-            I build robust full-stack applications with
-            <span class="text-white font-medium">Angular</span>,
-            <span class="text-white font-medium">Spring Boot</span> &amp;
-            <span class="text-white font-medium">Java</span> &mdash;
-            1.5+ years delivering production-grade systems at software companies in Pune.
+            I build <span class="hl">full-stack systems</span> with Angular, Spring Boot &amp; Java
+            &mdash; <strong>1.5+ years</strong> shipping production-grade software at Pune-based
+            engineering teams.
           </p>
           <p>
-            Currently at
-            <span class="text-accent font-medium">Sdaemon Infotech Pvt. Ltd</span>, I focus on building
-            scalable, maintainable applications that bridge solid backend architecture with
-            clean, performant frontends.
+            Currently transmitting from
+            <a href="#" class="link-amber">Sdaemon Infotech</a>, where I focus on scalable Angular
+            architecture and clean integration with backend services.
           </p>
           <p>
-            When I'm not coding, I explore new technologies, contribute to open-source projects,
-            and think about how great UI/UX drives real business outcomes.
+            Off-hours I read about how the web actually works, build small cosmic side-projects,
+            and obsess over UX details that compound.
           </p>
         </div>
 
-        <div class="mt-10 flex flex-wrap gap-3 reveal" data-reveal-delay="240">
-          <a href="https://www.linkedin.com/in/rutik-pimpale/" target="_blank" rel="noopener noreferrer"
-            class="btn-primary !py-2.5 !px-5 text-sm">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-            </svg>
-            LinkedIn
+        <div class="origin-cta reveal" data-reveal-delay="240">
+          <a href="https://www.linkedin.com/in/rutik-pimpale/" target="_blank" rel="noopener noreferrer" class="origin-btn primary">
+            <span class="btn-prompt">&gt;</span>
+            CONNECT
           </a>
-          <a href="mailto:rutikpimpale2401@gmail.com"
-            class="btn-secondary !py-2.5 !px-5 text-sm">
-            Say Hello
+          <a href="mailto:rutikpimpale2401@gmail.com" class="origin-btn ghost">
+            <span class="btn-prompt">&gt;</span>
+            SAY_HELLO
           </a>
         </div>
       </div>
 
-      <!-- Right: Stats grid -->
-      <div class="grid grid-cols-2 gap-3 md:gap-4">
-        @for (stat of stats; track stat.label; let i = $index) {
-          <div class="stat-card glass rounded-2xl p-5 md:p-6 glass-hover reveal" [attr.data-reveal-delay]="i * 80">
-            <div
-              class="text-4xl font-black mb-1 tabular-nums"
-              [style.color]="stat.accent"
-            >{{ stat.value }}</div>
-            <div class="text-sm text-muted font-medium">{{ stat.label }}</div>
+      <!-- Right: terminal-style stats panel -->
+      <div class="origin-panel reveal" data-reveal-delay="200">
+        <div class="panel-header">
+          <span class="panel-dots">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+          </span>
+          <span class="panel-title">~/origin/stats.log</span>
+        </div>
+        <div class="panel-body">
+          @for (stat of stats; track stat.label; let i = $index) {
+            <div class="stat-line reveal" [attr.data-reveal-delay]="300 + (i * 80)">
+              <span class="stat-prompt">$</span>
+              <span class="stat-key">{{ stat.label }}</span>
+              <span class="stat-equals">=</span>
+              <span class="stat-val" [style.color]="stat.accent">{{ stat.value }}</span>
+            </div>
+          }
+          <div class="stat-line reveal" data-reveal-delay="640">
+            <span class="stat-prompt">$</span>
+            <span class="stat-key">location</span>
+            <span class="stat-equals">=</span>
+            <span class="stat-val location-val">"Pune, IN"</span>
           </div>
-        }
+          <div class="stat-line reveal term-cursor-line" data-reveal-delay="720">
+            <span class="stat-prompt">$</span>
+            <span class="stat-typing term-cursor">_</span>
+          </div>
+        </div>
       </div>
 
     </div>

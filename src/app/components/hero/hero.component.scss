@@ -6,12 +6,16 @@
 .hero-section {
   position: relative;
   min-height: 100vh;
-  padding: 7rem 0 5rem;
+  padding: 5.5rem 0 3.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
   background: #050505;
+
+  @media (min-width: 768px) {
+    padding: 7rem 0 5rem;
+  }
 }
 
 /* Background grid */
@@ -72,11 +76,17 @@
 .boot-block {
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  line-height: 1.9;
+  font-size: 0.72rem;
+  line-height: 1.85;
   color: rgba(255, 255, 255, 0.55);
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   background: rgba(255, 255, 255, 0.015);
+  max-width: 100%;
+
+  @media (min-width: 480px) {
+    font-size: 0.78rem;
+    margin-bottom: 2.5rem;
+  }
 
   @media (min-width: 768px) {
     font-size: 0.82rem;
@@ -160,7 +170,7 @@
    ============================================= */
 .hero-name {
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(3.5rem, 13vw, 11rem);
+  font-size: clamp(2.75rem, 13vw, 11rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.92;
@@ -169,6 +179,7 @@
   text-transform: uppercase;
   display: block;
   user-select: none;
+  word-break: break-word;
 }
 
 .line-1, .line-2 {
@@ -294,7 +305,7 @@
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 2.5rem;
+  gap: 1.5rem 2.5rem;
   padding-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
