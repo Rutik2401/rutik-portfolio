@@ -95,24 +95,25 @@ export class CursorComponent implements AfterViewInit, OnDestroy {
       });
     };
 
-    const onEnterLink = () => document.body.classList.add('cursor-hover');
-    const onLeaveLink = () => document.body.classList.remove('cursor-hover');
-
     document.addEventListener('mousemove', onMove);
 
-    // Attach hover listeners to interactive elements dynamically
-    const attachHoverListeners = () => {
-      document.querySelectorAll('a, button, [data-cursor-hover]').forEach((el) => {
-        el.addEventListener('mouseenter', onEnterLink);
-        el.addEventListener('mouseleave', onLeaveLink);
-      });
+    // Event delegation: one listener handles all interactive elements,
+    // including ones added later. No MutationObserver = no scroll jank.
+    const HOVER_SELECTOR = 'a, button, [data-cursor-hover]';
+    const onPointerOver = (e: Event) => {
+      if ((e.target as Element).closest?.(HOVER_SELECTOR)) {
+        document.body.classList.add('cursor-hover');
+      }
     };
-
-    // Observe DOM for newly added interactive elements
-    const observer = new MutationObserver(attachHoverListeners);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    attachHoverListeners();
+    const onPointerOut = (e: Event) => {
+      const from = e.target as Element;
+      const to = (e as MouseEvent).relatedTarget as Element | null;
+      if (from.closest?.(HOVER_SELECTOR) && !to?.closest?.(HOVER_SELECTOR)) {
+        document.body.classList.remove('cursor-hover');
+      }
+    };
+    document.addEventListener('pointerover', onPointerOver);
+    document.addEventListener('pointerout', onPointerOut);
 
     // Hide cursor when leaving window
     const onLeave = () => gsap.to([dot, ring], { opacity: 0, duration: 0.2 });
@@ -122,9 +123,10 @@ export class CursorComponent implements AfterViewInit, OnDestroy {
 
     this.listeners.push(
       () => document.removeEventListener('mousemove', onMove),
+      () => document.removeEventListener('pointerover', onPointerOver),
+      () => document.removeEventListener('pointerout', onPointerOut),
       () => document.removeEventListener('mouseleave', onLeave),
       () => document.removeEventListener('mouseenter', onEnter),
-      () => observer.disconnect(),
     );
   }
 

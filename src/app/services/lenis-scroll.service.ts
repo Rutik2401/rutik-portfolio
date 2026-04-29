@@ -34,8 +34,6 @@ export class LenisScrollService implements OnDestroy {
         this.lenis?.raf(time * 1000);
       });
 
-      gsap.ticker.lagSmoothing(0);
-
       // Sync Lenis scroll with ScrollTrigger
       this.lenis.on('scroll', ScrollTrigger.update);
 
