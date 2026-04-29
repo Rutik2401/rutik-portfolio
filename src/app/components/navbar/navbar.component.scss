@@ -2,11 +2,15 @@
 
 .navbar {
   background: rgba(3, 7, 18, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* Single fixed blur value — animating backdrop-filter causes screen-wide
+     repaint flicker on scroll. Pick one value and only transition opacity. */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  /* Specific transitions — avoids opacity conflict with GSAP */
-  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease,
+  /* Promote to its own compositor layer so the blur is cached, not
+     recomputed every frame. */
+  will-change: transform;
+  transition: background 0.3s ease, border-color 0.3s ease,
               transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   /* CSS entrance animation — reliable, no GSAP conflict */
   animation: navbarEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
@@ -25,8 +29,6 @@
 
 .navbar.scrolled {
   background: rgba(3, 7, 18, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 

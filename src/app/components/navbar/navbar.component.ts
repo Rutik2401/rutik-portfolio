@@ -39,6 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   private lastScrollY = 0;
   private scrollThreshold = 150;
+  private hideDelta = 8; // require 8px of movement to flip hide/show — kills oscillation
   private sectionObserver?: IntersectionObserver;
 
   constructor(
@@ -78,8 +79,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const scrollY = window.scrollY;
-    this.isScrolled.set(scrollY > 20);
-    this.isHidden.set(scrollY > this.lastScrollY && scrollY > this.scrollThreshold);
+    const delta = scrollY - this.lastScrollY;
+
+    // Hysteresis around the .scrolled threshold (20 / 30) prevents the class
+    // from toggling on every Lenis sub-pixel oscillation near the boundary.
+    if (scrollY > 30) this.isScrolled.set(true);
+    else if (scrollY < 10) this.isScrolled.set(false);
+
+    // Only flip hidden state on a meaningful scroll delta. Lenis emits frames
+    // with tiny direction jitter at scroll endpoints — without this guard the
+    // navbar toggles hidden/visible repeatedly causing screen flicker.
+    if (Math.abs(delta) < this.hideDelta) return;
+
+    if (delta > 0 && scrollY > this.scrollThreshold) {
+      this.isHidden.set(true);
+    } else if (delta < 0) {
+      this.isHidden.set(false);
+    }
     this.lastScrollY = scrollY;
   }
 
