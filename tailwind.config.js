@@ -6,14 +6,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        dark: '#030712',
-        surface: '#0d1117',
-        'surface-2': '#161b22',
-        accent: '#818cf8',
+        // Cosmic / signal palette
+        dark: '#050505',
+        surface: '#0a0a0a',
+        'surface-2': '#101010',
+        accent: '#818cf8',           // signal indigo (kept for brand continuity)
         'accent-cyan': '#22d3ee',
         'accent-purple': '#a78bfa',
-        muted: '#64748b',
-        border: 'rgba(255,255,255,0.08)',
+        'signal-amber': '#c9a86a',   // warm transmission accent
+        'signal-green': '#22d39e',   // status active
+        'signal-red': '#ff4d6d',     // critical / archived
+        muted: '#5b5b5b',
+        'muted-2': '#3a3a3a',
+        border: 'rgba(255,255,255,0.06)',
+        'border-strong': 'rgba(255,255,255,0.12)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
