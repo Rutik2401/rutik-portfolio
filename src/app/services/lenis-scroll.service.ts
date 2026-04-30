@@ -50,6 +50,16 @@ export class LenisScrollService implements OnDestroy {
     }
   }
 
+  /** Scroll to the very top of the page with a smooth, eased motion. */
+  scrollToTop(duration: number = 1.4): void {
+    if (!this.isBrowser) return;
+    if (this.lenis) {
+      this.lenis.scrollTo(0, { duration });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
   stop(): void {
     this.lenis?.stop();
   }

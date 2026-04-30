@@ -1,0 +1,721 @@
+:host { display: block; background: #050505; min-height: 100vh; }
+
+/* =============================================
+   READING PROGRESS BAR
+   ============================================= */
+.progress-track {
+  --accent: #818cf8;
+  position: fixed;
+  top: 64px; /* sits just below the navbar */
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  z-index: 40;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 50%, #818cf8));
+  transition: width 0.1s linear;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* =============================================
+   SECTION
+   ============================================= */
+.viewer-section {
+  --accent: #818cf8;
+  padding: 7rem 0 5rem;
+  position: relative;
+
+  @media (min-width: 768px) { padding: 8rem 0 6rem; }
+}
+
+.viewer-empty {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+/* =============================================
+   TOOLBAR
+   ============================================= */
+.viewer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+
+  @media (min-width: 768px) {
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .back-link span,
+    .download-btn span { display: none; }
+    .back-link, .download-btn { padding: 0.5rem 0.6rem; }
+  }
+}
+
+/* View mode toggle (Markdown / HTML preview) */
+.view-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  gap: 2px;
+}
+
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.55);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  &:active { transform: scale(0.97); }
+
+  &.is-active {
+    color: #050505;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Compact view-toggle on small phones */
+  @media (max-width: 480px) {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    gap: 0.3rem;
+    svg { width: 12px; height: 12px; }
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  &.primary {
+    background: var(--accent);
+    color: #050505;
+    border-color: var(--accent);
+
+    &:hover {
+      box-shadow: 0 8px 24px -8px var(--accent);
+    }
+  }
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.viewer-head {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.viewer-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #fafafa;
+  margin: 0.75rem 0 1rem;
+}
+
+.viewer-icon {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--accent) 60%, transparent));
+}
+
+.viewer-path {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
+}
+
+/* =============================================
+   MARKDOWN BODY (very important — styled carefully)
+   ============================================= */
+.viewer-body {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+::ng-deep .md-content {
+  display: block;
+  color: rgba(255, 255, 255, 0.78);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+
+  /* Headings — use mono for terminal feel */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'JetBrains Mono', monospace;
+    color: #fafafa;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin: 2.5rem 0 1rem;
+    scroll-margin-top: 100px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  h2 {
+    font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+    color: var(--accent, #fafafa);
+    margin-top: 3rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    color: #c9a86a;
+  }
+
+  h4 {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  /* Paragraphs */
+  p {
+    margin: 0 0 1.25rem;
+  }
+
+  /* Links */
+  a {
+    color: var(--accent, #818cf8);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent, #818cf8) 40%, transparent);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease;
+
+    &:hover {
+      text-decoration-color: var(--accent, #818cf8);
+    }
+  }
+
+  /* Strong & em */
+  strong {
+    color: #fafafa;
+    font-weight: 700;
+  }
+
+  em {
+    color: #c9a86a;
+    font-style: italic;
+  }
+
+  /* Lists */
+  ul, ol {
+    margin: 0 0 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+
+    &::marker {
+      color: var(--accent, #818cf8);
+    }
+  }
+
+  /* Inline code */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em;
+    padding: 0.15em 0.4em;
+    background: rgba(129, 140, 248, 0.1);
+    color: #c4b5fd;
+    border: 1px solid rgba(129, 140, 248, 0.18);
+    border-radius: 4px;
+  }
+
+  /* Code blocks */
+  pre {
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+
+    code {
+      background: none;
+      border: none;
+      color: #e2e8f0;
+      padding: 0;
+      font-size: inherit;
+    }
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 3px solid var(--accent, #818cf8);
+    margin: 1.75rem 0;
+    padding: 0.5rem 1.25rem;
+    background: rgba(129, 140, 248, 0.04);
+    border-radius: 0 8px 8px 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-style: italic;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  th {
+    background: rgba(255, 255, 255, 0.03);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent, #818cf8);
+    font-weight: 600;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Horizontal rule */
+  hr {
+    border: none;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    margin: 2.5rem 0;
+  }
+
+  /* Images (rare in interview notes but just in case) */
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* =============================================
+   FOOTER CTA
+   ============================================= */
+.viewer-foot {
+  max-width: 760px;
+  margin: 4rem auto 0;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  text-align: center;
+
+  .foot-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* =============================================
+   HTML PREVIEW — MODERN DOCUMENT VIEW
+   (no fake browser chrome — feels like reading a Stripe / Linear doc)
+   ============================================= */
+.preview-stage {
+  position: relative;
+  padding: 1rem 0 0;
+
+  /* Soft accent glow behind the document */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -10% -10% 30% -10%;
+    background:
+      radial-gradient(ellipse 50% 40% at 50% 0%,
+        color-mix(in srgb, var(--accent) 22%, transparent),
+        transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.preview-meta {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 2rem;
+}
+
+.preview-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #fafafa;
+  margin: 0.6rem 0 0.75rem;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.preview-sub {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.preview-document {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  /* Premium multi-layer shadow that lifts the document off the page */
+  filter:
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
+    drop-shadow(0 30px 80px rgba(0, 0, 0, 0.55));
+  border-radius: 16px;
+  /* Thin accent ring */
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--accent) 35%, transparent),
+    rgba(255, 255, 255, 0.08));
+  padding: 1px;
+
+  /* Hover lift */
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover { transform: translateY(-2px); }
+
+  @media (max-width: 600px) {
+    border-radius: 13px;
+    margin: 0 -2px;  /* let it span almost edge-to-edge on phones */
+    /* Drop the heavy shadow on mobile — it eats too much screen */
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+  }
+}
+
+.preview-frame {
+  display: block;
+  width: 100%;
+  height: 88vh;
+  min-height: 760px;
+  max-height: 1400px;
+  border: 0;
+  background: #fff;
+  border-radius: 15px;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @media (max-width: 600px) {
+    height: 78vh;
+    min-height: 580px;
+    border-radius: 12px;
+  }
+}
+
+.preview-document.is-loaded .preview-frame { opacity: 1; }
+
+/* Loading skeleton — only visible while the iframe is fetching/parsing */
+.preview-skeleton {
+  position: absolute;
+  inset: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 60px 36px;
+  background: #fff;
+  border-radius: 15px;
+  z-index: 2;
+  pointer-events: none;
+  animation: skeleton-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.preview-document.is-loaded .preview-skeleton {
+  animation: skeleton-out 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.sk-bar {
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    rgba(15, 23, 42, 0.06) 0%,
+    rgba(15, 23, 42, 0.13) 50%,
+    rgba(15, 23, 42, 0.06) 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.sk-bar-1 { width: 60%; height: 28px; }
+.sk-bar-2 { width: 90%; }
+.sk-bar-3 { width: 78%; }
+.sk-bar-4 { width: 84%; }
+.sk-bar-5 { width: 65%; }
+
+@keyframes skeleton-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes skeleton-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes skeleton-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+.preview-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.9);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-1px);
+  }
+
+  &.primary {
+    background: var(--accent);
+    color: #050505;
+    border-color: var(--accent);
+
+    &:hover {
+      box-shadow: 0 12px 30px -10px var(--accent);
+    }
+  }
+}
+
+/* =============================================
+   FLOATING BACK-TO-TOP
+   ============================================= */
+.back-to-top {
+  --accent: #818cf8;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #050505;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 14px 35px -8px color-mix(in srgb, var(--accent) 65%, transparent),
+    0 4px 12px rgba(0, 0, 0, 0.4);
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+  animation: btt-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  /* subtle resting pulse so the button hints at being interactive */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    opacity: 0;
+    animation: btt-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 22px 50px -10px color-mix(in srgb, var(--accent) 80%, transparent),
+      0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.96);
+  }
+
+  svg { transition: transform 0.3s ease; }
+  &:hover svg { transform: translateY(-2px); }
+
+  @media (max-width: 600px) {
+    bottom: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    &::before { animation: none; }
+  }
+}
+
+@keyframes btt-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes btt-pulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* =============================================
+   404 EMPTY STATE
+   ============================================= */
+.empty-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #fafafa;
+  margin: 0.75rem 0 1rem;
+}
+
+.empty-sub {
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 32rem;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.empty-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #fafafa;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #818cf8;
+  }
+}

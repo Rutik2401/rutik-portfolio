@@ -1,0 +1,93 @@
+<footer class="rf">
+  <div class="rf-bg" aria-hidden="true"></div>
+
+  <div class="container-custom mx-auto px-6 relative z-10">
+
+    <!-- Top: pitch -->
+    <div class="rf-top">
+      <p class="rf-eyebrow">
+        <span class="eyebrow-dot"></span>
+        // PREMIUM NOTES
+      </p>
+      <h2 class="rf-title">
+        Built to help you <span class="rf-hl">ship interviews</span>.
+      </h2>
+      <p class="rf-sub">
+        Hand-crafted prep from real product-company interviews. More notes shipping monthly — bookmark, share, and come back.
+      </p>
+    </div>
+
+    <!-- Note pills -->
+    <div class="rf-pills">
+      @for (n of notes; track n.slug) {
+        <a [routerLink]="['/resources', n.slug]" class="rf-pill" [style.--pillAccent]="n.accent">
+          <span class="rf-pill-sym">{{ n.symbol }}</span>
+          <span class="rf-pill-label">{{ n.label }}</span>
+        </a>
+      }
+    </div>
+
+    <!-- Mid grid: coming soon · author · links -->
+    <div class="rf-grid">
+
+      <div class="rf-col">
+        <p class="rf-col-label">// COMING SOON</p>
+        <ul class="rf-col-list">
+          @for (item of comingSoon; track item) {
+            <li>
+              <span class="rf-bullet"></span>
+              {{ item }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="rf-col">
+        <p class="rf-col-label">// AUTHOR</p>
+        <p class="rf-author-name">Rutik Pimpale</p>
+        <p class="rf-author-role">
+          Full-stack engineer · Pune, IN<br>
+          Writing notes for ambitious devs.
+        </p>
+        <a href="mailto:rutikpimpale2401@gmail.com" class="rf-author-mail">
+          <span>&gt;</span>
+          rutikpimpale2401&#64;gmail.com
+        </a>
+      </div>
+
+      <div class="rf-col">
+        <p class="rf-col-label">// QUICK LINKS</p>
+        <ul class="rf-col-list rf-col-links">
+          <li><a routerLink="/">Back to portfolio →</a></li>
+          <li><a routerLink="/resources">All resources →</a></li>
+          <li><a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer">GitHub →</a></li>
+          <li><a href="https://www.linkedin.com/in/rutik-pimpale/" target="_blank" rel="noopener noreferrer">LinkedIn →</a></li>
+          <li><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">Twitter / X →</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div class="rf-bottom">
+      <p class="rf-meta">
+        <span class="rf-eof">// EOF</span>
+        <span class="rf-sep">·</span>
+        <span>&copy; {{ year }}</span>
+        <span class="rf-sep">·</span>
+        <span class="rf-name">RUTIK PIMPALE</span>
+        <span class="rf-sep">·</span>
+        <span class="rf-mode">FREE FOR NOW</span>
+      </p>
+
+      <button (click)="scrollTop()" class="rf-totop" aria-label="Back to top">
+        <span>BACK TO TOP</span>
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 15l7-7 7 7"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</footer>

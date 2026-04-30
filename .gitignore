@@ -1,5 +1,7 @@
 # Node modules
 node_modules/
+tools/notes-generator/node_modules/
+tools/notes-generator/package-lock.json
 
 # Angular cache
 .angular/
