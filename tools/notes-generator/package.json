@@ -1,0 +1,14 @@
+{
+  "name": "notes-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Builds notes.html + notes.pdf from notes.md inside src/assets/notes/<slug>/.",
+  "scripts": {
+    "generate": "node generate.js"
+  },
+  "dependencies": {
+    "highlight.js": "^11.9.0",
+    "marked": "^9.1.0",
+    "puppeteer": "^22.0.0"
+  }
+}

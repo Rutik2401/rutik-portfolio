@@ -1,34 +1,34 @@
-import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  PLATFORM_ID,
+  Inject,
+  signal,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { LenisScrollService } from './services/lenis-scroll.service';
 import { RevealService } from './services/reveal.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CursorComponent } from './components/cursor/cursor.component';
 import { BootScreenComponent } from './components/boot-screen/boot-screen.component';
 import { ScrollProgressComponent } from './components/scroll-progress/scroll-progress.component';
-import { HeroComponent } from './components/hero/hero.component';
-import { AboutComponent } from './components/about/about.component';
-import { SkillsComponent } from './components/skills/skills.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { ExperienceComponent } from './components/experience/experience.component';
-import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ResourcesFooterComponent } from './components/resources-footer/resources-footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    RouterOutlet,
     BootScreenComponent,
     ScrollProgressComponent,
     NavbarComponent,
     CursorComponent,
-    HeroComponent,
-    AboutComponent,
-    SkillsComponent,
-    ProjectsComponent,
-    ExperienceComponent,
-    ContactComponent,
     FooterComponent,
+    ResourcesFooterComponent,
   ],
   template: `
     <app-boot-screen />
@@ -36,14 +36,13 @@ import { FooterComponent } from './components/footer/footer.component';
     <app-cursor />
     <app-navbar />
     <main>
-      <app-hero />
-      <app-about />
-      <app-skills />
-      <app-projects />
-      <app-experience />
-      <app-contact />
+      <router-outlet />
     </main>
-    <app-footer />
+    @if (isResourcesRoute()) {
+      <app-resources-footer />
+    } @else {
+      <app-footer />
+    }
   `,
   styles: [`
     :host { display: block; }
@@ -51,21 +50,31 @@ import { FooterComponent } from './components/footer/footer.component';
   `],
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  isResourcesRoute = signal(false);
+
   constructor(
     private lenisScroll: LenisScrollService,
     private reveal: RevealService,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.lenisScroll.init();
-    }
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.lenisScroll.init();
+
+    this.isResourcesRoute.set(this.router.url.startsWith('/resources'));
+
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe((e) => {
+        this.isResourcesRoute.set(e.urlAfterRedirects.startsWith('/resources'));
+        setTimeout(() => this.reveal.refresh(), 50);
+      });
   }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    // All section components have rendered by now — start watching reveals.
     this.reveal.init();
   }
 }

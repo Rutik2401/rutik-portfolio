@@ -8,7 +8,7 @@
   <div class="navbar-inner container-custom mx-auto">
 
     <!-- Logo -->
-    <a (click)="scrollTo('#hero')" class="logo">
+    <a (click)="goHome()" class="logo">
       <span class="logo-bracket">[</span>
       <span class="logo-name">RUTIK<span class="logo-dot">.</span>DEV</span>
       <span class="logo-bracket">]</span>
@@ -16,11 +16,11 @@
 
     <!-- Desktop Nav Links -->
     <ul class="hidden md:flex items-center gap-1">
-      @for (link of navLinks; track link.href; let i = $index) {
+      @for (link of navLinks; track link.label; let i = $index) {
         <li>
           <a
-            (click)="scrollTo(link.href)"
-            [ngClass]="{ 'active-link': activeSection() === link.href.slice(1) }"
+            (click)="navigateTo(link)"
+            [ngClass]="{ 'active-link': isLinkActive(link) }"
             class="nav-link"
           >
             <span class="nav-num">{{ '0' + (i + 1) }}</span>
@@ -59,9 +59,9 @@
   @if (mobileOpen()) {
     <div class="mobile-menu md:hidden">
       <ul>
-        @for (link of navLinks; track link.href; let i = $index) {
+        @for (link of navLinks; track link.label; let i = $index) {
           <li>
-            <a (click)="scrollTo(link.href); closeMobileMenu()" class="mobile-link">
+            <a (click)="navigateTo(link); closeMobileMenu()" class="mobile-link">
               <span class="nav-num">{{ '0' + (i + 1) }}</span>
               {{ link.label }}
             </a>

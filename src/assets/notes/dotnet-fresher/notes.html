@@ -1,0 +1,2647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>.NET Interview Roadmap</title>
+<style>/* ============================================================
+   PREMIUM PDF STYLES
+   Scalable — works with any markdown that uses ##, ###, code, tables
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700;900&display=swap');
+
+:root {
+  --brand-red: #DC2626;
+  --brand-red-dark: #991B1B;
+  --brand-blue: #1E3A8A;
+  --brand-blue-dark: #0F172A;
+  --accent-orange: #EA580C;
+  --accent-amber: #F59E0B;
+  --ink: #0F172A;
+  --ink-soft: #334155;
+  --ink-muted: #64748B;
+  --line: #E2E8F0;
+  --line-soft: #F1F5F9;
+  --bg: #FFFFFF;
+  --bg-soft: #F8FAFC;
+  --code-bg: #0F172A;
+  --code-bg-2: #1E293B;
+  --code-text: #E2E8F0;
+  --code-kw: #F472B6;
+  --code-str: #86EFAC;
+  --code-num: #FBBF24;
+  --code-cmt: #64748B;
+  --q-bg: #EFF6FF;
+  --q-border: #1D4ED8;
+  --highlight-bg: #FEF3C7;
+  --highlight-text: #B45309;
+  --inline-code-bg: #FFF1E6;
+  --inline-code-text: #C2410C;
+}
+
+* { box-sizing: border-box; }
+
+@page {
+  size: A4;
+  margin: 18mm 15mm 20mm 15mm;
+}
+
+@page :first {
+  margin: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--ink);
+  font-size: 10.5pt;
+  line-height: 1.65;
+  background: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ================ COVER PAGE ================ */
+.cover-page {
+  page-break-after: always;
+  break-after: page;
+  height: 297mm;
+  width: 210mm;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(220,38,38,0.42), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(59,130,246,0.38), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(234,88,12,0.12), transparent 60%),
+    linear-gradient(135deg, #020617 0%, #0F172A 45%, #1E293B 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+.cover-page::before {
+  content: '';
+  position: absolute;
+  inset: 14mm;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(220,38,38,0.6), rgba(234,88,12,0.4), rgba(59,130,246,0.6)) border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.cover-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.cover-inner { position: relative; z-index: 2; }
+.cover-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  background: linear-gradient(135deg, #DC2626, #EA580C, #F59E0B);
+  color: #fff;
+  font-size: 9pt;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  border-radius: 30px;
+  margin-bottom: 44px;
+  box-shadow: 0 10px 30px rgba(220,38,38,0.5), 0 0 0 1px rgba(255,255,255,0.15) inset;
+  position: relative;
+  z-index: 2;
+}
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 62pt;
+  font-weight: 900;
+  line-height: 1.02;
+  margin: 0 0 18px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #E0E7FF 45%, #FECACA 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1.5px;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 2;
+}
+.cover-subtitle {
+  font-size: 13pt;
+  font-weight: 500;
+  color: #CBD5E1;
+  margin: 0 0 10px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+.cover-exp {
+  display: inline-block;
+  font-size: 9.5pt;
+  font-weight: 600;
+  color: #FBBF24;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border: 1px solid rgba(251,191,36,0.35);
+  border-radius: 20px;
+  margin-bottom: 30px;
+  background: rgba(251,191,36,0.08);
+  position: relative;
+  z-index: 2;
+}
+.cover-divider {
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #EA580C, #60A5FA, transparent);
+  border-radius: 2px;
+  margin: 0 auto 40px auto;
+  position: relative;
+  z-index: 2;
+}
+.cover-meta {
+  margin-bottom: 50px;
+  padding: 18px 40px;
+  background: rgba(15,23,42,0.55);
+  border: 1px solid rgba(148,163,184,0.15);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+}
+.cover-prepared {
+  font-size: 8.5pt;
+  color: #64748B;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+.cover-author {
+  font-size: 24pt;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FCA5A5, #FFFFFF, #93C5FD);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+.cover-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 440px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.cover-tags span {
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(220,38,38,0.15), rgba(59,130,246,0.15));
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  font-size: 9pt;
+  font-weight: 600;
+  color: #F1F5F9;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+}
+.cover-footer {
+  position: absolute;
+  bottom: 20mm;
+  left: 0;
+  right: 0;
+  font-size: 8.5pt;
+  color: #64748B;
+  letter-spacing: 2px;
+  z-index: 2;
+}
+.cover-footer::before,
+.cover-footer::after {
+  content: '◆';
+  color: #DC2626;
+  margin: 0 10px;
+  font-size: 7pt;
+  vertical-align: middle;
+}
+
+/* ================ TOC PAGE ================ */
+.toc-page {
+  page-break-after: always;
+  break-after: page;
+  padding: 4mm 0 0 0;
+}
+.toc-head {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.toc-kicker {
+  display: inline-block;
+  font-size: 8pt;
+  font-weight: 800;
+  letter-spacing: 5px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand-red), var(--accent-orange));
+  padding: 4px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(220,38,38,0.25);
+}
+.toc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 34pt;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+.toc-rule {
+  width: 90px;
+  height: 3px;
+  margin: 8px auto 8px auto;
+  background: linear-gradient(90deg, var(--brand-red), var(--accent-orange), var(--brand-blue));
+  border-radius: 2px;
+}
+.toc-sub {
+  font-size: 8.5pt;
+  color: var(--ink-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 14px 0;
+  text-align: center;
+}
+
+.toc-grid {
+  column-count: 2;
+  column-gap: 14px;
+}
+.toc-card {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 10px 0;
+  box-shadow: 0 2px 6px rgba(15,23,42,0.04);
+  border-top: 3px solid var(--brand-red);
+}
+.toc-topic {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  border: none;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--line);
+}
+.toc-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--brand-red), var(--brand-blue));
+  color: #fff;
+  font-size: 10pt;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(30,58,138,0.25);
+}
+.toc-topic-title {
+  font-size: 9.5pt;
+  font-weight: 800;
+  color: var(--brand-blue-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1.25;
+}
+.toc-qs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.toc-qs li { margin: 0; padding: 0; }
+.toc-qs li a {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 3px 2px;
+  font-size: 8.5pt;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border: none;
+  line-height: 1.35;
+}
+.toc-qs li a:hover { color: var(--brand-red); }
+.toc-dot {
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand-red);
+  margin-top: 6px;
+}
+.toc-q-text { flex: 1; }
+.toc-imp {
+  color: var(--accent-amber);
+  font-size: 8pt;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ================ HEADINGS ================ */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24pt;
+  font-weight: 900;
+  color: var(--brand-blue-dark);
+  margin: 0 0 14px 0;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--brand-red);
+}
+
+/* Topic header — h2 rendered as gradient banner */
+h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 15pt;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin: 28px 0 22px 0;
+  padding: 14px 18px;
+  background: linear-gradient(90deg, var(--brand-red) 0%, var(--brand-red-dark) 45%, var(--brand-blue) 100%);
+  border-radius: 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  box-shadow: 0 6px 18px rgba(30,58,138,0.18);
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-before: auto;
+}
+
+/* Question header — h3 rendered as left-bar callout */
+h3 {
+  font-size: 12.5pt;
+  font-weight: 700;
+  color: var(--brand-blue-dark);
+  margin: 22px 0 12px 0;
+  padding: 10px 14px;
+  background: var(--q-bg);
+  border-left: 5px solid var(--q-border);
+  border-radius: 0 6px 6px 0;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+h3 em {
+  font-style: normal;
+  color: var(--brand-red);
+  font-size: 9pt;
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+h4 {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--brand-blue);
+  margin: 18px 0 8px 0;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+/* ================ PARAGRAPHS ================ */
+p {
+  margin: 0 0 10px 0;
+  color: var(--ink-soft);
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Bold keyword highlight — matches screenshot */
+strong {
+  color: var(--accent-orange);
+  font-weight: 700;
+  background: linear-gradient(180deg, transparent 60%, rgba(234,88,12,0.12) 60%);
+  padding: 0 1px;
+}
+
+/* But not inside code, headings, toc, or question labels */
+h1 strong, h2 strong, h3 strong, h4 strong,
+pre strong, code strong, .toc strong,
+.q-label strong, .re-label strong, .fu-label strong {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+em {
+  font-style: italic;
+  color: var(--ink);
+}
+
+/* Answer intro "A:" */
+p > strong:first-child:only-child { display: none; }
+
+/* Highlight paragraphs starting with "Real Example:" / "Follow-up:" */
+p strong:first-child {
+  display: inline-block;
+}
+
+/* ================ LINKS ================ */
+a {
+  color: var(--brand-blue);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--brand-blue);
+}
+
+/* ================ INLINE CODE ================ */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  background: var(--inline-code-bg);
+  color: var(--inline-code-text);
+  padding: 1.5px 7px;
+  border-radius: 5px;
+  border: 1px solid rgba(234,88,12,0.18);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ================ CODE BLOCKS ================ */
+pre {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 14px 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 12px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.8pt;
+  line-height: 1.55;
+  position: relative;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.15);
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+pre::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #EF4444;
+  box-shadow: 16px 0 0 #F59E0B, 32px 0 0 #10B981;
+}
+pre code {
+  background: transparent;
+  border: none;
+  padding: 22px 0 0 0;
+  color: inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+  display: block;
+  font-size: 8.8pt;
+  border-radius: 0;
+}
+
+/* highlight.js tokens */
+.hljs-keyword, .hljs-selector-tag, .hljs-built_in { color: #F472B6; }
+.hljs-string, .hljs-attr { color: #86EFAC; }
+.hljs-number, .hljs-literal { color: #FBBF24; }
+.hljs-comment, .hljs-quote { color: #64748B; font-style: italic; }
+.hljs-function, .hljs-title { color: #60A5FA; }
+.hljs-params { color: #E2E8F0; }
+.hljs-variable, .hljs-name { color: #FCA5A5; }
+.hljs-type, .hljs-class { color: #7DD3FC; }
+.hljs-tag { color: #F472B6; }
+.hljs-attribute { color: #FBBF24; }
+
+/* ================ LISTS ================ */
+ul, ol { margin: 8px 0 12px 0; padding-left: 22px; }
+li {
+  margin: 4px 0;
+  color: var(--ink-soft);
+  padding-left: 4px;
+}
+ul li::marker { color: var(--brand-red); font-size: 11pt; }
+ol li::marker { color: var(--brand-blue); font-weight: 700; }
+
+/* ================ TABLES ================ */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 14px 0;
+  font-size: 9pt;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+thead {
+  background: linear-gradient(90deg, var(--brand-blue-dark), var(--brand-blue));
+  color: #fff;
+}
+thead th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 9pt;
+  letter-spacing: 0.3px;
+  border-bottom: 2px solid var(--brand-red);
+}
+tbody td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: var(--bg-soft); }
+tbody tr:last-child td { border-bottom: none; }
+tbody td strong {
+  background: none;
+  color: var(--brand-blue-dark);
+  font-weight: 600;
+}
+tbody td code {
+  font-size: 8.5pt;
+}
+
+/* ================ BLOCKQUOTE ================ */
+blockquote {
+  margin: 14px 0;
+  padding: 12px 16px 12px 20px;
+  background: linear-gradient(90deg, rgba(234,88,12,0.07), transparent);
+  border-left: 4px solid var(--accent-orange);
+  border-radius: 0 6px 6px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+blockquote p { margin: 0; color: var(--ink); }
+
+/* ================ HR DIVIDER ================ */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  margin: 24px 0;
+  page-break-after: avoid;
+}
+
+/* ================ PAGE-BREAK HELPERS ================ */
+.page-break { page-break-after: always; break-after: page; }
+.avoid-break { page-break-inside: avoid; break-inside: avoid; }
+</style>
+</head>
+<body>
+<div class="cover-page">
+  <div class="cover-badge">PREMIUM EDITION</div>
+  <h1 class="cover-title">.NET &amp; C#<br/>INTERVIEW ROADMAP</h1>
+  <p class="cover-subtitle">Fresher to Mid-Level · 75+ Modern, Tricky &amp; Most-Asked Questions</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <p class="cover-prepared">Prepared By</p>
+    <p class="cover-author">Rutik Pimpale</p>
+  </div>
+  <div class="cover-tags">
+    <span>C# 12</span>
+    <span>.NET 8</span>
+    <span>ASP.NET Core</span>
+    <span>EF Core</span>
+    <span>Async</span>
+    <span>LINQ</span>
+    <span>Web API</span>
+  </div>
+  <div class="cover-footer">© 2026 · All Rights Reserved</div>
+</div>
+
+<div class="toc-page">
+  <div class="toc-head">
+    <div class="toc-kicker">Navigation</div>
+    <h1 class="toc-title">Table of Contents</h1>
+    <div class="toc-rule"></div>
+    <p class="toc-sub">Click any entry to jump to the section</p>
+  </div>
+  <div class="toc-grid">
+    <div class="toc-card">
+          <a class="toc-topic" href="#category-1-c-core-fundamentals">
+            <span class="toc-num">01</span>
+            <span class="toc-topic-title">CATEGORY 1: C# CORE FUNDAMENTALS</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#q1-value-types-vs-reference-types-stack-vs-heap"><span class="toc-dot"></span><span class="toc-q-text">Q1: Value Types vs. Reference Types — Stack vs. Heap</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q2-boxing-and-unboxing-performance-cost"><span class="toc-dot"></span><span class="toc-q-text">Q2: Boxing and Unboxing — Performance Cost</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q3-struct-vs-class-when-to-choose-a-struct"><span class="toc-dot"></span><span class="toc-q-text">Q3: struct vs. class — When to Choose a struct?</span></a></li>
+            <li><a href="#q4-const-vs-readonly-vs-static-readonly-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q4: const vs. readonly vs. static readonly (TRICKY)</span></a></li>
+            <li><a href="#q5-why-are-strings-immutable-in-c"><span class="toc-dot"></span><span class="toc-q-text">Q5: Why Are Strings Immutable in C#?</span></a></li>
+            <li><a href="#q6-string-vs-stringbuilder-when-to-use-which"><span class="toc-dot"></span><span class="toc-q-text">Q6: String vs. StringBuilder — When to Use Which?</span></a></li>
+            <li><a href="#q7-var-vs-dynamic-vs-object-common-confusion-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q7: var vs. dynamic vs. object — Common Confusion (TRICKY)</span></a></li>
+            <li><a href="#q8-nullable-types-and-the-operator"><span class="toc-dot"></span><span class="toc-q-text">Q8: Nullable Types and the ?? Operator</span></a></li>
+            <li><a href="#q9-ref-vs-out-vs-in-parameters"><span class="toc-dot"></span><span class="toc-q-text">Q9: ref vs. out vs. in Parameters</span></a></li>
+            <li><a href="#q10-the-using-statement-and-idisposable"><span class="toc-dot"></span><span class="toc-q-text">Q10: The using Statement and IDisposable</span></a></li>
+            <li><a href="#q11-pattern-matching-in-c-modern"><span class="toc-dot"></span><span class="toc-q-text">Q11: Pattern Matching in C# (MODERN)</span></a></li>
+            <li><a href="#q12-init-only-properties-and-required-members-modern"><span class="toc-dot"></span><span class="toc-q-text">Q12: Init-Only Properties and Required Members (MODERN)</span></a></li>
+          </ul>
+        </div>
+    <div class="toc-card">
+          <a class="toc-topic" href="#category-2-object-oriented-programming">
+            <span class="toc-num">02</span>
+            <span class="toc-topic-title">CATEGORY 2: OBJECT-ORIENTED PROGRAMMING</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#q13-the-4-pillars-of-oop"><span class="toc-dot"></span><span class="toc-q-text">Q13: The 4 Pillars of OOP</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q14-interface-vs-abstract-class-when-to-use-what"><span class="toc-dot"></span><span class="toc-q-text">Q14: Interface vs. Abstract Class — When to Use What?</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q15-method-overloading-vs-method-overriding"><span class="toc-dot"></span><span class="toc-q-text">Q15: Method Overloading vs. Method Overriding</span></a></li>
+            <li><a href="#q16-virtual-vs-abstract-vs-sealed-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q16: virtual vs. abstract vs. sealed (TRICKY)</span></a></li>
+            <li><a href="#q17-constructor-chaining-this-and-base"><span class="toc-dot"></span><span class="toc-q-text">Q17: Constructor Chaining — `this()` and `base()`</span></a></li>
+            <li><a href="#q18-static-vs-instance-members"><span class="toc-dot"></span><span class="toc-q-text">Q18: Static vs. Instance Members</span></a></li>
+            <li><a href="#q19-composition-over-inheritance"><span class="toc-dot"></span><span class="toc-q-text">Q19: Composition over Inheritance</span></a></li>
+            <li><a href="#q20-deep-copy-vs-shallow-copy"><span class="toc-dot"></span><span class="toc-q-text">Q20: Deep Copy vs. Shallow Copy</span></a></li>
+            <li><a href="#q21-solid-principles"><span class="toc-dot"></span><span class="toc-q-text">Q21: SOLID Principles</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q22-encapsulation-in-the-real-world"><span class="toc-dot"></span><span class="toc-q-text">Q22: Encapsulation in the Real World</span></a></li>
+            <li><a href="#q23-the-base-keyword"><span class="toc-dot"></span><span class="toc-q-text">Q23: The base Keyword</span></a></li>
+            <li><a href="#q24-multiple-inheritance-in-c-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q24: Multiple Inheritance in C# (TRICKY)</span></a></li>
+          </ul>
+        </div>
+    <div class="toc-card">
+          <a class="toc-topic" href="#category-3-collections-linq">
+            <span class="toc-num">03</span>
+            <span class="toc-topic-title">CATEGORY 3: COLLECTIONS & LINQ</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#q25-array-vs-arraylist-vs-listt"><span class="toc-dot"></span><span class="toc-q-text">Q25: Array vs. ArrayList vs. List<T></span></a></li>
+            <li><a href="#q26-ienumerable-vs-iqueryable-which-filters-at-the-db"><span class="toc-dot"></span><span class="toc-q-text">Q26: IEnumerable vs. IQueryable — Which Filters at the DB?</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q27-deferred-execution-in-linq"><span class="toc-dot"></span><span class="toc-q-text">Q27: Deferred Execution in LINQ</span></a></li>
+            <li><a href="#q28-how-does-dictionary-handle-collisions"><span class="toc-dot"></span><span class="toc-q-text">Q28: How Does Dictionary Handle Collisions?</span></a></li>
+            <li><a href="#q29-yield-return-custom-lazy-iteration"><span class="toc-dot"></span><span class="toc-q-text">Q29: yield return — Custom Lazy Iteration</span></a></li>
+            <li><a href="#q30-any-vs-count-0-which-is-faster-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q30: Any() vs. Count() > 0 — Which Is Faster? (TRICKY)</span></a></li>
+            <li><a href="#q31-select-vs-selectmany"><span class="toc-dot"></span><span class="toc-q-text">Q31: Select vs. SelectMany</span></a></li>
+            <li><a href="#q32-first-vs-firstordefault-vs-single-vs-singleordefault-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q32: First vs. FirstOrDefault vs. Single vs. SingleOrDefault (TRICKY)</span></a></li>
+            <li><a href="#q33-groupby-in-linq"><span class="toc-dot"></span><span class="toc-q-text">Q33: GroupBy in LINQ</span></a></li>
+            <li><a href="#q34-icollection-vs-ilist-vs-ireadonlylist"><span class="toc-dot"></span><span class="toc-q-text">Q34: ICollection vs. IList vs. IReadOnlyList</span></a></li>
+            <li><a href="#q35-hashset-vs-list-when-to-use-hashset-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q35: HashSet vs. List — When to Use HashSet (TRICKY)</span></a></li>
+            <li><a href="#q36-linq-method-syntax-vs-query-syntax"><span class="toc-dot"></span><span class="toc-q-text">Q36: LINQ Method Syntax vs. Query Syntax</span></a></li>
+          </ul>
+        </div>
+    <div class="toc-card">
+          <a class="toc-topic" href="#category-4-async-multithreading-parallelism">
+            <span class="toc-num">04</span>
+            <span class="toc-topic-title">CATEGORY 4: ASYNC, MULTITHREADING & PARALLELISM</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#q37-process-vs-thread-vs-task"><span class="toc-dot"></span><span class="toc-q-text">Q37: Process vs. Thread vs. Task</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q38-async-and-await-how-they-work"><span class="toc-dot"></span><span class="toc-q-text">Q38: async and await — How They Work</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q39-task-vs-thread-when-to-use-which"><span class="toc-dot"></span><span class="toc-q-text">Q39: Task vs. Thread — When to Use Which?</span></a></li>
+            <li><a href="#q40-taskrun-vs-taskfactorystartnew"><span class="toc-dot"></span><span class="toc-q-text">Q40: Task.Run vs. Task.Factory.StartNew</span></a></li>
+            <li><a href="#q41-deadlocks-result-vs-await"><span class="toc-dot"></span><span class="toc-q-text">Q41: Deadlocks — `.Result` vs. `await`</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q42-cancellationtoken-stopping-long-running-work"><span class="toc-dot"></span><span class="toc-q-text">Q42: CancellationToken — Stopping Long-Running Work</span></a></li>
+            <li><a href="#q43-valuetask-vs-task"><span class="toc-dot"></span><span class="toc-q-text">Q43: ValueTask vs. Task</span></a></li>
+            <li><a href="#q44-configureawaitfalse-why-it-matters"><span class="toc-dot"></span><span class="toc-q-text">Q44: ConfigureAwait(false) — Why It Matters</span></a></li>
+            <li><a href="#q45-lock-vs-monitor-vs-semaphoreslim"><span class="toc-dot"></span><span class="toc-q-text">Q45: lock vs. Monitor vs. SemaphoreSlim</span></a></li>
+            <li><a href="#q46-taskwhenall-vs-taskwhenany"><span class="toc-dot"></span><span class="toc-q-text">Q46: Task.WhenAll vs. Task.WhenAny</span></a></li>
+            <li><a href="#q47-async-streams-iasyncenumerablet-modern"><span class="toc-dot"></span><span class="toc-q-text">Q47: Async Streams — IAsyncEnumerable<T> (MODERN)</span></a></li>
+          </ul>
+        </div>
+    <div class="toc-card">
+          <a class="toc-topic" href="#category-5-aspnet-core-net-core">
+            <span class="toc-num">05</span>
+            <span class="toc-topic-title">CATEGORY 5: ASP.NET CORE & .NET CORE</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#q48-net-framework-vs-net-core-vs-net-5"><span class="toc-dot"></span><span class="toc-q-text">Q48: .NET Framework vs .NET Core vs .NET 5+</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q49-dependency-injection-transient-scoped-singleton"><span class="toc-dot"></span><span class="toc-q-text">Q49: Dependency Injection — Transient, Scoped, Singleton</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q50-middleware-pipeline-in-aspnet-core"><span class="toc-dot"></span><span class="toc-q-text">Q50: Middleware Pipeline in ASP.NET Core</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q51-filters-action-result-exception-authorization"><span class="toc-dot"></span><span class="toc-q-text">Q51: Filters — Action, Result, Exception, Authorization</span></a></li>
+            <li><a href="#q52-garbage-collection-generations-0-1-2"><span class="toc-dot"></span><span class="toc-q-text">Q52: Garbage Collection — Generations 0, 1, 2</span></a></li>
+            <li><a href="#q53-ihttpclientfactory-why-not-new-httpclient"><span class="toc-dot"></span><span class="toc-q-text">Q53: IHttpClientFactory — Why Not new HttpClient()?</span></a></li>
+            <li><a href="#q54-ioptions-pattern-strongly-typed-config"><span class="toc-dot"></span><span class="toc-q-text">Q54: IOptions Pattern — Strongly Typed Config</span></a></li>
+            <li><a href="#q55-appsettingsjson-and-configuration-hierarchy"><span class="toc-dot"></span><span class="toc-q-text">Q55: appsettings.json and Configuration Hierarchy</span></a></li>
+            <li><a href="#q56-hosted-services-and-backgroundservice"><span class="toc-dot"></span><span class="toc-q-text">Q56: Hosted Services and BackgroundService</span></a></li>
+            <li><a href="#q57-logging-with-ilogger"><span class="toc-dot"></span><span class="toc-q-text">Q57: Logging with ILogger</span></a></li>
+            <li><a href="#q58-minimal-apis-vs-controllers-modern"><span class="toc-dot"></span><span class="toc-q-text">Q58: Minimal APIs vs. Controllers (MODERN)</span></a></li>
+            <li><a href="#q59-authentication-vs-authorization"><span class="toc-dot"></span><span class="toc-q-text">Q59: Authentication vs. Authorization</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q60-jwt-tokens-in-aspnet-core-modern"><span class="toc-dot"></span><span class="toc-q-text">Q60: JWT Tokens in ASP.NET Core (MODERN)</span></a></li>
+          </ul>
+        </div>
+    <div class="toc-card">
+          <a class="toc-topic" href="#category-6-entity-framework-core">
+            <span class="toc-num">06</span>
+            <span class="toc-topic-title">CATEGORY 6: ENTITY FRAMEWORK CORE</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#q61-ef-core-vs-adonet-vs-dapper"><span class="toc-dot"></span><span class="toc-q-text">Q61: EF Core vs. ADO.NET vs. Dapper</span></a></li>
+            <li><a href="#q62-code-first-vs-database-first"><span class="toc-dot"></span><span class="toc-q-text">Q62: Code First vs. Database First</span><span class="toc-imp">★</span></a></li>
+            <li><a href="#q63-ef-core-migrations"><span class="toc-dot"></span><span class="toc-q-text">Q63: EF Core Migrations</span></a></li>
+            <li><a href="#q64-asnotracking-vs-tracking-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q64: AsNoTracking vs. Tracking (TRICKY)</span></a></li>
+            <li><a href="#q65-lazy-vs-eager-vs-explicit-loading"><span class="toc-dot"></span><span class="toc-q-text">Q65: Lazy vs. Eager vs. Explicit Loading</span></a></li>
+            <li><a href="#q66-include-vs-theninclude"><span class="toc-dot"></span><span class="toc-q-text">Q66: Include vs. ThenInclude</span></a></li>
+            <li><a href="#q67-transactions-in-ef-core"><span class="toc-dot"></span><span class="toc-q-text">Q67: Transactions in EF Core</span></a></li>
+            <li><a href="#q68-stored-procedures-with-ef-core"><span class="toc-dot"></span><span class="toc-q-text">Q68: Stored Procedures with EF Core</span></a></li>
+          </ul>
+        </div>
+    <div class="toc-card">
+          <a class="toc-topic" href="#category-7-modern-net-advanced-concepts">
+            <span class="toc-num">07</span>
+            <span class="toc-topic-title">CATEGORY 7: MODERN .NET & ADVANCED CONCEPTS</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#q69-reflection-what-it-is-and-why-its-slow"><span class="toc-dot"></span><span class="toc-q-text">Q69: Reflection — What It Is and Why It's Slow</span></a></li>
+            <li><a href="#q70-delegates-vs-events"><span class="toc-dot"></span><span class="toc-q-text">Q70: Delegates vs. Events</span></a></li>
+            <li><a href="#q71-func-vs-action-vs-predicate-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q71: Func vs. Action vs. Predicate (TRICKY)</span></a></li>
+            <li><a href="#q72-custom-attributes"><span class="toc-dot"></span><span class="toc-q-text">Q72: Custom Attributes</span></a></li>
+            <li><a href="#q73-exception-handling-throw-vs-throw-ex-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q73: Exception Handling — throw vs. throw ex (TRICKY)</span></a></li>
+            <li><a href="#q74-records-vs-class-vs-struct-modern"><span class="toc-dot"></span><span class="toc-q-text">Q74: Records vs. Class vs. Struct (MODERN)</span></a></li>
+            <li><a href="#q75-top-level-statements-modern"><span class="toc-dot"></span><span class="toc-q-text">Q75: Top-Level Statements (MODERN)</span></a></li>
+            <li><a href="#q76-global-usings-and-file-scoped-namespaces-modern"><span class="toc-dot"></span><span class="toc-q-text">Q76: Global Usings and File-Scoped Namespaces (MODERN)</span></a></li>
+            <li><a href="#q77-spant-and-memoryt-modern"><span class="toc-dot"></span><span class="toc-q-text">Q77: Span<T> and Memory<T> (MODERN)</span></a></li>
+            <li><a href="#q78-source-generators-modern"><span class="toc-dot"></span><span class="toc-q-text">Q78: Source Generators (MODERN)</span></a></li>
+          </ul>
+        </div>
+    <div class="toc-card">
+          <a class="toc-topic" href="#appendix">
+            <span class="toc-num">08</span>
+            <span class="toc-topic-title">APPENDIX</span>
+          </a>
+          <ul class="toc-qs">
+            <li><a href="#quick-revision-cheat-sheet"><span class="toc-dot"></span><span class="toc-q-text">Quick Revision Cheat Sheet</span></a></li>
+            <li><a href="#interview-tips"><span class="toc-dot"></span><span class="toc-q-text">Interview Tips</span></a></li>
+          </ul>
+        </div>
+  </div>
+</div>
+
+<hr>
+<h2 id="category-1-c-core-fundamentals">CATEGORY 1: C# CORE FUNDAMENTALS</h2>
+<h3 id="q1-value-types-vs-reference-types-stack-vs-heap-important">Q1: Value Types vs. Reference Types — Stack vs. Heap <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+Value types like <code>int</code>, <code>bool</code>, <code>struct</code>, <code>enum</code>, <code>decimal</code>, and <code>DateTime</code> store the actual data inline. Reference types like <code>class</code>, <code>string</code>, arrays, and delegates store a pointer to the data on the heap. The common phrase &quot;value types live on the stack&quot; is only partially true — a value type field inside a class actually lives on the heap with that class. So the real rule is: value types store data directly, reference types store an address.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Value types: <code>int</code>, <code>bool</code>, <code>struct</code>, <code>enum</code>, <code>DateTime</code>.</li>
+<li>Reference types: <code>class</code>, <code>string</code>, <code>array</code>, <code>interface</code>, <code>delegate</code>.</li>
+<li>Where the variable lives depends on where it&#39;s declared.</li>
+<li>Reference types can be <code>null</code>; value types cannot (unless nullable).</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-built_in">int</span> x = <span class="hljs-number">5</span>;                       <span class="hljs-comment">// value type, stack</span>
+Order o = <span class="hljs-keyword">new</span> Order { Id = <span class="hljs-number">99</span> }; <span class="hljs-comment">// reference, object on heap</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Is <code>string</code> a value or reference type?
+<strong>A:</strong> Reference type, but it behaves like a value because it&#39;s immutable.</p>
+<p><strong>Q:</strong> Where does an <code>int</code> field inside a class live?
+<strong>A:</strong> On the heap — because the class itself lives on the heap.</p>
+<p><strong>Q:</strong> Can a value type be <code>null</code>?
+<strong>A:</strong> Only if it&#39;s declared as nullable (<code>int?</code>).</p>
+<hr>
+<h3 id="q2-boxing-and-unboxing-performance-cost-important">Q2: Boxing and Unboxing — Performance Cost <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+Boxing means converting a value type into an <code>object</code> reference, which allocates memory on the heap. Unboxing means casting that object back to its original value type. Each boxing operation costs a heap allocation, a copy, and adds GC pressure — roughly 20–30× slower than working with the value directly. This is why generics like <code>List&lt;int&gt;</code> were introduced — they completely avoid boxing.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Boxing → value type to <code>object</code> (heap allocation).</li>
+<li>Unboxing → casting back from object.</li>
+<li>Slows down performance and increases GC.</li>
+<li>Avoid using non-generic collections like <code>ArrayList</code>.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-built_in">int</span> i = <span class="hljs-number">10</span>;
+<span class="hljs-built_in">object</span> obj = i;       <span class="hljs-comment">// boxing</span>
+<span class="hljs-built_in">int</span> j = (<span class="hljs-built_in">int</span>)obj;     <span class="hljs-comment">// unboxing</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> How do you avoid boxing?
+<strong>A:</strong> Use generic collections like <code>List&lt;T&gt;</code>, <code>Dictionary&lt;K,V&gt;</code>.</p>
+<p><strong>Q:</strong> Does <code>int.ToString()</code> cause boxing?
+<strong>A:</strong> No, because <code>int</code> has its own override for <code>ToString()</code>.</p>
+<p><strong>Q:</strong> Why is boxing bad for performance?
+<strong>A:</strong> It allocates on the heap, copies data, and adds GC overhead.</p>
+<hr>
+<h3 id="q3-struct-vs-class-when-to-choose-a-struct">Q3: struct vs. class — When to Choose a struct?</h3>
+<p><strong>Direct Answer:</strong>
+Use a <code>struct</code> for small, immutable, value-like types such as <code>Point</code>, <code>Money</code>, or coordinates. Use a <code>class</code> when you need identity, inheritance, polymorphism, or shared mutable state. Structs are value types (copied on assignment), classes are reference types (shared via reference). A common guideline is: if your type is under ~16 bytes and immutable, use a struct.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Struct = value type, copied by value, no inheritance.</li>
+<li>Class = reference type, supports inheritance, shared by reference.</li>
+<li>Mutable structs are dangerous due to copying.</li>
+<li>Structs cannot be <code>null</code> unless made nullable.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> <span class="hljs-keyword">struct</span> Point { <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> X { <span class="hljs-keyword">get</span>; } <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Y { <span class="hljs-keyword">get</span>; } }
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Customer</span> { <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } }</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can a struct have a constructor?
+<strong>A:</strong> Yes, but it must initialize all fields.</p>
+<p><strong>Q:</strong> Can struct inherit another struct?
+<strong>A:</strong> No, structs only support implementing interfaces.</p>
+<p><strong>Q:</strong> Why are mutable structs risky?
+<strong>A:</strong> Because every assignment creates a copy, and modifications on copies are lost.</p>
+<hr>
+<h3 id="q4-const-vs-readonly-vs-static-readonly-tricky">Q4: const vs. readonly vs. static readonly <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>const</code> is a compile-time constant — its value is baked into the compiled code and must be set at declaration. <code>readonly</code> is set at runtime and can only be assigned in declaration or constructor; values can differ per instance. <code>static readonly</code> is similar to <code>readonly</code> but shared across all instances and resolved at runtime — the safe choice for cross-assembly constants.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>const</code> → compile-time, only literals (int, string, etc.).</li>
+<li><code>readonly</code> → runtime, set in constructor.</li>
+<li><code>static readonly</code> → runtime, shared across instances.</li>
+<li>Use <code>static readonly</code> for cross-assembly safety.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">double</span> Pi = <span class="hljs-number">3.14</span>;
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> DateTime AppStart = DateTime.Now;
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">int</span> Id;   <span class="hljs-comment">// set in ctor</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why prefer <code>static readonly</code> over <code>const</code> in libraries?
+<strong>A:</strong> <code>const</code> values are baked into consumer assemblies — changes won&#39;t reflect without rebuild.</p>
+<p><strong>Q:</strong> Can <code>const</code> be a <code>DateTime</code>?
+<strong>A:</strong> No, only primitive literals and strings.</p>
+<p><strong>Q:</strong> Can <code>readonly</code> be modified?
+<strong>A:</strong> Only inside the constructor or at declaration.</p>
+<hr>
+<h3 id="q5-why-are-strings-immutable-in-c">Q5: Why Are Strings Immutable in C#?</h3>
+<p><strong>Direct Answer:</strong>
+Strings in C# are immutable, meaning once a string is created, its value cannot be changed. Any &quot;modification&quot; actually creates a new string and the old one becomes garbage. Immutability gives thread safety, safe hashing for dictionary keys, and predictable behavior. The downside is that <code>+=</code> in a loop creates many intermediate strings, which is slow — that&#39;s where <code>StringBuilder</code> helps.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Strings cannot be changed after creation.</li>
+<li>Each modification creates a new object.</li>
+<li>Provides thread safety automatically.</li>
+<li>Use <code>StringBuilder</code> for heavy concatenations.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-built_in">string</span> s = <span class="hljs-string">&quot;Hello&quot;</span>;
+s += <span class="hljs-string">&quot; World&quot;</span>;   <span class="hljs-comment">// creates a new string, original is GC&#x27;d</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why is string a reference type but acts like a value?
+<strong>A:</strong> Because of immutability — comparing two strings checks values, not references.</p>
+<p><strong>Q:</strong> Are two equal strings stored only once?
+<strong>A:</strong> Yes, due to string interning of literals at compile time.</p>
+<p><strong>Q:</strong> Can we make our own immutable type?
+<strong>A:</strong> Yes, use <code>readonly</code> fields and only <code>get</code> properties.</p>
+<hr>
+<h3 id="q6-string-vs-stringbuilder-when-to-use-which">Q6: String vs. StringBuilder — When to Use Which?</h3>
+<p><strong>Direct Answer:</strong>
+Use <code>StringBuilder</code> when you&#39;re building a string in a loop or doing many concatenations. It uses an internal mutable buffer, so it doesn&#39;t keep allocating new string objects. For 2–3 concatenations, plain <code>+</code> or string interpolation is faster and cleaner. As a thumb rule: more than 5–10 concatenations or any loop → <code>StringBuilder</code>.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>String → immutable, slow for many edits.</li>
+<li>StringBuilder → mutable buffer, much faster in loops.</li>
+<li>Pre-set capacity if size is known.</li>
+<li>For small joins, prefer <code>string.Join</code> or interpolation.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> sb = <span class="hljs-keyword">new</span> StringBuilder();
+<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> item <span class="hljs-keyword">in</span> items)
+    sb.Append(item).Append(<span class="hljs-string">&quot;,&quot;</span>);
+<span class="hljs-keyword">return</span> sb.ToString();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Is <code>StringBuilder</code> thread-safe?
+<strong>A:</strong> No, you should not share a single instance across threads.</p>
+<p><strong>Q:</strong> When should I avoid <code>StringBuilder</code>?
+<strong>A:</strong> For 2–3 small concatenations — <code>string.Concat</code> or interpolation is faster.</p>
+<p><strong>Q:</strong> Does <code>string.Join</code> use a <code>StringBuilder</code>?
+<strong>A:</strong> Internally it uses something similar, optimized for known lengths.</p>
+<hr>
+<h3 id="q7-var-vs-dynamic-vs-object-common-confusion-tricky">Q7: var vs. dynamic vs. object — Common Confusion <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>var</code> is implicit typing — the compiler figures out the actual type at compile time, so it&#39;s still strongly typed. <code>dynamic</code> skips compile-time type checking and resolves everything at runtime. <code>object</code> is the base class of all types — you must cast it to use it. So <code>var</code> is safe and fast, <code>dynamic</code> is flexible but risky, and <code>object</code> is general but requires casting.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>var</code> → compile-time type, strongly typed.</li>
+<li><code>dynamic</code> → runtime type, no IntelliSense.</li>
+<li><code>object</code> → base type, needs casting.</li>
+<li>Use <code>var</code> for clean code, <code>dynamic</code> for COM/JSON only.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> x = <span class="hljs-string">&quot;Hello&quot;</span>;        <span class="hljs-comment">// string</span>
+<span class="hljs-built_in">dynamic</span> d = <span class="hljs-string">&quot;Hello&quot;</span>;    <span class="hljs-comment">// resolved at runtime</span>
+<span class="hljs-built_in">object</span> o = <span class="hljs-string">&quot;Hello&quot;</span>;     <span class="hljs-comment">// requires cast: (string)o</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Is <code>var</code> the same as JavaScript&#39;s <code>var</code>?
+<strong>A:</strong> No, C#&#39;s <code>var</code> is fully strongly typed at compile time.</p>
+<p><strong>Q:</strong> When to use <code>dynamic</code>?
+<strong>A:</strong> For COM interop, ExpandoObject, or dynamic JSON.</p>
+<p><strong>Q:</strong> Can <code>var</code> be used as a class field?
+<strong>A:</strong> No, only inside methods with an initializer.</p>
+<hr>
+<h3 id="q8-nullable-types-and-the-operator">Q8: Nullable Types and the ?? Operator</h3>
+<p><strong>Direct Answer:</strong>
+<code>int?</code> (shorthand for <code>Nullable&lt;int&gt;</code>) lets a value type also represent the absence of a value. The null-coalescing operator <code>??</code> returns the right-hand value if the left is <code>null</code>. The <code>??=</code> operator assigns only when the variable is null. Modern C# also has nullable reference types (<code>string?</code>) which are compiler-checked annotations to catch null reference exceptions early.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>int?</code> allows value types to be null.</li>
+<li><code>??</code> returns alternative value when null.</li>
+<li><code>??=</code> assigns if null.</li>
+<li><code>?.</code> (null-conditional) prevents null-deref crashes.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-built_in">int</span>? age = <span class="hljs-literal">null</span>;
+<span class="hljs-built_in">int</span> safe = age ?? <span class="hljs-number">0</span>;       <span class="hljs-comment">// 0 if null</span>
+age ??= <span class="hljs-number">18</span>;                <span class="hljs-comment">// assigns 18 if null</span>
+<span class="hljs-built_in">string</span>? name = user?.Name; <span class="hljs-comment">// null-safe access</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference between <code>int</code> and <code>int?</code>?
+<strong>A:</strong> <code>int?</code> can hold null; <code>int</code> cannot.</p>
+<p><strong>Q:</strong> What does <code>?.</code> operator do?
+<strong>A:</strong> Returns null if the operand is null, avoiding NullReferenceException.</p>
+<p><strong>Q:</strong> How do you check if nullable has a value?
+<strong>A:</strong> Using <code>.HasValue</code> or <code>!= null</code>.</p>
+<hr>
+<h3 id="q9-ref-vs-out-vs-in-parameters">Q9: ref vs. out vs. in Parameters</h3>
+<p><strong>Direct Answer:</strong>
+<code>ref</code> passes a variable by reference — the caller must initialize it, and the method can read or modify it. <code>out</code> is also pass-by-reference but the method <strong>must</strong> assign a value before returning, and the caller doesn&#39;t need to initialize. <code>in</code> is pass-by-reference for read-only access — used to avoid copying large structs without allowing modification.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>ref</code> → caller initializes, method reads/writes.</li>
+<li><code>out</code> → method must assign, caller needn&#39;t initialize.</li>
+<li><code>in</code> → read-only reference, performance optimization.</li>
+<li>C# 7+ tuple returns often replace <code>out</code>.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">TryParse</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> s, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> <span class="hljs-keyword">value</span></span>)</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>.TryParse(s, <span class="hljs-keyword">out</span> <span class="hljs-keyword">value</span>);
+}
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Increment</span>(<span class="hljs-params"><span class="hljs-keyword">ref</span> <span class="hljs-built_in">int</span> counter</span>)</span> =&gt; counter++;
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Contains</span>(<span class="hljs-params"><span class="hljs-keyword">in</span> Rectangle r, Point p</span>)</span> { <span class="hljs-comment">/* read-only */</span> }</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Modern alternative to <code>out</code>?
+<strong>A:</strong> Tuple return types like <code>(bool ok, int value)</code>.</p>
+<p><strong>Q:</strong> Why use <code>in</code>?
+<strong>A:</strong> Avoids copying large structs while keeping them read-only.</p>
+<p><strong>Q:</strong> Can we overload methods using <code>ref</code>/<code>out</code>?
+<strong>A:</strong> Yes, but <code>ref</code> and <code>out</code> together can&#39;t differ for overloading.</p>
+<hr>
+<h3 id="q10-the-using-statement-and-idisposable">Q10: The using Statement and IDisposable</h3>
+<p><strong>Direct Answer:</strong>
+The <code>using</code> statement automatically calls <code>.Dispose()</code> on an object when the block ends, even if an exception is thrown. Internally, it compiles to a <code>try/finally</code> block. This is essential for unmanaged resources like database connections, file streams, and HTTP clients. C# 8 introduced <code>using var</code> (without braces) which disposes when the enclosing method scope ends.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Ensures <code>Dispose()</code> is always called.</li>
+<li>Prevents resource leaks (DB, file, sockets).</li>
+<li><code>using var</code> is shorter, modern syntax.</li>
+<li><code>await using</code> works with <code>IAsyncDisposable</code>.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> conn = <span class="hljs-keyword">new</span> SqlConnection(connectionString);
+conn.Open();
+<span class="hljs-comment">// auto-disposed at method end</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What happens without <code>using</code>?
+<strong>A:</strong> Resources may leak; e.g., DB connections fill the pool.</p>
+<p><strong>Q:</strong> Difference: <code>using</code> statement vs. directive?
+<strong>A:</strong> Directive imports namespaces; statement disposes resources.</p>
+<p><strong>Q:</strong> What is <code>IAsyncDisposable</code>?
+<strong>A:</strong> Async cleanup interface used with <code>await using</code> (e.g., DbContext).</p>
+<hr>
+<h3 id="q11-pattern-matching-in-c-modern">Q11: Pattern Matching in C# <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+Pattern matching lets you check a value&#39;s shape and extract data in one expression. Modern C# supports type patterns, property patterns, tuple patterns, and <code>switch</code> expressions. It makes code more readable and safer than long <code>if-else</code> or <code>switch-case</code> chains. Introduced in C# 7 and significantly enhanced through C# 8, 9, 10, and 11.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>is</code> keyword for type checks with assignment.</li>
+<li><code>switch</code> expressions return values.</li>
+<li>Property and tuple patterns extract data.</li>
+<li>Cleaner than nested <code>if/else</code>.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-built_in">object</span> obj = <span class="hljs-string">&quot;hello&quot;</span>;
+<span class="hljs-keyword">if</span> (obj <span class="hljs-keyword">is</span> <span class="hljs-built_in">string</span> s) Console.WriteLine(s.Length);
+
+<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">Describe</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> n</span>)</span> =&gt; n <span class="hljs-keyword">switch</span> {
+    &lt; <span class="hljs-number">0</span> =&gt; <span class="hljs-string">&quot;Negative&quot;</span>,
+    <span class="hljs-number">0</span>   =&gt; <span class="hljs-string">&quot;Zero&quot;</span>,
+    &gt; <span class="hljs-number">0</span> =&gt; <span class="hljs-string">&quot;Positive&quot;</span>
+};</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What is a switch expression?
+<strong>A:</strong> A concise version of <code>switch</code> that returns a value.</p>
+<p><strong>Q:</strong> What is a property pattern?
+<strong>A:</strong> Matches based on object property values, e.g., <code>{ Status: &quot;Active&quot; }</code>.</p>
+<p><strong>Q:</strong> Difference between <code>is</code> and <code>as</code>?
+<strong>A:</strong> <code>is</code> returns bool; <code>as</code> returns the cast object or null.</p>
+<hr>
+<h3 id="q12-init-only-properties-and-required-members-modern">Q12: Init-Only Properties and Required Members <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>init</code> (C# 9) lets a property be set only during object initialization, making it immutable afterward. The <code>required</code> modifier (C# 11) forces callers to set that property when creating the object. Together they create safer immutable types without writing constructors. They&#39;re commonly used in DTOs, records, and configuration classes.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>init</code> → settable only during construction.</li>
+<li><code>required</code> → must be set by the caller.</li>
+<li>Great for immutability and DTOs.</li>
+<li>Replaces some constructor boilerplate.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">User</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">required</span> <span class="hljs-built_in">string</span> Name { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Age { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+}
+<span class="hljs-keyword">var</span> u = <span class="hljs-keyword">new</span> User { Name = <span class="hljs-string">&quot;Rutik&quot;</span>, Age = <span class="hljs-number">25</span> };</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference between <code>init</code> and <code>set</code>?
+<strong>A:</strong> <code>set</code> allows future changes; <code>init</code> only at object creation.</p>
+<p><strong>Q:</strong> What if <code>required</code> property is missing?
+<strong>A:</strong> Compiler error — caller must set it.</p>
+<p><strong>Q:</strong> Where are these used most?
+<strong>A:</strong> DTOs, records, immutable models, options classes.</p>
+<hr>
+<h2 id="category-2-object-oriented-programming">CATEGORY 2: OBJECT-ORIENTED PROGRAMMING</h2>
+<h3 id="q13-the-4-pillars-of-oop-important">Q13: The 4 Pillars of OOP <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+The four pillars are <strong>Encapsulation, Abstraction, Inheritance, and Polymorphism</strong>. Encapsulation hides internal state behind methods/properties. Abstraction shows only the necessary functionality and hides implementation details. Inheritance lets one class reuse another&#39;s behavior. Polymorphism lets a single interface represent different underlying types — through method overriding or interfaces.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Encapsulation → data hiding via properties.</li>
+<li>Abstraction → expose what, hide how.</li>
+<li>Inheritance → &quot;is-a&quot; relationship.</li>
+<li>Polymorphism → one interface, many forms.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Shape</span> {           <span class="hljs-comment">// abstraction</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Area</span>()</span>;      <span class="hljs-comment">// polymorphism</span>
+}
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Circle</span> : <span class="hljs-title">Shape</span> {           <span class="hljs-comment">// inheritance</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">double</span> _r;                  <span class="hljs-comment">// encapsulation</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Circle</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> r</span>)</span> =&gt; _r = r;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Area</span>()</span> =&gt; Math.PI * _r * _r;
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference between abstraction and encapsulation?
+<strong>A:</strong> Abstraction hides complexity; encapsulation hides data.</p>
+<p><strong>Q:</strong> Real-life example of polymorphism?
+<strong>A:</strong> A <code>Notification</code> interface used by Email, SMS, Push notifications.</p>
+<p><strong>Q:</strong> Does C# support multiple inheritance?
+<strong>A:</strong> Not for classes — only via multiple interfaces.</p>
+<hr>
+<h3 id="q14-interface-vs-abstract-class-when-to-use-what-important">Q14: Interface vs. Abstract Class — When to Use What? <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+Use an <strong>interface</strong> to define a pure contract — a &quot;can-do&quot; capability that any class can implement. Use an <strong>abstract class</strong> when you have shared state and partial implementation that derived classes should extend. A class can implement many interfaces but inherit from only one abstract class. From C# 8 onwards, interfaces can also have default implementations for non-breaking API evolution.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Interface → contract, no fields.</li>
+<li>Abstract class → partial implementation, shared logic.</li>
+<li>Multiple interfaces, single abstract base.</li>
+<li>C# 8+ allows default interface methods.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IExportable</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Export</span>()</span>; }
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ReportBase</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">string</span> Title { <span class="hljs-keyword">get</span>; }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Footer</span>()</span> =&gt; <span class="hljs-string">&quot;Generated today&quot;</span>;
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can interfaces have fields?
+<strong>A:</strong> No, only properties, methods, and events.</p>
+<p><strong>Q:</strong> Can abstract class have a constructor?
+<strong>A:</strong> Yes, called by derived classes via <code>base()</code>.</p>
+<p><strong>Q:</strong> Can interface have private methods?
+<strong>A:</strong> Yes, since C# 8 (only with default implementation).</p>
+<hr>
+<h3 id="q15-method-overloading-vs-method-overriding">Q15: Method Overloading vs. Method Overriding</h3>
+<p><strong>Direct Answer:</strong>
+Overloading means having multiple methods with the <strong>same name but different parameters</strong> in the same class — resolved at compile time (static polymorphism). Overriding means a derived class <strong>replaces</strong> a base class&#39;s <code>virtual</code> or <code>abstract</code> method using the <code>override</code> keyword — resolved at runtime (dynamic polymorphism). Overloading deals with signature differences, overriding deals with inheritance.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Overloading → same name, different parameters.</li>
+<li>Overriding → child replaces parent&#39;s virtual/abstract method.</li>
+<li>Overloading is compile-time, overriding is runtime.</li>
+<li>Return type alone cannot differentiate overloads.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Calc</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> <span class="hljs-title">Add</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> a, <span class="hljs-built_in">int</span> b</span>)</span> =&gt; a + b;          <span class="hljs-comment">// overload</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Add</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> a, <span class="hljs-built_in">double</span> b</span>)</span> =&gt; a + b; <span class="hljs-comment">// overload</span>
+}
+<span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> { <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Speak</span>()</span> =&gt; Console.WriteLine(<span class="hljs-string">&quot;...&quot;</span>); }
+<span class="hljs-keyword">class</span> <span class="hljs-title">Dog</span> : <span class="hljs-title">Animal</span> { <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Speak</span>()</span> =&gt; Console.WriteLine(<span class="hljs-string">&quot;Bark&quot;</span>); }</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What is method hiding?
+<strong>A:</strong> Using <code>new</code> to hide a parent&#39;s method instead of overriding.</p>
+<p><strong>Q:</strong> Can return type alone differ for overloads?
+<strong>A:</strong> No, parameter list must differ.</p>
+<p><strong>Q:</strong> Why is <code>override</code> better than <code>new</code>?
+<strong>A:</strong> It uses runtime polymorphism — works through base reference.</p>
+<hr>
+<h3 id="q16-virtual-vs-abstract-vs-sealed-tricky">Q16: virtual vs. abstract vs. sealed <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>virtual</code> allows a method to be overridden in derived classes but provides a default implementation. <code>abstract</code> requires derived classes to provide an implementation and exists only in abstract classes. <code>sealed</code> prevents further inheritance (on a class) or further overriding (on a method). Use <code>virtual</code> for optional extension, <code>abstract</code> for mandatory contracts, and <code>sealed</code> for stopping inheritance.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>virtual</code> → can be overridden, has default body.</li>
+<li><code>abstract</code> → must be overridden, no body.</li>
+<li><code>sealed</code> → cannot be inherited or overridden further.</li>
+<li><code>sealed override</code> ends overriding chain.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Shape</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Area</span>()</span>;             <span class="hljs-comment">// mandatory</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Describe</span>()</span> =&gt; <span class="hljs-string">&quot;Shape&quot;</span>; <span class="hljs-comment">// optional</span>
+}
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Square</span> : <span class="hljs-title">Shape</span> {           <span class="hljs-comment">// cannot inherit</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Area</span>()</span> =&gt; <span class="hljs-number">25</span>;
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why use <code>sealed</code>?
+<strong>A:</strong> For performance (JIT can devirtualize) and design clarity.</p>
+<p><strong>Q:</strong> Can a sealed class implement interfaces?
+<strong>A:</strong> Yes, sealed only prevents inheritance.</p>
+<p><strong>Q:</strong> Why is <code>string</code> sealed?
+<strong>A:</strong> For safety, immutability, and performance.</p>
+<hr>
+<h3 id="q17-constructor-chaining-this-and-base">Q17: Constructor Chaining — <code>this()</code> and <code>base()</code></h3>
+<p><strong>Direct Answer:</strong>
+Constructor chaining means one constructor calls another to avoid duplicate initialization. Use <code>this(...)</code> to call another constructor in the same class, and <code>base(...)</code> to call the parent class&#39;s constructor. They must appear before the constructor body. C# 12 also added <strong>primary constructors</strong> for cleaner initialization syntax.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>this()</code> → same class constructor.</li>
+<li><code>base()</code> → parent class constructor.</li>
+<li>Avoids duplicate initialization code.</li>
+<li>C# 12 supports primary constructors.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span>() : <span class="hljs-title">this</span>(<span class="hljs-params"><span class="hljs-string">&quot;Unknown&quot;</span></span>)</span> { }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> name</span>)</span> { Name = name; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name { <span class="hljs-keyword">get</span>; }
+}
+
+<span class="hljs-comment">// C# 12 primary constructor</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Logger</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> source</span>)</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Source { <span class="hljs-keyword">get</span>; } = source;
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can constructor be private?
+<strong>A:</strong> Yes — used in singletons and factory methods.</p>
+<p><strong>Q:</strong> Are constructors inherited?
+<strong>A:</strong> No, but they can be called via <code>base(...)</code>.</p>
+<p><strong>Q:</strong> Can we call virtual methods from constructor?
+<strong>A:</strong> Possible but risky — derived fields may not be initialized yet.</p>
+<hr>
+<h3 id="q18-static-vs-instance-members">Q18: Static vs. Instance Members</h3>
+<p><strong>Direct Answer:</strong>
+Static members belong to the class itself, not to any instance — they&#39;re shared across all objects and accessed using the class name. Instance members belong to a specific object and need an instance to be accessed. Static is great for utilities (<code>Math.Sqrt</code>), constants, and shared state. Avoid mutable static state in multi-threaded apps because it can cause race conditions.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Static → one copy per class, no instance needed.</li>
+<li>Instance → one copy per object.</li>
+<li>Static methods can&#39;t access instance members.</li>
+<li>Static is shared across threads — handle locking.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Counter</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">int</span> Total;       <span class="hljs-comment">// shared</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Local;              <span class="hljs-comment">// per instance</span>
+}
+Counter.Total++;                   <span class="hljs-comment">// accessed via class</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can static class be instantiated?
+<strong>A:</strong> No, it&#39;s sealed by default.</p>
+<p><strong>Q:</strong> Why are extension methods static?
+<strong>A:</strong> Because they belong to a static class.</p>
+<p><strong>Q:</strong> Are static fields thread-safe?
+<strong>A:</strong> No, you need locks or <code>Interlocked</code>.</p>
+<hr>
+<h3 id="q19-composition-over-inheritance">Q19: Composition over Inheritance</h3>
+<p><strong>Direct Answer:</strong>
+Composition means building a class by <strong>holding references</strong> to other objects, while inheritance extends from a base class. Composition is preferred because it&#39;s more flexible, easier to test, and avoids tight coupling. Inheritance is rigid — once you commit to a hierarchy, changes ripple downward. Modern .NET, especially DI in ASP.NET Core, is built around composition.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Composition → &quot;has-a&quot; relationship.</li>
+<li>Inheritance → &quot;is-a&quot; relationship.</li>
+<li>Composition is more flexible and testable.</li>
+<li>DI is real-world composition.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">OrderService</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> INotifier _notifier;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">OrderService</span>(<span class="hljs-params">INotifier n</span>)</span> =&gt; _notifier = n;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Place</span>(<span class="hljs-params">Order o</span>)</span> =&gt; _notifier.Send(<span class="hljs-string">$&quot;Placed <span class="hljs-subst">{o.Id}</span>&quot;</span>);
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> When is inheritance still useful?
+<strong>A:</strong> When there&#39;s a clear &quot;is-a&quot; relationship and shared logic.</p>
+<p><strong>Q:</strong> Is dependency injection composition?
+<strong>A:</strong> Yes — services receive dependencies instead of inheriting them.</p>
+<p><strong>Q:</strong> Drawback of inheritance?
+<strong>A:</strong> Tight coupling and the fragile base class problem.</p>
+<hr>
+<h3 id="q20-deep-copy-vs-shallow-copy">Q20: Deep Copy vs. Shallow Copy</h3>
+<p><strong>Direct Answer:</strong>
+A <strong>shallow copy</strong> creates a new object but copies references for nested objects, so they&#39;re shared between copies. A <strong>deep copy</strong> creates a fully independent copy including all nested objects. <code>MemberwiseClone()</code> in .NET produces a shallow copy. For deep copies, you write your own copy logic, use serialization, or use records with <code>with</code> expressions.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Shallow → top-level copy, nested objects shared.</li>
+<li>Deep → fully independent copy.</li>
+<li><code>MemberwiseClone()</code> = shallow.</li>
+<li>Records support <code>with</code> expressions for cloning.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">OrderDto</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> Id, <span class="hljs-built_in">string</span> Status</span>)</span>;
+<span class="hljs-keyword">var</span> original = <span class="hljs-keyword">new</span> OrderDto(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Pending&quot;</span>);
+<span class="hljs-keyword">var</span> shipped = original <span class="hljs-keyword">with</span> { Status = <span class="hljs-string">&quot;Shipped&quot;</span> };</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Is JSON serialization a deep copy?
+<strong>A:</strong> Yes, but slower and may break on circular references.</p>
+<p><strong>Q:</strong> Is <code>MemberwiseClone()</code> deep or shallow?
+<strong>A:</strong> Shallow — shares nested references.</p>
+<p><strong>Q:</strong> Use case for deep copy?
+<strong>A:</strong> Snapshotting state, undo/redo, isolating test data.</p>
+<hr>
+<h3 id="q21-solid-principles-important">Q21: SOLID Principles <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+SOLID is five design principles that make code maintainable and testable:</p>
+<ul>
+<li><strong>S</strong> — Single Responsibility: one class, one reason to change.</li>
+<li><strong>O</strong> — Open/Closed: open to extension, closed to modification.</li>
+<li><strong>L</strong> — Liskov Substitution: subclasses must work where parent works.</li>
+<li><strong>I</strong> — Interface Segregation: small focused interfaces over fat ones.</li>
+<li><strong>D</strong> — Dependency Inversion: depend on abstractions, not concretions.</li>
+</ul>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Reduces coupling and increases testability.</li>
+<li>ASP.NET Core&#39;s DI follows DIP.</li>
+<li>Avoid &quot;God classes&quot; doing too much.</li>
+<li>Apply where change is likely; don&#39;t over-engineer.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-comment">// Following DIP and SRP</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">OrderService</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">OrderService</span>(<span class="hljs-params">IOrderRepository repo, IEmailSender mail</span>)</span> { }
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Most commonly applied SOLID principle?
+<strong>A:</strong> SRP and DIP — they reduce coupling.</p>
+<p><strong>Q:</strong> Real example of OCP?
+<strong>A:</strong> Adding new payment types via interfaces without modifying existing code.</p>
+<p><strong>Q:</strong> Does DI implement DIP?
+<strong>A:</strong> Yes, DI containers are the practical form of DIP.</p>
+<hr>
+<h3 id="q22-encapsulation-in-the-real-world">Q22: Encapsulation in the Real World</h3>
+<p><strong>Direct Answer:</strong>
+Encapsulation means hiding the internal state of an object and exposing it only through controlled methods or properties. In C#, we use access modifiers (<code>private</code>, <code>protected</code>, etc.) and properties with getters/setters to control how data is read or modified. This protects invariants — for example, an Account class wouldn&#39;t allow setting balance directly; only <code>Deposit</code> and <code>Withdraw</code> modify it.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Hide fields, expose via properties.</li>
+<li>Use access modifiers wisely.</li>
+<li>Maintain invariants (validation in setter).</li>
+<li>Protects against misuse.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Account</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">decimal</span> _balance;
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">decimal</span> Balance =&gt; _balance;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Deposit</span>(<span class="hljs-params"><span class="hljs-built_in">decimal</span> amt</span>)</span> {
+        <span class="hljs-keyword">if</span> (amt &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentException();
+        _balance += amt;
+    }
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why use properties over public fields?
+<strong>A:</strong> They allow validation, lazy loading, and binding.</p>
+<p><strong>Q:</strong> What is auto-property?
+<strong>A:</strong> A shorthand: <code>public int Id { get; set; }</code> — compiler creates the field.</p>
+<p><strong>Q:</strong> Can encapsulation hide method behavior too?
+<strong>A:</strong> Yes, via abstraction — exposing only what&#39;s needed.</p>
+<hr>
+<h3 id="q23-the-base-keyword">Q23: The base Keyword</h3>
+<p><strong>Direct Answer:</strong>
+The <code>base</code> keyword lets a derived class access methods or constructors of its direct parent class. It&#39;s mostly used when overriding a method to extend (not replace) the parent&#39;s logic, or in constructors to call the base constructor. It&#39;s resolved at compile time and refers strictly to the immediate parent — you can&#39;t skip levels.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>base.Method()</code> → calls parent&#39;s version.</li>
+<li><code>base()</code> → calls parent constructor.</li>
+<li>Used to extend rather than replace.</li>
+<li>Cannot use <code>base</code> in static methods.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AuditedRepo</span> : <span class="hljs-title">Repository</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Save</span>(<span class="hljs-params">Entity e</span>)</span> {
+        Log(e);
+        <span class="hljs-keyword">base</span>.Save(e);   <span class="hljs-comment">// delegate to parent</span>
+    }
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can <code>base</code> skip multiple levels?
+<strong>A:</strong> No, only direct parent.</p>
+<p><strong>Q:</strong> Can constructor use both <code>this</code> and <code>base</code>?
+<strong>A:</strong> Only one of them at a time.</p>
+<p><strong>Q:</strong> What if you forget <code>base.Dispose()</code> in a child?
+<strong>A:</strong> Resources of the base class may leak.</p>
+<hr>
+<h3 id="q24-multiple-inheritance-in-c-tricky">Q24: Multiple Inheritance in C# <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+C# does <strong>not support multiple inheritance</strong> for classes — a class can inherit from only one base class. This avoids the &quot;diamond problem&quot; of ambiguous method resolution. However, a class can implement <strong>multiple interfaces</strong>, achieving similar flexibility. Since C# 8, interfaces can also have default method implementations, providing a controlled form of multiple inheritance.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Single class inheritance only.</li>
+<li>Multiple interface implementation allowed.</li>
+<li>Avoids diamond problem ambiguity.</li>
+<li>Default interface methods (C# 8+) bring partial multi-inheritance.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IReader</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Read</span>()</span>; }
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IWriter</span> { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Write</span>()</span>; }
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FileHandler</span> : <span class="hljs-title">IReader</span>, <span class="hljs-title">IWriter</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Read</span>()</span> { }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Write</span>()</span> { }
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why doesn&#39;t C# allow multiple class inheritance?
+<strong>A:</strong> To prevent ambiguity in method resolution (diamond problem).</p>
+<p><strong>Q:</strong> What if two interfaces have same default method?
+<strong>A:</strong> The class must explicitly implement and disambiguate.</p>
+<p><strong>Q:</strong> Can struct inherit from class?
+<strong>A:</strong> No, structs only implement interfaces.</p>
+<hr>
+<h2 id="category-3-collections-linq">CATEGORY 3: COLLECTIONS &amp; LINQ</h2>
+<h3 id="q25-array-vs-arraylist-vs-listt">Q25: Array vs. ArrayList vs. List<T></h3>
+<p><strong>Direct Answer:</strong>
+<code>Array</code> has a fixed size and is type-safe. <code>ArrayList</code> is older, dynamic, but stores everything as <code>object</code> — meaning value types get boxed and there&#39;s no type safety. <code>List&lt;T&gt;</code> is the modern, generic, type-safe, and dynamic choice. In real projects, we almost always use <code>List&lt;T&gt;</code> and rarely touch <code>ArrayList</code>, which is a leftover from .NET 1.0.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Array → fixed size, type-safe.</li>
+<li>ArrayList → dynamic but old, boxes values.</li>
+<li>List<T> → generic, dynamic, fast.</li>
+<li>Use <code>List&lt;T&gt;</code> by default.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">List&lt;<span class="hljs-built_in">int</span>&gt; numbers = <span class="hljs-keyword">new</span>() { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> };
+<span class="hljs-built_in">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">int</span>[<span class="hljs-number">5</span>];</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why avoid <code>ArrayList</code>?
+<strong>A:</strong> It causes boxing for value types and lacks type safety.</p>
+<p><strong>Q:</strong> Is <code>List&lt;T&gt;</code> thread-safe?
+<strong>A:</strong> No, use <code>ConcurrentBag&lt;T&gt;</code> or locks for threading.</p>
+<p><strong>Q:</strong> How does <code>List&lt;T&gt;</code> grow?
+<strong>A:</strong> It doubles internal capacity when full.</p>
+<hr>
+<h3 id="q26-ienumerable-vs-iqueryable-which-filters-at-the-db-important">Q26: IEnumerable vs. IQueryable — Which Filters at the DB? <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>IQueryable</code> builds an expression tree that EF Core translates into SQL — so filtering happens <strong>at the database</strong>. <code>IEnumerable</code> represents in-memory iteration — filtering happens <strong>in your application</strong> after data is loaded. Calling <code>.ToList()</code> too early forces data into memory and you lose database-level filtering, which can crash apps when tables are large.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>IQueryable → filters at the database (SQL).</li>
+<li>IEnumerable → filters in memory.</li>
+<li>Avoid premature <code>.ToList()</code>.</li>
+<li>IQueryable supports expression composition.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> pending = ctx.Orders
+    .Where(o =&gt; o.Status == <span class="hljs-string">&quot;Pending&quot;</span>)  <span class="hljs-comment">// SQL WHERE</span>
+    .ToListAsync();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> How to convert IQueryable to IEnumerable?
+<strong>A:</strong> Call <code>.AsEnumerable()</code> or <code>.ToList()</code>.</p>
+<p><strong>Q:</strong> Why is mixing them dangerous?
+<strong>A:</strong> Filtering may move from SQL to memory and pull entire tables.</p>
+<p><strong>Q:</strong> Is IQueryable always faster?
+<strong>A:</strong> Usually — but only when filtering reduces data significantly.</p>
+<hr>
+<h3 id="q27-deferred-execution-in-linq">Q27: Deferred Execution in LINQ</h3>
+<p><strong>Direct Answer:</strong>
+LINQ queries don&#39;t execute when defined — they only execute when iterated. Operators like <code>Where</code>, <code>Select</code>, and <code>OrderBy</code> build a query description; execution happens on <code>foreach</code>, <code>ToList</code>, <code>Count</code>, <code>First</code>, etc. This allows efficient query composition but can cause unexpected re-execution if the same query is iterated multiple times.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Queries are lazy by default.</li>
+<li>Each iteration re-runs the query.</li>
+<li>Use <code>.ToList()</code> to materialize once.</li>
+<li>Combines well with <code>IQueryable</code> for SQL.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> query = list.Where(x =&gt; x &gt; <span class="hljs-number">10</span>);  <span class="hljs-comment">// not executed yet</span>
+<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> x <span class="hljs-keyword">in</span> query) { }          <span class="hljs-comment">// executes here</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What triggers immediate execution?
+<strong>A:</strong> <code>ToList</code>, <code>ToArray</code>, <code>Count</code>, <code>First</code>, <code>Sum</code>.</p>
+<p><strong>Q:</strong> Why is deferred execution useful?
+<strong>A:</strong> Lets you build queries piece by piece without running prematurely.</p>
+<p><strong>Q:</strong> What&#39;s a common bug with deferred execution?
+<strong>A:</strong> Captured variable changes affecting later iteration results.</p>
+<hr>
+<h3 id="q28-how-does-dictionary-handle-collisions">Q28: How Does Dictionary Handle Collisions?</h3>
+<p><strong>Direct Answer:</strong>
+Dictionary in .NET uses a hash table with <strong>separate chaining</strong>. Each key&#39;s hash code maps to a bucket; if multiple keys hash to the same bucket, they form a linked chain. On lookup, the dictionary walks that chain comparing keys with <code>Equals</code>. Average lookup is O(1) but can degrade to O(n) if all keys collide. Stable <code>GetHashCode</code> and <code>Equals</code> are essential.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Hash table with chaining.</li>
+<li>Average O(1), worst O(n) lookup.</li>
+<li>Don&#39;t use mutable objects as keys.</li>
+<li>Use <code>ConcurrentDictionary</code> for thread safety.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> dict = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">int</span>&gt;();
+dict[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-number">25</span>;
+dict.TryGetValue(<span class="hljs-string">&quot;age&quot;</span>, <span class="hljs-keyword">out</span> <span class="hljs-built_in">int</span> v);</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What if a key already exists?
+<strong>A:</strong> <code>Add</code> throws; indexer <code>[]</code> overwrites.</p>
+<p><strong>Q:</strong> Why must keys be immutable?
+<strong>A:</strong> Changing a key&#39;s hash makes the entry unreachable.</p>
+<p><strong>Q:</strong> When to use <code>ConcurrentDictionary</code>?
+<strong>A:</strong> When multiple threads read/write the same dictionary.</p>
+<hr>
+<h3 id="q29-yield-return-custom-lazy-iteration">Q29: yield return — Custom Lazy Iteration</h3>
+<p><strong>Direct Answer:</strong>
+<code>yield return</code> produces values one at a time on demand instead of building the full collection in memory. The compiler generates a state machine that pauses execution after each yield and resumes on the next iteration. It&#39;s perfect for streaming large datasets, paged APIs, or infinite sequences without consuming memory.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Produces values lazily.</li>
+<li>Saves memory for large data.</li>
+<li>Pauses and resumes execution automatically.</li>
+<li>Used in custom iterators and LINQ-style methods.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function">IEnumerable&lt;<span class="hljs-built_in">int</span>&gt; <span class="hljs-title">GetEvens</span>()</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++)
+        <span class="hljs-keyword">if</span> (i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> i;
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> When does the method body actually run?
+<strong>A:</strong> When iteration starts (first <code>MoveNext</code>).</p>
+<p><strong>Q:</strong> Async version of yield?
+<strong>A:</strong> Use <code>IAsyncEnumerable&lt;T&gt;</code> with async + <code>yield return</code>.</p>
+<p><strong>Q:</strong> Can we use <code>yield</code> in an async method?
+<strong>A:</strong> Only with <code>IAsyncEnumerable</code>, not regular Task.</p>
+<hr>
+<h3 id="q30-any-vs-count-0-which-is-faster-tricky">Q30: Any() vs. Count() &gt; 0 — Which Is Faster? <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>Any()</code> is faster on <code>IEnumerable&lt;T&gt;</code> because it stops at the first matching element — short-circuits. <code>Count() &gt; 0</code> walks the entire collection. But for <code>List&lt;T&gt;</code> or arrays, <code>.Count</code> is O(1) since it&#39;s a property, slightly beating <code>Any()</code>. For <code>IQueryable&lt;T&gt;</code> (EF Core), <code>Any()</code> translates to SQL <code>EXISTS</code>, much faster than <code>COUNT(*)</code>.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>IEnumerable → use <code>Any()</code> (short-circuits).</li>
+<li>List/Array → use <code>.Count &gt; 0</code> (O(1)).</li>
+<li>IQueryable → use <code>Any()</code> (SQL EXISTS).</li>
+<li>Avoid <code>Count() &gt; 0</code> in big sequences.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">if</span> (orders.Any()) { ... }
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">await</span> ctx.Orders.AnyAsync()) { ... }   <span class="hljs-comment">// SQL EXISTS</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why is <code>Count()</code> slow on IEnumerable?
+<strong>A:</strong> It iterates the full sequence even if not needed.</p>
+<p><strong>Q:</strong> Does EF Core optimize <code>Any()</code>?
+<strong>A:</strong> Yes, generates SQL <code>EXISTS</code>.</p>
+<p><strong>Q:</strong> When can <code>Count()</code> be O(1)?
+<strong>A:</strong> On types implementing <code>ICollection&lt;T&gt;</code> like <code>List&lt;T&gt;</code>.</p>
+<hr>
+<h3 id="q31-select-vs-selectmany">Q31: Select vs. SelectMany</h3>
+<p><strong>Direct Answer:</strong>
+<code>Select</code> projects each element into a new shape — one to one mapping. <code>SelectMany</code> projects each element into a <strong>collection</strong> and then flattens all those collections into a single sequence — one to many mapping. Use <code>Select</code> for transformations and <code>SelectMany</code> when you have nested collections you want to merge.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Select → 1 to 1 mapping.</li>
+<li>SelectMany → 1 to many, flattens.</li>
+<li>Acts like a SQL JOIN in EF Core.</li>
+<li>Common with parent-child data.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> allItems = orders.SelectMany(o =&gt; o.Items);                <span class="hljs-comment">// flat</span>
+<span class="hljs-keyword">var</span> listOfLists = orders.Select(o =&gt; o.Items);                 <span class="hljs-comment">// nested</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Output type difference?
+<strong>A:</strong> Select → <code>IEnumerable&lt;IEnumerable&lt;T&gt;&gt;</code>; SelectMany → <code>IEnumerable&lt;T&gt;</code>.</p>
+<p><strong>Q:</strong> Real-world use of SelectMany?
+<strong>A:</strong> Getting all line items across all orders.</p>
+<p><strong>Q:</strong> Does it generate SQL JOIN in EF Core?
+<strong>A:</strong> Yes, typically.</p>
+<hr>
+<h3 id="q32-first-vs-firstordefault-vs-single-vs-singleordefault-tricky">Q32: First vs. FirstOrDefault vs. Single vs. SingleOrDefault <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>First</code> returns the first matching element and <strong>throws</strong> if none found. <code>FirstOrDefault</code> returns the first match or default (null/zero) if none. <code>Single</code> ensures <strong>exactly one</strong> match, throws if zero or more than one. <code>SingleOrDefault</code> allows zero or one match — throws if more than one. Use <code>Single</code> when uniqueness must be guaranteed.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>First</code> → first element, throws if empty.</li>
+<li><code>FirstOrDefault</code> → first or default value.</li>
+<li><code>Single</code> → exactly one, throws otherwise.</li>
+<li><code>SingleOrDefault</code> → zero or one, throws if more.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> u1 = users.First(u =&gt; u.Active);                  <span class="hljs-comment">// may throw</span>
+<span class="hljs-keyword">var</span> u2 = users.FirstOrDefault(u =&gt; u.Active);         <span class="hljs-comment">// null if not found</span>
+<span class="hljs-keyword">var</span> u3 = users.Single(u =&gt; u.Email == <span class="hljs-string">&quot;x@y.com&quot;</span>);     <span class="hljs-comment">// exactly one</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Which is safest?
+<strong>A:</strong> <code>FirstOrDefault</code> — handles missing data gracefully.</p>
+<p><strong>Q:</strong> When to use <code>Single</code>?
+<strong>A:</strong> When data uniqueness must be enforced (e.g., primary key).</p>
+<p><strong>Q:</strong> Performance difference?
+<strong>A:</strong> <code>Single</code> always scans for second match; <code>First</code> stops at first.</p>
+<hr>
+<h3 id="q33-groupby-in-linq">Q33: GroupBy in LINQ</h3>
+<p><strong>Direct Answer:</strong>
+<code>GroupBy</code> groups elements by a key and returns an <code>IGrouping&lt;TKey, TElement&gt;</code> for each group. Each group exposes the key and the elements. It&#39;s commonly used for aggregations like totals per category or counts per status. In EF Core, simple <code>GroupBy</code> translates to SQL <code>GROUP BY</code>, but complex grouping may run client-side.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Groups items by key.</li>
+<li>Returns <code>IGrouping&lt;TKey, TElement&gt;</code>.</li>
+<li>Common with aggregation (Sum, Count, Avg).</li>
+<li>EF Core translates simple cases to SQL.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> totals = orders
+    .GroupBy(o =&gt; o.CustomerId)
+    .Select(g =&gt; <span class="hljs-keyword">new</span> { Customer = g.Key, Total = g.Sum(o =&gt; o.Amount) });</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What does <code>IGrouping</code> contain?
+<strong>A:</strong> Key and the matching elements as IEnumerable.</p>
+<p><strong>Q:</strong> Does GroupBy execute SQL or in memory?
+<strong>A:</strong> Depends on EF Core — simple keys go to SQL.</p>
+<p><strong>Q:</strong> Use case in real apps?
+<strong>A:</strong> Sales report by region, error count by status, etc.</p>
+<hr>
+<h3 id="q34-icollection-vs-ilist-vs-ireadonlylist">Q34: ICollection vs. IList vs. IReadOnlyList</h3>
+<p><strong>Direct Answer:</strong>
+<code>ICollection&lt;T&gt;</code> supports basic operations like Add, Remove, Count — no indexing. <code>IList&lt;T&gt;</code> extends it with index access (<code>list[0]</code>) and ordering. <code>IReadOnlyList&lt;T&gt;</code> is for read-only consumption — it has indexing and Count but no modification. As a rule, return <code>IReadOnlyList&lt;T&gt;</code> from APIs to prevent callers from mutating internal state.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>ICollection → basic ops, no indexer.</li>
+<li>IList → indexed, mutable.</li>
+<li>IReadOnlyList → indexed, read-only.</li>
+<li>Return <code>IReadOnlyList&lt;T&gt;</code> to expose data safely.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> IReadOnlyList&lt;Order&gt; <span class="hljs-title">GetRecent</span>()</span> =&gt; _store.ToList();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference between IList and IReadOnlyList?
+<strong>A:</strong> IList allows changes; IReadOnlyList does not.</p>
+<p><strong>Q:</strong> Does List<T> implement both?
+<strong>A:</strong> Yes, it implements IList and IReadOnlyList.</p>
+<p><strong>Q:</strong> Why expose IReadOnly?
+<strong>A:</strong> Prevents accidental mutation by callers.</p>
+<hr>
+<h3 id="q35-hashset-vs-list-when-to-use-hashset-tricky">Q35: HashSet vs. List — When to Use HashSet <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>List&lt;T&gt;</code> keeps insertion order and allows duplicates — best for sequential or indexed access. <code>HashSet&lt;T&gt;</code> stores unique items and provides O(1) lookup using hashing — best for membership checks. If you frequently check if an item exists or want to remove duplicates, use <code>HashSet&lt;T&gt;</code>. If you need ordering or duplicates, use <code>List&lt;T&gt;</code>.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>List → ordered, duplicates allowed, O(n) lookup.</li>
+<li>HashSet → unique items, O(1) lookup.</li>
+<li>HashSet has no indexer.</li>
+<li>Use HashSet for fast Contains checks.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> visited = <span class="hljs-keyword">new</span> HashSet&lt;<span class="hljs-built_in">string</span>&gt;();
+<span class="hljs-keyword">if</span> (!visited.Contains(id)) visited.Add(id);</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can HashSet have null?
+<strong>A:</strong> Yes, but only one null entry.</p>
+<p><strong>Q:</strong> What&#39;s the order of HashSet?
+<strong>A:</strong> No guaranteed order.</p>
+<p><strong>Q:</strong> Best use case?
+<strong>A:</strong> Removing duplicates, fast lookup of unique IDs.</p>
+<hr>
+<h3 id="q36-linq-method-syntax-vs-query-syntax">Q36: LINQ Method Syntax vs. Query Syntax</h3>
+<p><strong>Direct Answer:</strong>
+LINQ supports two styles: <strong>method syntax</strong> uses extension methods (<code>.Where().Select()</code>), and <strong>query syntax</strong> uses SQL-like keywords (<code>from x in list where ... select ...</code>). They&#39;re functionally identical and compile to the same code. Method syntax is more popular today because it&#39;s flexible, supports all operators, and chains cleanly. Query syntax is more readable for joins and group-bys.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Method syntax → extension methods chain.</li>
+<li>Query syntax → SQL-like keywords.</li>
+<li>Identical results, equal performance.</li>
+<li>Method syntax supports more operators.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-comment">// method syntax</span>
+<span class="hljs-keyword">var</span> result = orders.Where(o =&gt; o.Total &gt; <span class="hljs-number">100</span>).Select(o =&gt; o.Id);
+<span class="hljs-comment">// query syntax</span>
+<span class="hljs-keyword">var</span> result2 = <span class="hljs-keyword">from</span> o <span class="hljs-keyword">in</span> orders <span class="hljs-keyword">where</span> o.Total &gt; <span class="hljs-number">100</span> <span class="hljs-keyword">select</span> o.Id;</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Are they different in performance?
+<strong>A:</strong> No — query syntax compiles to method calls.</p>
+<p><strong>Q:</strong> Which supports more operators?
+<strong>A:</strong> Method syntax (e.g., <code>Distinct</code>, <code>Skip</code>, <code>Take</code>).</p>
+<p><strong>Q:</strong> When is query syntax preferred?
+<strong>A:</strong> For readable joins and group operations.</p>
+<hr>
+<h2 id="category-4-async-multithreading-parallelism">CATEGORY 4: ASYNC, MULTITHREADING &amp; PARALLELISM</h2>
+<h3 id="q37-process-vs-thread-vs-task-important">Q37: Process vs. Thread vs. Task <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+A <strong>Process</strong> is an OS-level running program with its own memory. A <strong>Thread</strong> is the smallest execution unit inside a process, sharing memory with sibling threads. A <strong>Task</strong> is a higher-level .NET abstraction for asynchronous work — usually scheduled on the thread pool. Tasks are lighter than threads and provide composability via <code>WhenAll</code>, <code>WhenAny</code>, and async/await.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Process → isolated memory, heavy.</li>
+<li>Thread → shares memory, OS-level.</li>
+<li>Task → lightweight, uses thread pool.</li>
+<li>Use <code>Task</code> and async/await for modern apps.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">Task.Run(() =&gt; Compute());           <span class="hljs-comment">// background work</span>
+<span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">1000</span>);              <span class="hljs-comment">// non-blocking wait</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference between Task and Thread?
+<strong>A:</strong> Thread is OS-level; Task is a unit of work that runs on threads.</p>
+<p><strong>Q:</strong> Does Task always create a new thread?
+<strong>A:</strong> No, it uses the thread pool.</p>
+<p><strong>Q:</strong> What&#39;s the unit of CPU scheduling?
+<strong>A:</strong> A thread, not a task.</p>
+<hr>
+<h3 id="q38-async-and-await-how-they-work-important">Q38: async and await — How They Work <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>async</code> and <code>await</code> enable non-blocking asynchronous code. When you <code>await</code> an I/O operation like a DB or HTTP call, the current thread is released to do other work. When the operation completes, execution resumes — possibly on a different thread. Importantly, <code>async</code> doesn&#39;t create new threads; it just lets the runtime use them more efficiently. This is why ASP.NET Core scales so well.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>async/await → non-blocking I/O.</li>
+<li>Doesn&#39;t create new threads.</li>
+<li>Compiler builds a state machine internally.</li>
+<li>Improves scalability under load.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;User&gt; <span class="hljs-title">GetUserAsync</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> _db.Users.FindAsync(id);
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Does async make code parallel?
+<strong>A:</strong> No, it makes code non-blocking.</p>
+<p><strong>Q:</strong> Should every method be async?
+<strong>A:</strong> Only methods doing I/O or awaiting tasks.</p>
+<p><strong>Q:</strong> What is <code>Task.CompletedTask</code>?
+<strong>A:</strong> A pre-completed task — useful in async methods with no work to do.</p>
+<hr>
+<h3 id="q39-task-vs-thread-when-to-use-which">Q39: Task vs. Thread — When to Use Which?</h3>
+<p><strong>Direct Answer:</strong>
+Use <code>Task</code> for almost everything — short-lived units of work, async I/O, parallel CPU operations. Tasks are scheduled on the .NET thread pool, which reuses threads efficiently. Use raw <code>Thread</code> only for long-running, dedicated workers (rare today). Modern code virtually never uses <code>new Thread()</code> directly; we use <code>Task.Run</code> for CPU work and <code>async</code>/<code>await</code> for I/O.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Task → modern, lightweight, thread pool.</li>
+<li>Thread → heavy, OS-level.</li>
+<li>Use <code>Task.Run</code> for CPU-bound.</li>
+<li>Use <code>async/await</code> for I/O-bound.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">await</span> Task.Run(() =&gt; ComputeHash(<span class="hljs-keyword">file</span>));   <span class="hljs-comment">// CPU-bound</span>
+<span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> _http.GetStringAsync(url); <span class="hljs-comment">// I/O-bound (no Task.Run!)</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> When should I use raw Thread?
+<strong>A:</strong> For long-running background loops (rare).</p>
+<p><strong>Q:</strong> Should I wrap async I/O in <code>Task.Run</code>?
+<strong>A:</strong> No, that wastes a thread.</p>
+<p><strong>Q:</strong> Why is the thread pool more efficient?
+<strong>A:</strong> Threads are reused, reducing allocation and context switching.</p>
+<hr>
+<h3 id="q40-taskrun-vs-taskfactorystartnew">Q40: Task.Run vs. Task.Factory.StartNew</h3>
+<p><strong>Direct Answer:</strong>
+Use <code>Task.Run</code> for everything modern — it has safe defaults and properly handles async lambdas. <code>Task.Factory.StartNew</code> is the older, lower-level API. Its main pitfall is that with <code>async () =&gt; ...</code>, it returns <code>Task&lt;Task&gt;</code> instead of <code>Task</code>, which silently breaks awaiting. Reach for <code>StartNew</code> only when you need advanced options like <code>TaskCreationOptions.LongRunning</code>.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>Task.Run</code> → modern, safe.</li>
+<li><code>StartNew</code> → old, tricky with async lambdas.</li>
+<li>Use <code>LongRunning</code> for dedicated thread.</li>
+<li>Avoid <code>StartNew</code> in everyday code.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> t = Task.Run(<span class="hljs-keyword">async</span> () =&gt; <span class="hljs-keyword">await</span> DoAsync());
+<span class="hljs-comment">// Edge case: dedicated thread</span>
+Task.Factory.StartNew(() =&gt; MonitorLoop(), TaskCreationOptions.LongRunning);</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What&#39;s the bug in <code>StartNew(async () =&gt; ...)</code>?
+<strong>A:</strong> It returns <code>Task&lt;Task&gt;</code> — outer completes early.</p>
+<p><strong>Q:</strong> When to use <code>LongRunning</code>?
+<strong>A:</strong> Background services, file watchers, message consumers.</p>
+<p><strong>Q:</strong> Are continuations the same?
+<strong>A:</strong> Both support <code>ContinueWith</code>, but Task.Run is simpler.</p>
+<hr>
+<h3 id="q41-deadlocks-result-vs-await-important">Q41: Deadlocks — <code>.Result</code> vs. <code>await</code> <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+Calling <code>.Result</code> or <code>.Wait()</code> on an async method <strong>blocks</strong> the calling thread. In UI apps or classic ASP.NET, this often causes deadlocks because the awaited continuation tries to come back to the same blocked thread. <code>await</code> is non-blocking — it releases the thread until the work finishes. ASP.NET Core has no SynchronizationContext, so deadlocks are less likely there, but blocking still wastes pool threads.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>.Result</code> / <code>.Wait()</code> → blocks thread.</li>
+<li><code>await</code> → non-blocking.</li>
+<li>Mixing sync + async causes deadlocks.</li>
+<li>&quot;Async all the way&quot; is the safe rule.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-comment">// Bad — may deadlock or starve threads</span>
+<span class="hljs-keyword">var</span> data = GetDataAsync().Result;
+<span class="hljs-comment">// Good</span>
+<span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> GetDataAsync();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why does <code>.Result</code> deadlock in WinForms?
+<strong>A:</strong> UI thread is blocked, but continuation needs that same thread.</p>
+<p><strong>Q:</strong> What&#39;s &quot;thread pool starvation&quot;?
+<strong>A:</strong> Too many blocked threads make the app freeze.</p>
+<p><strong>Q:</strong> Safer alternative when blocking is unavoidable?
+<strong>A:</strong> <code>GetAwaiter().GetResult()</code> — unwraps exceptions cleanly.</p>
+<hr>
+<h3 id="q42-cancellationtoken-stopping-long-running-work">Q42: CancellationToken — Stopping Long-Running Work</h3>
+<p><strong>Direct Answer:</strong>
+<code>CancellationToken</code> provides cooperative cancellation for async operations. The caller creates a <code>CancellationTokenSource</code>, passes its <code>Token</code> to async methods, and calls <code>Cancel()</code> when needed. The async code checks <code>IsCancellationRequested</code> or calls <code>ThrowIfCancellationRequested()</code>. ASP.NET Core gives <code>HttpContext.RequestAborted</code> automatically — when the user disconnects, you can stop processing.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Cooperative — code must check the token.</li>
+<li>Built-in async APIs accept tokens.</li>
+<li>Use linked tokens to combine signals.</li>
+<li>Don&#39;t swallow <code>OperationCanceledException</code>.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;IActionResult&gt; <span class="hljs-title">Get</span>(<span class="hljs-params">CancellationToken ct</span>)</span> {
+    <span class="hljs-keyword">var</span> data = <span class="hljs-keyword">await</span> _db.Orders.ToListAsync(ct);
+    <span class="hljs-keyword">return</span> Ok(data);
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> How do you add a timeout?
+<strong>A:</strong> Use <code>CancellationTokenSource.CancelAfter(TimeSpan)</code>.</p>
+<p><strong>Q:</strong> What if I ignore the token?
+<strong>A:</strong> Cancellation has no effect — defeats the purpose.</p>
+<p><strong>Q:</strong> How to combine multiple tokens?
+<strong>A:</strong> <code>CreateLinkedTokenSource(token1, token2)</code>.</p>
+<hr>
+<h3 id="q43-valuetask-vs-task">Q43: ValueTask vs. Task</h3>
+<p><strong>Direct Answer:</strong>
+<code>Task</code> is a reference type — every async call allocates a heap object. <code>ValueTask&lt;T&gt;</code> is a struct designed for hot paths that <strong>often complete synchronously</strong>, like cache lookups. It avoids unnecessary allocation when the result is already available. But it has rules: you can only <code>await</code> it once, you can&#39;t cache it. Use <code>Task</code> by default; switch to <code>ValueTask</code> only after profiling.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Task → heap allocation always.</li>
+<li>ValueTask → struct, less allocation for sync paths.</li>
+<li>Await only once.</li>
+<li>Default to <code>Task</code>.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">User</span>&gt; <span class="hljs-title">GetUserAsync</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span> {
+    <span class="hljs-keyword">if</span> (_cache.TryGetValue(id, <span class="hljs-keyword">out</span> <span class="hljs-keyword">var</span> u)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ValueTask&lt;User&gt;(u);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ValueTask&lt;User&gt;(LoadAsync(id));
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Default async return type?
+<strong>A:</strong> <code>Task</code> or <code>Task&lt;T&gt;</code>.</p>
+<p><strong>Q:</strong> Can we use Task.WhenAll with ValueTask?
+<strong>A:</strong> Convert with <code>.AsTask()</code> first.</p>
+<p><strong>Q:</strong> Where does ValueTask shine?
+<strong>A:</strong> Caches, pooled buffers, fast-path APIs.</p>
+<hr>
+<h3 id="q44-configureawaitfalse-why-it-matters">Q44: ConfigureAwait(false) — Why It Matters</h3>
+<p><strong>Direct Answer:</strong>
+<code>ConfigureAwait(false)</code> tells <code>await</code> not to capture the current SynchronizationContext, so the continuation can run on any thread pool thread. This avoids deadlocks and improves performance in <strong>library code</strong>. In ASP.NET Core there&#39;s no SynchronizationContext, so it&#39;s effectively a no-op there — but still recommended in shared libraries that may be consumed by older platforms.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Skips capturing SyncContext.</li>
+<li>Useful in NuGet/library code.</li>
+<li>Avoids deadlocks in WinForms/WPF.</li>
+<li>No-op in ASP.NET Core.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">FetchAsync</span>()</span> {
+    <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> resp = <span class="hljs-keyword">await</span> _http.SendAsync(req).ConfigureAwait(<span class="hljs-literal">false</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> resp.Content.ReadAsStringAsync().ConfigureAwait(<span class="hljs-literal">false</span>);
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Should I use it in controllers?
+<strong>A:</strong> Not necessary — ASP.NET Core has no SyncContext.</p>
+<p><strong>Q:</strong> When is it required?
+<strong>A:</strong> WinForms, WPF, libraries consumed by them.</p>
+<p><strong>Q:</strong> Can it be set globally?
+<strong>A:</strong> Yes, via <code>[ConfigureAwait(false)]</code> at assembly level (C# 11).</p>
+<hr>
+<h3 id="q45-lock-vs-monitor-vs-semaphoreslim">Q45: lock vs. Monitor vs. SemaphoreSlim</h3>
+<p><strong>Direct Answer:</strong>
+<code>lock</code> is the simplest way to ensure only one thread enters a code block — it&#39;s actually compiled into <code>Monitor.Enter</code> and <code>Monitor.Exit</code>. <code>Monitor</code> provides finer control with timeouts and <code>TryEnter</code>. <code>SemaphoreSlim</code> allows N threads at once and supports <code>async</code> (<code>WaitAsync</code>) — use it inside async code where <code>lock</code> is forbidden. Always lock on a private object, never on <code>this</code> or <code>string</code>.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>lock → simple, sync only.</li>
+<li>Monitor → lock with timeout/control.</li>
+<li>SemaphoreSlim → async-friendly, N threads.</li>
+<li>Lock on private readonly object.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">object</span> _gate = <span class="hljs-keyword">new</span>();
+<span class="hljs-keyword">lock</span> (_gate) { _count++; }
+
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> SemaphoreSlim _sem = <span class="hljs-keyword">new</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>);
+<span class="hljs-keyword">await</span> _sem.WaitAsync();
+<span class="hljs-keyword">try</span> { <span class="hljs-comment">/* critical */</span> } <span class="hljs-keyword">finally</span> { _sem.Release(); }</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why not lock on <code>this</code>?
+<strong>A:</strong> External code may also lock on it, causing deadlocks.</p>
+<p><strong>Q:</strong> Async-safe alternative to lock?
+<strong>A:</strong> <code>SemaphoreSlim(1, 1)</code>.</p>
+<p><strong>Q:</strong> Lock-free counter?
+<strong>A:</strong> <code>Interlocked.Increment(ref count)</code>.</p>
+<hr>
+<h3 id="q46-taskwhenall-vs-taskwhenany">Q46: Task.WhenAll vs. Task.WhenAny</h3>
+<p><strong>Direct Answer:</strong>
+<code>Task.WhenAll</code> waits for <strong>all tasks</strong> to finish (or any to throw). <code>Task.WhenAny</code> completes when the <strong>first task</strong> finishes. Use <code>WhenAll</code> for parallel fan-out — like calling 3 APIs at once. Use <code>WhenAny</code> for racing patterns like &quot;first one wins&quot; or implementing timeouts using <code>Task.Delay</code>. Both are essential for writing parallel async code.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>WhenAll → wait for everything.</li>
+<li>WhenAny → first to finish wins.</li>
+<li>Useful for parallel API calls.</li>
+<li>Used to implement timeouts.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> results = <span class="hljs-keyword">await</span> Task.WhenAll(api1, api2, api3);
+
+<span class="hljs-keyword">var</span> work = DoLongAsync();
+<span class="hljs-keyword">var</span> winner = <span class="hljs-keyword">await</span> Task.WhenAny(work, Task.Delay(<span class="hljs-number">5000</span>));
+<span class="hljs-keyword">if</span> (winner != work) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> TimeoutException();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Does WhenAll throw if one task fails?
+<strong>A:</strong> Yes, but only the first exception is rethrown.</p>
+<p><strong>Q:</strong> How to throttle WhenAll?
+<strong>A:</strong> Use <code>Parallel.ForEachAsync</code> or <code>SemaphoreSlim</code>.</p>
+<p><strong>Q:</strong> Difference between WaitAll and WhenAll?
+<strong>A:</strong> WaitAll blocks; WhenAll is awaitable.</p>
+<hr>
+<h3 id="q47-async-streams-iasyncenumerablet-modern">Q47: Async Streams — IAsyncEnumerable<T> <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>IAsyncEnumerable&lt;T&gt;</code> (C# 8) lets you stream data asynchronously, item by item, using <code>await foreach</code>. It&#39;s perfect for paged APIs, large DB results, or live data feeds. Combined with <code>yield return</code> in async methods, you don&#39;t need to load everything into memory. EF Core, ASP.NET Core (gRPC, server-sent events), and channels all support it natively.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Async + lazy iteration.</li>
+<li>Use <code>await foreach</code> to consume.</li>
+<li>Great for streaming large data.</li>
+<li>Use <code>[EnumeratorCancellation]</code> for token support.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> IAsyncEnumerable&lt;Order&gt; <span class="hljs-title">StreamAsync</span>(<span class="hljs-params">
+    [EnumeratorCancellation] CancellationToken ct = <span class="hljs-literal">default</span></span>)</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> o <span class="hljs-keyword">in</span> _db.Orders.AsAsyncEnumerable().WithCancellation(ct))
+        <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> o;
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference from <code>Task&lt;List&lt;T&gt;&gt;</code>?
+<strong>A:</strong> <code>Task&lt;List&lt;T&gt;&gt;</code> loads everything; async enumerable streams.</p>
+<p><strong>Q:</strong> How to cancel iteration?
+<strong>A:</strong> Use <code>WithCancellation(token)</code>.</p>
+<p><strong>Q:</strong> Does EF Core support it?
+<strong>A:</strong> Yes — <code>AsAsyncEnumerable()</code> enables streaming.</p>
+<hr>
+<h2 id="category-5-aspnet-core-net-core">CATEGORY 5: ASP.NET CORE &amp; .NET CORE</h2>
+<h3 id="q48-net-framework-vs-net-core-vs-net-5-important">Q48: .NET Framework vs .NET Core vs .NET 5+ <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+.NET Framework is the original Windows-only platform (last version 4.8). .NET Core (1–3.1) is the cross-platform, open-source rewrite — runs on Windows, Linux, macOS. From .NET 5 onward, Microsoft unified everything into a single platform called just &quot;.NET&quot; (5, 6, 7, 8, 9). All new development should target the latest .NET 8 LTS or newer; legacy apps stay on Framework.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>.NET Framework → Windows only, legacy.</li>
+<li>.NET Core → cross-platform, lightweight.</li>
+<li>.NET 5+ → unified modern platform.</li>
+<li>.NET 8 is the current LTS.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-text">.NET Framework 4.8  → Legacy desktop / WebForms
+.NET Core 3.1       → Cross-platform LTS
+.NET 8 / 9          → Modern unified platform</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Should I start a new project on .NET Framework?
+<strong>A:</strong> No, always use .NET 8+.</p>
+<p><strong>Q:</strong> What is .NET Standard?
+<strong>A:</strong> A specification for sharing libraries across .NET versions.</p>
+<p><strong>Q:</strong> What&#39;s an LTS release?
+<strong>A:</strong> Long-Term Support — supported for 3 years.</p>
+<hr>
+<h3 id="q49-dependency-injection-transient-scoped-singleton-important">Q49: Dependency Injection — Transient, Scoped, Singleton <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+ASP.NET Core has built-in DI with three lifetimes:</p>
+<ul>
+<li><strong>Transient</strong> — new instance every time it&#39;s requested.</li>
+<li><strong>Scoped</strong> — one instance per HTTP request.</li>
+<li><strong>Singleton</strong> — one instance for the entire app lifetime.
+Use <code>Scoped</code> for <code>DbContext</code> and repositories, <code>Singleton</code> for stateless utilities, and <code>Transient</code> for lightweight services like validators.</li>
+</ul>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Transient → new every time.</li>
+<li>Scoped → per request.</li>
+<li>Singleton → one for app lifetime.</li>
+<li>Avoid injecting Scoped into Singleton.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">services.AddScoped&lt;IOrderRepository, OrderRepository&gt;();
+services.AddSingleton&lt;IClock, SystemClock&gt;();
+services.AddTransient&lt;IEmailValidator, EmailValidator&gt;();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What is captive dependency?
+<strong>A:</strong> Holding a Scoped/Transient inside a Singleton — causes bugs.</p>
+<p><strong>Q:</strong> For HTTP calls in singletons?
+<strong>A:</strong> Use <code>IHttpClientFactory</code>.</p>
+<p><strong>Q:</strong> Why is DbContext Scoped?
+<strong>A:</strong> It&#39;s not thread-safe and tracks entities per request.</p>
+<hr>
+<h3 id="q50-middleware-pipeline-in-aspnet-core-important">Q50: Middleware Pipeline in ASP.NET Core <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+Middleware are components that handle each HTTP request in a pipeline. Each one can do work before and after calling <code>next()</code>, like a Russian-doll structure. They handle cross-cutting concerns like authentication, routing, logging, and exception handling. The order in <code>Program.cs</code> is critical — <code>UseAuthentication</code> must come before <code>UseAuthorization</code>.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Form a request-response pipeline.</li>
+<li>Order matters.</li>
+<li>Can short-circuit by not calling next.</li>
+<li>Custom middleware = class with <code>InvokeAsync(HttpContext)</code>.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">app.UseExceptionHandler(<span class="hljs-string">&quot;/error&quot;</span>);
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What if <code>UseAuthorization</code> is before <code>UseAuthentication</code>?
+<strong>A:</strong> Authorization always denies — auth never sets the user.</p>
+<p><strong>Q:</strong> How do I write custom middleware?
+<strong>A:</strong> Create a class with <code>InvokeAsync(HttpContext)</code> and <code>RequestDelegate</code>.</p>
+<p><strong>Q:</strong> Difference between middleware and filters?
+<strong>A:</strong> Middleware = pipeline-level; filters = MVC-action-level.</p>
+<hr>
+<h3 id="q51-filters-action-result-exception-authorization">Q51: Filters — Action, Result, Exception, Authorization</h3>
+<p><strong>Direct Answer:</strong>
+Filters in ASP.NET Core run within MVC action execution and let you inject logic at specific points:</p>
+<ul>
+<li><strong>Authorization filter</strong> → first, controls access.</li>
+<li><strong>Action filter</strong> → before/after action execution.</li>
+<li><strong>Result filter</strong> → before/after the response.</li>
+<li><strong>Exception filter</strong> → handles unhandled errors.
+They&#39;re great for cross-cutting concerns like logging, validation, or auditing — without touching every controller.</li>
+</ul>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Run inside MVC pipeline.</li>
+<li>Apply globally, per controller, or per action.</li>
+<li>Implement via attributes or interfaces.</li>
+<li>Use middleware for non-MVC concerns.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">LogActionFilter</span> : <span class="hljs-title">IActionFilter</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnActionExecuting</span>(<span class="hljs-params">ActionExecutingContext c</span>)</span> { <span class="hljs-comment">/* before */</span> }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnActionExecuted</span>(<span class="hljs-params">ActionExecutedContext c</span>)</span> { <span class="hljs-comment">/* after */</span> }
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Filter vs. middleware?
+<strong>A:</strong> Filters know about MVC (action, model); middleware doesn&#39;t.</p>
+<p><strong>Q:</strong> How to apply globally?
+<strong>A:</strong> Add to <code>MvcOptions.Filters</code> in Program.cs.</p>
+<p><strong>Q:</strong> Order of filter execution?
+<strong>A:</strong> Authorization → Resource → Action → Result → Exception.</p>
+<hr>
+<h3 id="q52-garbage-collection-generations-0-1-2">Q52: Garbage Collection — Generations 0, 1, 2</h3>
+<p><strong>Direct Answer:</strong>
+.NET GC is <strong>generational</strong> — it groups objects by age:</p>
+<ul>
+<li><strong>Gen 0</strong> → newly created, collected most often (cheap).</li>
+<li><strong>Gen 1</strong> → survived one Gen 0 collection.</li>
+<li><strong>Gen 2</strong> → long-lived objects, collected rarely (expensive).
+Large objects (&gt;85 KB) go to the <strong>LOH (Large Object Heap)</strong> and are collected with Gen 2. Goal: most objects die young, so Gen 0 cleanup is fast.</li>
+</ul>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Gen 0/1/2 → short to long-lived.</li>
+<li>LOH for objects &gt;85 KB.</li>
+<li>Gen 2 collections are slow.</li>
+<li>Don&#39;t call <code>GC.Collect()</code> manually.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> pooled = ArrayPool&lt;<span class="hljs-built_in">byte</span>&gt;.Shared.Rent(<span class="hljs-number">1024</span>);  <span class="hljs-comment">// reuse, less GC pressure</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Should I call <code>GC.Collect()</code>?
+<strong>A:</strong> Almost never — the GC manages it better.</p>
+<p><strong>Q:</strong> How to reduce GC pressure?
+<strong>A:</strong> Allocate less, use pooling, reuse buffers.</p>
+<p><strong>Q:</strong> What is Server GC?
+<strong>A:</strong> A multi-threaded GC tuned for ASP.NET Core servers.</p>
+<hr>
+<h3 id="q53-ihttpclientfactory-why-not-new-httpclient">Q53: IHttpClientFactory — Why Not new HttpClient()?</h3>
+<p><strong>Direct Answer:</strong>
+Creating a new <code>HttpClient</code> per request leaks sockets (TIME_WAIT). Storing one as a static field avoids that but can use stale DNS. <code>IHttpClientFactory</code> solves both — it pools and rotates handlers, manages DNS lifetimes, and lets you configure named or typed clients with policies (Polly retries, timeouts). Always use it in ASP.NET Core, never raw <code>new HttpClient()</code>.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Avoids socket exhaustion.</li>
+<li>Refreshes DNS automatically.</li>
+<li>Supports named/typed clients.</li>
+<li>Integrates with Polly for retries.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">services.AddHttpClient(<span class="hljs-string">&quot;api&quot;</span>, c =&gt; c.BaseAddress = <span class="hljs-keyword">new</span> Uri(<span class="hljs-string">&quot;https://api.com/&quot;</span>));
+<span class="hljs-keyword">var</span> client = httpFactory.CreateClient(<span class="hljs-string">&quot;api&quot;</span>);</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why not use static HttpClient?
+<strong>A:</strong> DNS doesn&#39;t refresh — stale endpoints can cause failures.</p>
+<p><strong>Q:</strong> What is a typed client?
+<strong>A:</strong> A class with HttpClient injected via constructor.</p>
+<p><strong>Q:</strong> How to add retries?
+<strong>A:</strong> Use <code>AddPolicyHandler</code> with Polly.</p>
+<hr>
+<h3 id="q54-ioptions-pattern-strongly-typed-config">Q54: IOptions Pattern — Strongly Typed Config</h3>
+<p><strong>Direct Answer:</strong>
+The <code>IOptions&lt;T&gt;</code> pattern binds sections of <code>appsettings.json</code> to strongly typed C# classes. You register them in DI and inject <code>IOptions&lt;MySettings&gt;</code>. There&#39;s also <code>IOptionsSnapshot&lt;T&gt;</code> (per request, supports reload) and <code>IOptionsMonitor&lt;T&gt;</code> (singleton with change notifications). This avoids hard-coded strings and gives type safety for configuration.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Binds JSON config to classes.</li>
+<li>Register with <code>services.Configure&lt;T&gt;(...)</code>.</li>
+<li>IOptionsSnapshot → per request, reloads.</li>
+<li>IOptionsMonitor → live reload, singleton.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">services.Configure&lt;EmailSettings&gt;(config.GetSection(<span class="hljs-string">&quot;Email&quot;</span>));
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EmailService</span> {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EmailService</span>(<span class="hljs-params">IOptions&lt;EmailSettings&gt; opts</span>)</span> { ... }
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference IOptions vs. IOptionsSnapshot?
+<strong>A:</strong> Snapshot reloads per request; Options is fixed at startup.</p>
+<p><strong>Q:</strong> When to use IOptionsMonitor?
+<strong>A:</strong> Singletons that need live reload notifications.</p>
+<p><strong>Q:</strong> Can I validate config?
+<strong>A:</strong> Yes, with <code>ValidateDataAnnotations()</code> or <code>ValidateOnStart()</code>.</p>
+<hr>
+<h3 id="q55-appsettingsjson-and-configuration-hierarchy">Q55: appsettings.json and Configuration Hierarchy</h3>
+<p><strong>Direct Answer:</strong>
+ASP.NET Core reads configuration from multiple sources in order: <code>appsettings.json</code>, <code>appsettings.{Environment}.json</code>, environment variables, command-line args, and user secrets. Later sources override earlier ones. So <code>appsettings.Development.json</code> overrides production settings during development. This layered design lets you keep secrets out of source code and adapt configuration per environment.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Layered config — last source wins.</li>
+<li>Environment-based overrides.</li>
+<li>User secrets for dev secrets.</li>
+<li>Environment variables for prod secrets.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-json"><span class="hljs-comment">// appsettings.json</span>
+<span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;ConnectionStrings&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;Default&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Server=...&quot;</span> <span class="hljs-punctuation">}</span> <span class="hljs-punctuation">}</span></code></pre><pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> conn = builder.Configuration.GetConnectionString(<span class="hljs-string">&quot;Default&quot;</span>);</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Where do you store secrets?
+<strong>A:</strong> User secrets (dev), Azure Key Vault or env vars (prod).</p>
+<p><strong>Q:</strong> How to get current environment?
+<strong>A:</strong> <code>IWebHostEnvironment.EnvironmentName</code> or <code>ASPNETCORE_ENVIRONMENT</code>.</p>
+<p><strong>Q:</strong> Why use IConfiguration?
+<strong>A:</strong> Unified API across all config sources.</p>
+<hr>
+<h3 id="q56-hosted-services-and-backgroundservice">Q56: Hosted Services and BackgroundService</h3>
+<p><strong>Direct Answer:</strong>
+A <strong>Hosted Service</strong> runs background tasks within an ASP.NET Core app — like queue listeners, schedulers, or recurring jobs. Implement <code>IHostedService</code> (with <code>StartAsync</code>/<code>StopAsync</code>) or inherit from <code>BackgroundService</code> and override <code>ExecuteAsync</code>. They&#39;re registered with <code>services.AddHostedService&lt;T&gt;()</code> and run for the lifetime of the application.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Run alongside the web app.</li>
+<li>Use <code>BackgroundService</code> for long-running loops.</li>
+<li>Register via <code>AddHostedService&lt;T&gt;</code>.</li>
+<li>Respect <code>CancellationToken</code> for graceful shutdown.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CleanupService</span> : <span class="hljs-title">BackgroundService</span> {
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">ExecuteAsync</span>(<span class="hljs-params">CancellationToken ct</span>)</span> {
+        <span class="hljs-keyword">while</span> (!ct.IsCancellationRequested) {
+            <span class="hljs-keyword">await</span> DoCleanup();
+            <span class="hljs-keyword">await</span> Task.Delay(TimeSpan.FromMinutes(<span class="hljs-number">5</span>), ct);
+        }
+    }
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> When should I use BackgroundService?
+<strong>A:</strong> Periodic jobs, queue consumers, monitors.</p>
+<p><strong>Q:</strong> Difference: BackgroundService vs. Timer?
+<strong>A:</strong> BackgroundService respects DI and graceful shutdown.</p>
+<p><strong>Q:</strong> How to inject scoped services?
+<strong>A:</strong> Use <code>IServiceScopeFactory</code> and create a scope inside the loop.</p>
+<hr>
+<h3 id="q57-logging-with-ilogger">Q57: Logging with ILogger</h3>
+<p><strong>Direct Answer:</strong>
+ASP.NET Core has built-in logging via <code>ILogger&lt;T&gt;</code> that supports multiple providers (Console, Debug, File, Application Insights, Serilog, etc.). It uses <strong>structured logging</strong> — placeholders like <code>{UserId}</code> are recorded as fields, not just text. Configure log levels in <code>appsettings.json</code> per category. Avoid string concatenation; let placeholders preserve structure.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Use <code>ILogger&lt;T&gt;</code> (T = class name).</li>
+<li>Structured logging with <code>{Placeholders}</code>.</li>
+<li>Log levels: Trace, Debug, Information, Warning, Error, Critical.</li>
+<li>Configure providers via DI.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger&lt;UserService&gt; _log;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserService</span>(<span class="hljs-params">ILogger&lt;UserService&gt; log</span>)</span> =&gt; _log = log;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Greet</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span> =&gt; _log.LogInformation(<span class="hljs-string">&quot;Hello {UserId}&quot;</span>, id);
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why use placeholders, not interpolation?
+<strong>A:</strong> Preserves structured fields for searchable logs.</p>
+<p><strong>Q:</strong> What&#39;s a popular third-party logger?
+<strong>A:</strong> Serilog with sinks for files, Seq, Elastic.</p>
+<p><strong>Q:</strong> What is <code>ILogger&lt;T&gt;</code> benefit?
+<strong>A:</strong> Auto-categorized by class name for filtering.</p>
+<hr>
+<h3 id="q58-minimal-apis-vs-controllers-modern">Q58: Minimal APIs vs. Controllers <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+Minimal APIs (introduced in .NET 6) let you define endpoints directly in <code>Program.cs</code> without controllers. They&#39;re concise, fast, and great for microservices, simple APIs, or quick prototypes. Controllers are still preferred for large apps with many endpoints, complex routing, filters, and conventions. Both share routing, DI, and middleware — choose based on team size and complexity.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Minimal APIs → less code, fast.</li>
+<li>Controllers → structured, conventions-based.</li>
+<li>Both share routing &amp; DI.</li>
+<li>Use Minimal APIs for small/microservices.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">app.MapGet(<span class="hljs-string">&quot;/users/{id}&quot;</span>, <span class="hljs-keyword">async</span> (<span class="hljs-built_in">int</span> id, IUserService svc) =&gt;
+    Results.Ok(<span class="hljs-keyword">await</span> svc.GetAsync(id)));</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can Minimal APIs use filters?
+<strong>A:</strong> Yes, since .NET 7 with endpoint filters.</p>
+<p><strong>Q:</strong> Are Minimal APIs faster?
+<strong>A:</strong> Slightly — fewer abstractions, but mostly comparable.</p>
+<p><strong>Q:</strong> Can I mix both?
+<strong>A:</strong> Yes, in the same project.</p>
+<hr>
+<h3 id="q59-authentication-vs-authorization-important">Q59: Authentication vs. Authorization <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+<strong>Authentication</strong> is verifying <em>who</em> the user is (login, JWT, OAuth, cookies). <strong>Authorization</strong> is deciding <em>what</em> they can do (roles, policies, claims). They run in that order in the middleware pipeline. ASP.NET Core supports JWT, cookies, OAuth2, OpenID Connect, and policy-based authorization out of the box.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Authentication = identity check.</li>
+<li>Authorization = permission check.</li>
+<li>Auth middleware runs before authz.</li>
+<li>Policy-based authz is most flexible.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">app.UseAuthentication();
+app.UseAuthorization();
+
+[<span class="hljs-meta">Authorize(Roles = <span class="hljs-string">&quot;Admin&quot;</span>)</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">AdminOnly</span>()</span> =&gt; Ok();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference between roles and claims?
+<strong>A:</strong> Roles are a kind of claim; claims are key-value identity facts.</p>
+<p><strong>Q:</strong> What is a policy?
+<strong>A:</strong> A reusable authorization rule made of claim/role requirements.</p>
+<p><strong>Q:</strong> Best auth scheme for SPAs?
+<strong>A:</strong> JWT bearer or OpenID Connect (OAuth2).</p>
+<hr>
+<h3 id="q60-jwt-tokens-in-aspnet-core-modern">Q60: JWT Tokens in ASP.NET Core <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+JWT (JSON Web Token) is a stateless, signed token used for authentication in APIs. It contains a header, payload (claims), and signature. The client gets a JWT after login and sends it in every request via <code>Authorization: Bearer &lt;token&gt;</code>. The server validates the signature (no DB lookup needed). JWTs are great for distributed APIs but can&#39;t be revoked easily — use short expiry + refresh tokens.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Stateless, signed token.</li>
+<li>Header.Payload.Signature (Base64).</li>
+<li>Sent via <code>Authorization: Bearer ...</code>.</li>
+<li>Use short expiry + refresh tokens.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opts =&gt; {
+        opts.TokenValidationParameters = <span class="hljs-keyword">new</span>() {
+            ValidateIssuer = <span class="hljs-literal">true</span>, ValidateAudience = <span class="hljs-literal">true</span>,
+            ValidateLifetime = <span class="hljs-literal">true</span>, ValidateIssuerSigningKey = <span class="hljs-literal">true</span>,
+            IssuerSigningKey = <span class="hljs-keyword">new</span> SymmetricSecurityKey(key)
+        };
+    });</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can JWT be revoked?
+<strong>A:</strong> Not easily — use a blacklist or short expiry + refresh.</p>
+<p><strong>Q:</strong> Where to store JWT in browser?
+<strong>A:</strong> HttpOnly cookie for safety; avoid localStorage.</p>
+<p><strong>Q:</strong> Difference: JWT vs. session cookie?
+<strong>A:</strong> JWT = stateless, cookie = stateful (server stores session).</p>
+<hr>
+<h2 id="category-6-entity-framework-core">CATEGORY 6: ENTITY FRAMEWORK CORE</h2>
+<h3 id="q61-ef-core-vs-adonet-vs-dapper">Q61: EF Core vs. ADO.NET vs. Dapper</h3>
+<p><strong>Direct Answer:</strong>
+<strong>ADO.NET</strong> is the lowest-level data access — you write raw SQL and manually map results. <strong>Dapper</strong> is a micro-ORM on top of ADO.NET — fast, simple, but no change tracking. <strong>EF Core</strong> is a full ORM with LINQ, change tracking, migrations, and lazy loading. Use EF Core for complex domains, Dapper for high-performance read-heavy paths, and ADO.NET only for low-level needs.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>ADO.NET → raw SQL, manual mapping.</li>
+<li>Dapper → fast micro-ORM.</li>
+<li>EF Core → full ORM with LINQ + tracking.</li>
+<li>Choose based on complexity vs performance.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-comment">// EF Core</span>
+<span class="hljs-keyword">var</span> orders = <span class="hljs-keyword">await</span> _ctx.Orders.Where(o =&gt; o.Status == <span class="hljs-string">&quot;Open&quot;</span>).ToListAsync();
+<span class="hljs-comment">// Dapper</span>
+<span class="hljs-keyword">var</span> orders = <span class="hljs-keyword">await</span> _conn.QueryAsync&lt;Order&gt;(<span class="hljs-string">&quot;SELECT * FROM Orders WHERE Status=&#x27;Open&#x27;&quot;</span>);</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Which is fastest?
+<strong>A:</strong> Dapper, slightly ahead of EF Core for raw SELECTs.</p>
+<p><strong>Q:</strong> Can I mix EF Core + Dapper?
+<strong>A:</strong> Yes — EF for writes, Dapper for hot read paths.</p>
+<p><strong>Q:</strong> Why do teams pick EF Core?
+<strong>A:</strong> Productivity — LINQ, migrations, change tracking.</p>
+<hr>
+<h3 id="q62-code-first-vs-database-first-important">Q62: Code First vs. Database First <em>(IMPORTANT)</em></h3>
+<p><strong>Direct Answer:</strong>
+<strong>Code First</strong> means you define your model classes first, and EF Core generates the database via migrations. <strong>Database First</strong> starts from an existing database and scaffolds entity classes (<code>dotnet ef dbcontext scaffold</code>). Code First is preferred for new projects because the model is version-controlled with the code. Database First is useful for legacy databases.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Code First → classes first, migrations create DB.</li>
+<li>Database First → scaffold from DB.</li>
+<li>Code First is more popular today.</li>
+<li>Use Database First for legacy systems.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-bash"><span class="hljs-comment"># Code First</span>
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
+<span class="hljs-comment"># Database First</span>
+dotnet ef dbcontext scaffold <span class="hljs-string">&quot;ConnString&quot;</span> Microsoft.EntityFrameworkCore.SqlServer</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What is Model First?
+<strong>A:</strong> Older approach using a designer file (.edmx) — rarely used now.</p>
+<p><strong>Q:</strong> Can we mix the two?
+<strong>A:</strong> Yes, by scaffolding then customizing.</p>
+<p><strong>Q:</strong> Why is Code First preferred?
+<strong>A:</strong> Source control, migrations, fluent API control.</p>
+<hr>
+<h3 id="q63-ef-core-migrations">Q63: EF Core Migrations</h3>
+<p><strong>Direct Answer:</strong>
+Migrations track changes to your model and apply them to the database in versioned steps. Use <code>dotnet ef migrations add MigrationName</code> to create one and <code>dotnet ef database update</code> to apply it. Each migration produces an <code>Up</code> (apply) and <code>Down</code> (revert) method. In production, run migrations as part of deployment, not on app startup.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Versioned schema changes.</li>
+<li>Add → Update workflow.</li>
+<li>Up/Down methods for revert.</li>
+<li>Apply during deployment, not at runtime.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-bash">dotnet ef migrations add AddOrderTotal
+dotnet ef database update</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> How to revert a migration?
+<strong>A:</strong> <code>dotnet ef database update PreviousMigrationName</code>.</p>
+<p><strong>Q:</strong> Can I edit migration files?
+<strong>A:</strong> Yes, before running update — useful for data fixes.</p>
+<p><strong>Q:</strong> What is <code>__EFMigrationsHistory</code>?
+<strong>A:</strong> A table tracking applied migrations.</p>
+<hr>
+<h3 id="q64-asnotracking-vs-tracking-tricky">Q64: AsNoTracking vs. Tracking <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+By default, EF Core <strong>tracks</strong> entities you query — it watches for changes so <code>SaveChanges</code> knows what to update. This adds memory and CPU overhead. For read-only queries, call <code>AsNoTracking()</code> to skip tracking — typically 30–50% faster on read paths and reduces memory. Always use it in API endpoints that just return data.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Tracked by default.</li>
+<li><code>AsNoTracking()</code> → skip tracking, faster reads.</li>
+<li>Use for read-only API responses.</li>
+<li>Saves memory in large queries.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> users = <span class="hljs-keyword">await</span> _ctx.Users.AsNoTracking().ToListAsync();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> When should I keep tracking?
+<strong>A:</strong> When loading data to update or delete.</p>
+<p><strong>Q:</strong> Can I make it default?
+<strong>A:</strong> Yes, with <code>ChangeTracker.QueryTrackingBehavior = NoTracking</code>.</p>
+<p><strong>Q:</strong> What is <code>AsNoTrackingWithIdentityResolution</code>?
+<strong>A:</strong> Like AsNoTracking but de-duplicates entities in results.</p>
+<hr>
+<h3 id="q65-lazy-vs-eager-vs-explicit-loading">Q65: Lazy vs. Eager vs. Explicit Loading</h3>
+<p><strong>Direct Answer:</strong></p>
+<ul>
+<li><strong>Eager loading</strong> uses <code>Include()</code> to load related data in one query upfront.</li>
+<li><strong>Lazy loading</strong> loads related data only when accessed (needs proxies enabled).</li>
+<li><strong>Explicit loading</strong> lets you call <code>Load()</code> manually after the main query.
+Eager loading is the safest default — it avoids the <strong>N+1 problem</strong> where accessing each child triggers a separate SQL query.</li>
+</ul>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Eager → <code>Include()</code>, one query.</li>
+<li>Lazy → automatic, on access.</li>
+<li>Explicit → manual control.</li>
+<li>Avoid lazy in APIs — causes N+1.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> orders = <span class="hljs-keyword">await</span> _ctx.Orders
+    .Include(o =&gt; o.Items)
+    .ToListAsync();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> What is the N+1 problem?
+<strong>A:</strong> One query for parents + N queries for children — kills performance.</p>
+<p><strong>Q:</strong> How to enable lazy loading?
+<strong>A:</strong> Add <code>Microsoft.EntityFrameworkCore.Proxies</code> and <code>UseLazyLoadingProxies()</code>.</p>
+<p><strong>Q:</strong> Default in EF Core?
+<strong>A:</strong> Lazy loading is OFF by default.</p>
+<hr>
+<h3 id="q66-include-vs-theninclude">Q66: Include vs. ThenInclude</h3>
+<p><strong>Direct Answer:</strong>
+<code>Include</code> loads a directly related entity. <code>ThenInclude</code> loads a nested related entity from the previously included one. Together they let you navigate relationships and load deep object graphs in a single query — avoiding N+1. Be careful — over-including data can lead to cartesian explosion (huge result sets).</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Include → first level relationship.</li>
+<li>ThenInclude → nested relationship.</li>
+<li>One SQL query, multiple joins.</li>
+<li>Avoid loading too much.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> orders = <span class="hljs-keyword">await</span> _ctx.Orders
+    .Include(o =&gt; o.Items)
+        .ThenInclude(i =&gt; i.Product)
+    .ToListAsync();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Cartesian explosion?
+<strong>A:</strong> Multiple Includes can multiply rows — use split queries.</p>
+<p><strong>Q:</strong> What is <code>AsSplitQuery()</code>?
+<strong>A:</strong> Splits Include into multiple SQL queries to avoid duplication.</p>
+<p><strong>Q:</strong> Can I filter Include?
+<strong>A:</strong> Yes — <code>.Include(o =&gt; o.Items.Where(...))</code>.</p>
+<hr>
+<h3 id="q67-transactions-in-ef-core">Q67: Transactions in EF Core</h3>
+<p><strong>Direct Answer:</strong>
+EF Core wraps each <code>SaveChanges</code> call in an implicit transaction. For multi-step operations across multiple saves, use <code>Database.BeginTransactionAsync()</code> to manage them explicitly. You commit on success and roll back on exception. For distributed transactions across multiple databases, use <code>TransactionScope</code> (with caution — it&#39;s heavier).</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>SaveChanges</code> is auto-transactional.</li>
+<li>Use explicit transactions for multi-step ops.</li>
+<li>Rollback on exception.</li>
+<li>TransactionScope for distributed cases.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> tx = <span class="hljs-keyword">await</span> _ctx.Database.BeginTransactionAsync();
+<span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> DoWork1();
+    <span class="hljs-keyword">await</span> DoWork2();
+    <span class="hljs-keyword">await</span> tx.CommitAsync();
+} <span class="hljs-keyword">catch</span> { <span class="hljs-keyword">await</span> tx.RollbackAsync(); <span class="hljs-keyword">throw</span>; }</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Default isolation level?
+<strong>A:</strong> Read Committed (configurable).</p>
+<p><strong>Q:</strong> Why use explicit transactions?
+<strong>A:</strong> When you need atomicity across multiple <code>SaveChanges</code>.</p>
+<p><strong>Q:</strong> Are nested transactions allowed?
+<strong>A:</strong> EF Core uses savepoints, not true nesting.</p>
+<hr>
+<h3 id="q68-stored-procedures-with-ef-core">Q68: Stored Procedures with EF Core</h3>
+<p><strong>Direct Answer:</strong>
+EF Core supports stored procedures via <code>FromSqlRaw</code> (queries) and <code>ExecuteSqlRaw</code> (commands). EF 7+ also lets you map insert/update/delete operations to stored procs via fluent API. SPs are useful for performance-critical logic, complex aggregations, or when DBAs maintain logic in SQL. Always parameterize inputs to avoid SQL injection.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>FromSqlRaw</code> / <code>FromSqlInterpolated</code> for queries.</li>
+<li><code>ExecuteSqlRaw</code> for non-queries.</li>
+<li>EF 7+ maps CRUD to SPs via fluent API.</li>
+<li>Always use parameters.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> users = <span class="hljs-keyword">await</span> _ctx.Users
+    .FromSqlInterpolated(<span class="hljs-string">$&quot;EXEC GetActiveUsers <span class="hljs-subst">{minAge}</span>&quot;</span>)
+    .ToListAsync();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why use <code>FromSqlInterpolated</code>?
+<strong>A:</strong> Auto-parameterizes interpolated strings — safe from injection.</p>
+<p><strong>Q:</strong> Can I call SPs returning multiple result sets?
+<strong>A:</strong> Use raw ADO.NET or specific EF extensions.</p>
+<p><strong>Q:</strong> Are SPs always faster?
+<strong>A:</strong> Not necessarily — modern EF generates very good SQL.</p>
+<hr>
+<h2 id="category-7-modern-net-advanced-concepts">CATEGORY 7: MODERN .NET &amp; ADVANCED CONCEPTS</h2>
+<h3 id="q69-reflection-what-it-is-and-why-its-slow">Q69: Reflection — What It Is and Why It&#39;s Slow</h3>
+<p><strong>Direct Answer:</strong>
+Reflection lets you inspect and invoke types at runtime — read attributes, list properties, create instances, call methods by name. It&#39;s used by serializers, ORMs, DI containers, and validators. Reflection is slow because it skips compile-time checks and goes through metadata lookups, security checks, and boxing. For hot paths, cache the reflection results or use <strong>source generators</strong> (zero runtime cost).</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Inspect/invoke types at runtime.</li>
+<li>Used by serializers, EF, DI.</li>
+<li>10–100× slower than direct calls.</li>
+<li>Cache results or use source generators.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">var</span> prop = <span class="hljs-keyword">typeof</span>(User).GetProperty(<span class="hljs-string">&quot;Name&quot;</span>);
+<span class="hljs-keyword">var</span> name = prop?.GetValue(user);</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Where is reflection used in .NET?
+<strong>A:</strong> Serializers, DI containers, MVC routing, EF Core.</p>
+<p><strong>Q:</strong> Faster alternative?
+<strong>A:</strong> Source generators or compiled expressions (<code>Expression.Compile</code>).</p>
+<p><strong>Q:</strong> Is reflection AOT-friendly?
+<strong>A:</strong> Limited — many reflection APIs aren&#39;t supported in trimming/AOT.</p>
+<hr>
+<h3 id="q70-delegates-vs-events">Q70: Delegates vs. Events</h3>
+<p><strong>Direct Answer:</strong>
+A <strong>delegate</strong> is a type-safe pointer to a method. An <strong>event</strong> is a delegate field with restricted access — outside the class, only <code>+=</code> and <code>-=</code> are allowed; you can&#39;t invoke or reassign it. Events implement the publish/subscribe pattern in C#. Forgetting to unsubscribe (<code>-=</code>) is a common cause of memory leaks.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Delegate = method reference.</li>
+<li>Event = restricted delegate (pub/sub).</li>
+<li><code>+=</code> to subscribe, <code>-=</code> to unsubscribe.</li>
+<li>Forgotten <code>-=</code> causes memory leaks.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler&lt;OrderEventArgs&gt;? OrderShipped;
+OrderShipped?.Invoke(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">new</span> OrderEventArgs(...));</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Difference: Action vs. Func?
+<strong>A:</strong> Action returns void; Func returns a value.</p>
+<p><strong>Q:</strong> Can multiple handlers attach?
+<strong>A:</strong> Yes, delegates are multicast.</p>
+<p><strong>Q:</strong> Modern alternatives to events?
+<strong>A:</strong> <code>IObservable&lt;T&gt;</code>, <code>Channel&lt;T&gt;</code>, message buses (MediatR).</p>
+<hr>
+<h3 id="q71-func-vs-action-vs-predicate-tricky">Q71: Func vs. Action vs. Predicate <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>Action&lt;T&gt;</code> represents a method returning <strong>void</strong> with up to 16 parameters. <code>Func&lt;T, TResult&gt;</code> represents a method that <strong>returns a value</strong>. <code>Predicate&lt;T&gt;</code> is a specialized <code>Func&lt;T, bool&gt;</code> — used for tests like <code>List.Find</code>. They&#39;re built-in delegate types so you don&#39;t have to declare your own. Use <code>Func</code> and <code>Action</code> for most cases.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Action → returns void.</li>
+<li>Func → returns a value.</li>
+<li>Predicate → bool, takes one input.</li>
+<li>Avoid declaring custom delegates when these fit.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">Action&lt;<span class="hljs-built_in">string</span>&gt; log = Console.WriteLine;
+Func&lt;<span class="hljs-built_in">int</span>, <span class="hljs-built_in">int</span>, <span class="hljs-built_in">int</span>&gt; <span class="hljs-keyword">add</span> = (a, b) =&gt; a + b;
+Predicate&lt;<span class="hljs-built_in">int</span>&gt; isEven = n =&gt; n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>;</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why prefer Func over Predicate?
+<strong>A:</strong> Func is more general; LINQ uses <code>Func&lt;T,bool&gt;</code>.</p>
+<p><strong>Q:</strong> Max parameters in Func/Action?
+<strong>A:</strong> 16.</p>
+<p><strong>Q:</strong> Are these reference types?
+<strong>A:</strong> Yes — delegates are reference types.</p>
+<hr>
+<h3 id="q72-custom-attributes">Q72: Custom Attributes</h3>
+<p><strong>Direct Answer:</strong>
+Custom attributes attach metadata to classes, methods, properties, etc. Inherit from <code>System.Attribute</code> and use <code>[AttributeUsage(...)]</code> to control where it can be applied. Read attributes at runtime via reflection. Common examples: <code>[HttpGet]</code>, <code>[Required]</code>, <code>[Authorize]</code>, <code>[Table]</code>. They&#39;re widely used by frameworks for validation, routing, and ORM mapping.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Inherit from <code>Attribute</code>.</li>
+<li>Use <code>[AttributeUsage]</code> to limit targets.</li>
+<li>Read with reflection.</li>
+<li>Cache reflection results in hot paths.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">[<span class="hljs-meta">AttributeUsage(AttributeTargets.Method)</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FeatureFlagAttribute</span> : <span class="hljs-title">Attribute</span> {
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name { <span class="hljs-keyword">get</span>; }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">FeatureFlagAttribute</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> name</span>)</span> =&gt; Name = name;
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> How to read an attribute?
+<strong>A:</strong> <code>member.GetCustomAttribute&lt;T&gt;()</code>.</p>
+<p><strong>Q:</strong> Are attributes runtime or compile-time?
+<strong>A:</strong> Stored at compile-time, read at runtime.</p>
+<p><strong>Q:</strong> Performance concern?
+<strong>A:</strong> Reflection is slow — cache lookups for hot paths.</p>
+<hr>
+<h3 id="q73-exception-handling-throw-vs-throw-ex-tricky">Q73: Exception Handling — throw vs. throw ex <em>(TRICKY)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>throw ex;</code> resets the <strong>stack trace</strong> to the rethrow point, hiding where the original exception came from — making debugging painful. <code>throw;</code> keeps the original stack trace intact. If you want to add context, wrap it: <code>throw new MyException(&quot;...&quot;, ex)</code> so the original is preserved as <code>InnerException</code>. Never catch <code>Exception</code> and silently swallow it.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>throw;</code> → keeps stack trace.</li>
+<li><code>throw ex;</code> → resets trace (bad).</li>
+<li>Wrap with InnerException for context.</li>
+<li>Catch specific exceptions when possible.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-keyword">try</span> { Save(); }
+<span class="hljs-keyword">catch</span> (DbUpdateException ex) {
+    _log.LogError(ex, <span class="hljs-string">&quot;DB error&quot;</span>);
+    <span class="hljs-keyword">throw</span>; <span class="hljs-comment">// preserves trace</span>
+}</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Should we ever catch <code>Exception</code>?
+<strong>A:</strong> Only at the very top, e.g., global handler.</p>
+<p><strong>Q:</strong> What does <code>when</code> filter do?
+<strong>A:</strong> Conditional catch without entering and re-throwing.</p>
+<p><strong>Q:</strong> What is <code>ExceptionDispatchInfo.Capture</code>?
+<strong>A:</strong> Preserves the trace when re-throwing across async boundaries.</p>
+<hr>
+<h3 id="q74-records-vs-class-vs-struct-modern">Q74: Records vs. Class vs. Struct <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+A <strong>record</strong> (C# 9) is a reference type built for immutable data with <strong>value-based equality</strong> — two records are equal if all their properties are equal. A <strong>class</strong> uses reference equality and is mutable by default. A <strong>struct</strong> is a value type — copied on assignment, no inheritance. Use records for DTOs, classes for entities and services, and structs for small value-like types.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Record → reference type, value equality.</li>
+<li>Class → reference type, identity equality.</li>
+<li>Struct → value type, copied.</li>
+<li>Use records for DTOs and value objects.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">OrderDto</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> Id, <span class="hljs-built_in">decimal</span> Total</span>)</span>;
+<span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> OrderDto(<span class="hljs-number">1</span>, <span class="hljs-number">99</span>);
+<span class="hljs-keyword">var</span> b = <span class="hljs-keyword">new</span> OrderDto(<span class="hljs-number">1</span>, <span class="hljs-number">99</span>);
+Console.WriteLine(a == b); <span class="hljs-comment">// True (value equality)</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Should I use records for EF entities?
+<strong>A:</strong> No — value equality conflicts with identity tracking.</p>
+<p><strong>Q:</strong> Difference: record vs. record struct?
+<strong>A:</strong> record = reference type; record struct = value type.</p>
+<p><strong>Q:</strong> What is <code>with</code> expression?
+<strong>A:</strong> Non-destructive copy that changes only specified properties.</p>
+<hr>
+<h3 id="q75-top-level-statements-modern">Q75: Top-Level Statements <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+Top-level statements (C# 9+) let you write a <code>Program.cs</code> without explicitly declaring <code>Main()</code> or a class. The compiler generates them behind the scenes. This makes minimal apps and learning examples cleaner. Modern .NET templates use this style by default. You can still add classes, methods, and using directives in the same file.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>No <code>Main()</code> boilerplate.</li>
+<li>Compiler auto-generates Program class.</li>
+<li>Cleaner, less ceremony.</li>
+<li>Default in .NET 6+ templates.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-comment">// Program.cs</span>
+<span class="hljs-keyword">var</span> builder = WebApplication.CreateBuilder(<span class="hljs-keyword">args</span>);
+<span class="hljs-keyword">var</span> app = builder.Build();
+app.MapGet(<span class="hljs-string">&quot;/&quot;</span>, () =&gt; <span class="hljs-string">&quot;Hello!&quot;</span>);
+app.Run();</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Can I still write Main()?
+<strong>A:</strong> Yes, but only one file can have top-level statements.</p>
+<p><strong>Q:</strong> Are async top-level statements allowed?
+<strong>A:</strong> Yes — <code>await</code> works at the top level.</p>
+<p><strong>Q:</strong> Where can I declare types?
+<strong>A:</strong> Below the statements, in the same file.</p>
+<hr>
+<h3 id="q76-global-usings-and-file-scoped-namespaces-modern">Q76: Global Usings and File-Scoped Namespaces <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+<strong>Global usings</strong> (C# 10) let you add <code>using</code> directives once that apply across the entire project — no more repeating <code>using System;</code> everywhere. <strong>File-scoped namespaces</strong> also reduce boilerplate by letting you write <code>namespace MyApp;</code> once at the top instead of wrapping the whole file. Both make code cleaner and reduce indentation.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li><code>global using</code> → applies project-wide.</li>
+<li>File-scoped namespace → no braces.</li>
+<li>Reduces boilerplate.</li>
+<li>Default in .NET 6+ project templates.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp"><span class="hljs-comment">// GlobalUsings.cs</span>
+<span class="hljs-keyword">global</span> <span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">global</span> <span class="hljs-keyword">using</span> System.Linq;
+
+<span class="hljs-comment">// File-scoped namespace</span>
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyApp.Services</span>;
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> { }</code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Where should global usings live?
+<strong>A:</strong> A dedicated <code>GlobalUsings.cs</code> or csproj <code>&lt;ItemGroup&gt;</code>.</p>
+<p><strong>Q:</strong> Pros of file-scoped namespace?
+<strong>A:</strong> Less indentation, cleaner code.</p>
+<p><strong>Q:</strong> Can both old and new styles coexist?
+<strong>A:</strong> Yes, but stick to one for consistency.</p>
+<hr>
+<h3 id="q77-spant-and-memoryt-modern">Q77: Span<T> and Memory<T> <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+<code>Span&lt;T&gt;</code> is a stack-only struct that gives you a typed view over contiguous memory — array, stack-allocated buffer, or unmanaged block — without copying. <code>Memory&lt;T&gt;</code> is similar but heap-friendly and safe for async methods. Both are used in performance-critical scenarios like parsing, slicing, and high-throughput I/O. They reduce allocations dramatically.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Span<T> → stack-only, fast.</li>
+<li>Memory<T> → heap-friendly, async-safe.</li>
+<li>Slicing without copying.</li>
+<li>Used in modern parsers and System.IO.Pipelines.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">ReadOnlySpan&lt;<span class="hljs-built_in">char</span>&gt; s = <span class="hljs-string">&quot;Hello, World&quot;</span>.AsSpan().Slice(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>);
+Console.WriteLine(s.ToString());  <span class="hljs-comment">// Hello</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why can&#39;t Span be in an async method?
+<strong>A:</strong> It&#39;s a <code>ref struct</code> — must stay on the stack.</p>
+<p><strong>Q:</strong> Use case for Memory<T>?
+<strong>A:</strong> Async methods that pass buffers (HTTP, streams).</p>
+<p><strong>Q:</strong> What is <code>ArrayPool&lt;T&gt;</code>?
+<strong>A:</strong> Reusable pool of arrays — works great with Span.</p>
+<hr>
+<h3 id="q78-source-generators-modern">Q78: Source Generators <em>(MODERN)</em></h3>
+<p><strong>Direct Answer:</strong>
+Source generators (C# 9+) are compile-time tools that generate additional C# code based on your existing code. They run during build, see your types, and produce extra source files that the compiler includes. They&#39;re the modern replacement for runtime reflection — used by <code>System.Text.Json</code>, regex, logging, MediatR, and DI containers. Result: no runtime cost and AOT-friendly.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Generate code at compile time.</li>
+<li>Replace runtime reflection.</li>
+<li>AOT/trimming friendly.</li>
+<li>Used by JSON serializer, regex, logging.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code class="language-csharp">[<span class="hljs-meta">JsonSerializable(typeof(User))</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AppJsonContext</span> : <span class="hljs-title">JsonSerializerContext</span> { }
+<span class="hljs-comment">// generated code handles serialization without reflection</span></code></pre><p><strong>Follow-up Q&amp;A:</strong></p>
+<p><strong>Q:</strong> Why are they faster than reflection?
+<strong>A:</strong> Generated code runs as plain compiled C#.</p>
+<p><strong>Q:</strong> Where do they fit in build?
+<strong>A:</strong> During Roslyn compilation — extra files generated.</p>
+<p><strong>Q:</strong> Common real-world examples?
+<strong>A:</strong> <code>LoggerMessage</code>, <code>JsonSerializerContext</code>, <code>RegexGenerator</code>.</p>
+<hr>
+<h2 id="appendix">APPENDIX</h2>
+<h3 id="quick-revision-cheat-sheet">Quick Revision Cheat Sheet</h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>One-Liner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Stack vs. Heap</td>
+<td>Value types store data; reference types store pointers</td>
+</tr>
+<tr>
+<td>Boxing</td>
+<td>Value type → object on heap (allocation + copy)</td>
+</tr>
+<tr>
+<td>const</td>
+<td>Compile-time constant, baked into IL</td>
+</tr>
+<tr>
+<td>readonly</td>
+<td>Runtime, set in constructor</td>
+</tr>
+<tr>
+<td>Interface vs. Abstract</td>
+<td>Contract vs. partial template</td>
+</tr>
+<tr>
+<td>IEnumerable vs. IQueryable</td>
+<td>In-memory vs. database</td>
+</tr>
+<tr>
+<td>async/await</td>
+<td>Non-blocking I/O — no new threads</td>
+</tr>
+<tr>
+<td>Task.Run</td>
+<td>CPU-bound work only</td>
+</tr>
+<tr>
+<td>ConfigureAwait(false)</td>
+<td>Library code only</td>
+</tr>
+<tr>
+<td>ValueTask</td>
+<td>Hot-path, often-sync results</td>
+</tr>
+<tr>
+<td>DI Lifetimes</td>
+<td>Singleton / Scoped / Transient</td>
+</tr>
+<tr>
+<td>throw vs. throw ex</td>
+<td>Preserve trace vs. reset trace</td>
+</tr>
+<tr>
+<td>record</td>
+<td>Value-based equality + with expression</td>
+</tr>
+<tr>
+<td>AsNoTracking</td>
+<td>Faster read-only EF queries</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>Stateless signed token for APIs</td>
+</tr>
+<tr>
+<td>Minimal API</td>
+<td>Lightweight endpoints in Program.cs</td>
+</tr>
+<tr>
+<td>Source Generators</td>
+<td>Compile-time code generation</td>
+</tr>
+</tbody></table>
+<h3 id="interview-tips">Interview Tips</h3>
+<ul>
+<li><strong>Lead with a one-line crisp answer.</strong> Then expand. Interviewers grade clarity first.</li>
+<li><strong>Use real examples.</strong> Even small code snippets make answers concrete.</li>
+<li><strong>Show trade-offs.</strong> &quot;I&#39;d use X because Y, but switch to Z when...&quot;</li>
+<li><strong>Name common traps.</strong> &quot;captive dependency&quot;, &quot;throw ex resets trace&quot;, &quot;N+1 problem&quot; — proves real experience.</li>
+<li><strong>Stay current.</strong> Mention <code>record</code>, <code>IAsyncEnumerable</code>, <code>Span&lt;T&gt;</code>, source generators, Minimal APIs.</li>
+<li><strong>Don&#39;t bluff.</strong> Say &quot;I haven&#39;t used that directly, but I expect it works like...&quot;</li>
+<li><strong>Ask for context.</strong> If a question is vague, clarify — it shows maturity.</li>
+</ul>
+
+</body>
+</html>

@@ -211,7 +211,11 @@ export class BootScreenComponent implements OnInit {
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // Show on every page load (no session gate).
+    // Only run the loader when the user lands on the home URL.
+    // Direct visits to /resources, /resources/:slug, etc. skip the boot animation.
+    const path = window.location.pathname;
+    if (path !== '/' && path !== '') return;
+
     this.visible.set(true);
 
     // Step through the loading lines

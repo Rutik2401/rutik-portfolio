@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "notes:generate": "node tools/notes-generator/generate.js"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +20,8 @@
     "@angular/router": "^17.3.0",
     "@emailjs/browser": "^4.4.1",
     "lenis": "^1.1.14",
+    "marked": "^9.1.6",
+    "ngx-markdown": "^17.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.4"

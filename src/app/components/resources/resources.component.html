@@ -1,0 +1,156 @@
+<section class="resources-section">
+
+  <!-- Ambient background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+  <div class="container-custom px-4 sm:px-6 mx-auto relative z-10">
+
+    <!-- ─── HERO ─── -->
+    <header class="resources-hero">
+      <span class="hero-eyebrow reveal">
+        <span class="eyebrow-dot"></span>
+        Premium · Free for now
+      </span>
+      <h1 class="hero-title reveal" data-reveal-delay="80">
+        Interview notes
+        <span class="hero-title-grad">that actually got me hired.</span>
+      </h1>
+      <p class="hero-sub reveal" data-reveal-delay="160">
+        Battle-tested roadmaps I built while preparing for and giving interviews
+        at product companies. Read online or download the full PDF — no signup.
+      </p>
+
+      <div class="hero-meta reveal" data-reveal-delay="240">
+        <div class="meta-pill">
+          <span class="meta-num">3</span>
+          <span class="meta-key">Notes</span>
+        </div>
+        <div class="meta-pill">
+          <span class="meta-num">355+</span>
+          <span class="meta-key">Pages</span>
+        </div>
+        <div class="meta-pill">
+          <span class="meta-num">245+</span>
+          <span class="meta-key">Questions</span>
+        </div>
+        <div class="meta-pill is-free">
+          <span class="meta-num">$0</span>
+          <span class="meta-key">For now</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── CARD GRID ─── -->
+    <div class="resources-grid">
+      @for (r of resources; track r.slug; let i = $index) {
+        <article
+          class="card reveal"
+          [attr.data-reveal-delay]="160 + i * 100"
+          [style.--accent]="r.cover.accent"
+        >
+          <!-- Cover -->
+          <a
+            [routerLink]="['/resources', r.slug]"
+            class="card-cover"
+            [style.background]="'radial-gradient(circle at 30% 20%, ' + r.cover.gradientFrom + ', ' + r.cover.gradientTo + ' 70%)'"
+          >
+            <div class="cover-grid"></div>
+            <div class="cover-shine"></div>
+
+            <span class="cover-badge" [attr.data-tone]="r.badgeTone">
+              <span class="badge-dot"></span>
+              {{ r.badge }}
+            </span>
+
+            <div class="cover-mark">
+              <span class="cover-symbol">{{ r.cover.icon }}</span>
+              <span class="cover-initials">{{ r.cover.initials }}</span>
+            </div>
+
+            <div class="cover-foot">
+              <span class="cover-foot-key">/ READ_ONLINE</span>
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </div>
+          </a>
+
+          <!-- Body -->
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="meta-level">{{ r.level }}</span>
+              <span class="meta-divider">·</span>
+              <span class="meta-updated">Updated {{ r.updated }}</span>
+            </div>
+
+            <h2 class="card-title">{{ r.title }}</h2>
+            <p class="card-audience">{{ r.audience }}</p>
+
+            <ul class="card-topics">
+              @for (t of r.topics; track t) {
+                <li class="card-topic">{{ t }}</li>
+              }
+            </ul>
+
+            <div class="card-stats">
+              <div class="stat">
+                <span class="stat-val">{{ r.pages }}</span>
+                <span class="stat-key">Pages</span>
+              </div>
+              <div class="stat">
+                <span class="stat-val">{{ r.questions }}</span>
+                <span class="stat-key">Questions</span>
+              </div>
+              <div class="stat">
+                <span class="stat-val">{{ r.pdfSize }}</span>
+                <span class="stat-key">PDF size</span>
+              </div>
+            </div>
+
+            <div class="card-actions">
+              <a [routerLink]="['/resources', r.slug]" class="cta cta-primary">
+                <span>Read online</span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+              <button
+                type="button"
+                (click)="download(r, $event)"
+                class="cta cta-icon"
+                [attr.aria-label]="'Download ' + r.title + ' PDF'"
+              >
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <!-- ─── COMING SOON STRIP ─── -->
+    <div class="coming-soon reveal" data-reveal-delay="500">
+      <div class="cs-icon">✦</div>
+      <div class="cs-copy">
+        <h3 class="cs-title">More notes shipping soon</h3>
+        <p class="cs-sub">RxJS deep-dive · System Design · DSA in C# · React Hooks · Spring Boot.</p>
+      </div>
+      <a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer"
+         class="cs-cta">
+        <span>Follow on GitHub</span>
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</section>
