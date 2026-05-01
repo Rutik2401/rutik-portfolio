@@ -63,11 +63,14 @@ html, body {
 }
 
 /* ================ COVER PAGE ================ */
+/* Fits the puppeteer printable area (210mm A4 minus 15mm side margins,
+   minus 20mm/22mm top/bottom margins) so it never overflows and never
+   shows the white print-margin band on the right edge. */
 .cover-page {
   page-break-after: always;
   break-after: page;
-  height: 297mm;
-  width: 210mm;
+  width: 100%;
+  min-height: 255mm;
   margin: 0;
   padding: 0;
   position: relative;
