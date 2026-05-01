@@ -1,20 +1,70 @@
-<div class="cover-page">
-  <div class="cover-badge">PREMIUM EDITION</div>
-  <h1 class="cover-title">ANGULAR<br/>INTERVIEW ROADMAP</h1>
-  <p class="cover-subtitle">Senior-Level Notes for Developers</p>
-  <div class="cover-divider"></div>
-  <div class="cover-meta">
-    <p class="cover-prepared">Prepared By</p>
-    <p class="cover-author">Rutik Pimpale</p>
+<div class="cover-page" style="
+  --cv-bg-a:#08020a; --cv-bg-b:#2a0410; --cv-bg-c:#4a0512; --cv-bg-d:#110205;
+  --cv-glow-pri:rgba(255,45,135,0.55);
+  --cv-glow-sec:rgba(221,0,49,0.55);
+  --cv-foil-color:#ff2d87;
+  --cv-accent-light:#ff8fbb;
+  --cv-accent-mid:#ff2d87;
+  --cv-accent-dark:#dd0031;
+  --cv-glow-shadow-1:rgba(221,0,49,0.45);
+  --cv-glow-shadow-2:rgba(255,45,135,0.22);
+">
+  <div class="cv-foil"></div>
+  <div class="cv-grid"></div>
+  <div class="cv-grain"></div>
+  <div class="cv-shell">
+    <div class="cv-header">
+      <div class="cv-mark">
+        <div class="cv-badge">A</div>
+        <span class="cv-initials">NG</span>
+        <span class="cv-series">RP // Interview Series</span>
+      </div>
+      <span class="cv-level">Junior → Senior</span>
+    </div>
+    <div class="cv-rail">
+      <span class="cv-rail-line"></span>
+      <span class="cv-rail-text">Vol 01 · Frontend Interview</span>
+    </div>
+    <h1 class="cv-title">Angular<br/><span class="cv-title-accent">Interview</span><br/>Roadmap.</h1>
+    <p class="cv-subtitle">Junior → Senior</p>
+    <p class="cv-tagline">For Angular developers preparing for product-company interviews — concepts, patterns, and the answers that get you hired.</p>
+    <div class="cv-topics">
+      <span class="cv-chip">Signals</span>
+      <span class="cv-chip">Change Detection</span>
+      <span class="cv-chip">RxJS</span>
+      <span class="cv-chip">NgRx</span>
+      <span class="cv-chip">SSR</span>
+      <span class="cv-chip">Performance</span>
+      <span class="cv-chip">Testing</span>
+    </div>
+    <div class="cv-spacer"></div>
+    <div class="cv-stats">
+      <div class="cv-stat">
+        <div class="cv-stat-num">130+</div>
+        <div class="cv-stat-label">Pages</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">90+</div>
+        <div class="cv-stat-label">Questions</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">8 MB</div>
+        <div class="cv-stat-label">PDF Size</div>
+      </div>
+    </div>
+    <div class="cv-foot">
+      <div class="cv-foot-block">
+        <p class="cv-foot-label">Authored by</p>
+        <p class="cv-foot-value">Rutik Pimpale</p>
+      </div>
+      <div class="cv-foot-block right">
+        <p class="cv-foot-label">Updated</p>
+        <p class="cv-foot-value">Apr 2025</p>
+      </div>
+    </div>
   </div>
-  <div class="cover-tags">
-    <span>Angular 17+</span>
-    <span>RxJS</span>
-    <span>TypeScript</span>
-    <span>Signals</span>
-    <span>Performance</span>
-  </div>
-  <div class="cover-footer">© 2025 · All Rights Reserved</div>
 </div>
 
 <div class="toc-page">

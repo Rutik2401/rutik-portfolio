@@ -1,21 +1,70 @@
-<div class="cover-page">
-  <div class="cover-badge">PREMIUM EDITION</div>
-  <h1 class="cover-title">.NET<br/>INTERVIEW ROADMAP</h1>
-  <p class="cover-subtitle">Senior-Style Answers for 0 – 2.5 Years Candidates</p>
-  <div class="cover-divider"></div>
-  <div class="cover-meta">
-    <p class="cover-prepared">Prepared By</p>
-    <p class="cover-author">Rutik Pimpale</p>
+<div class="cover-page" style="
+  --cv-bg-a:#07021a; --cv-bg-b:#1a0a47; --cv-bg-c:#2e1383; --cv-bg-d:#0c0530;
+  --cv-glow-pri:rgba(124,58,237,0.6);
+  --cv-glow-sec:rgba(67,56,202,0.55);
+  --cv-foil-color:#a855f7;
+  --cv-accent-light:#c4a3fa;
+  --cv-accent-mid:#a855f7;
+  --cv-accent-dark:#7c3aed;
+  --cv-glow-shadow-1:rgba(124,58,237,0.48);
+  --cv-glow-shadow-2:rgba(168,85,247,0.25);
+">
+  <div class="cv-foil"></div>
+  <div class="cv-grid"></div>
+  <div class="cv-grain"></div>
+  <div class="cv-shell">
+    <div class="cv-header">
+      <div class="cv-mark">
+        <div class="cv-badge">#</div>
+        <span class="cv-initials">.NET</span>
+        <span class="cv-series">RP // Interview Series</span>
+      </div>
+      <span class="cv-level">0 – 2.5 Years</span>
+    </div>
+    <div class="cv-rail">
+      <span class="cv-rail-line"></span>
+      <span class="cv-rail-text">Vol 02 · Backend Interview</span>
+    </div>
+    <h1 class="cv-title">.NET<br/><span class="cv-title-accent">Interview</span><br/>Roadmap.</h1>
+    <p class="cv-subtitle">0 – 2.5 Years Experience</p>
+    <p class="cv-tagline">Senior-style answers tuned for the 0–2.5 years experience window — backend depth without the senior-level fluff.</p>
+    <div class="cv-topics">
+      <span class="cv-chip">C# 12</span>
+      <span class="cv-chip">.NET 8</span>
+      <span class="cv-chip">ASP.NET Core</span>
+      <span class="cv-chip">EF Core</span>
+      <span class="cv-chip">Clean Arch.</span>
+      <span class="cv-chip">Web API</span>
+      <span class="cv-chip">SOLID</span>
+    </div>
+    <div class="cv-spacer"></div>
+    <div class="cv-stats">
+      <div class="cv-stat">
+        <div class="cv-stat-num">135+</div>
+        <div class="cv-stat-label">Pages</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">80+</div>
+        <div class="cv-stat-label">Questions</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">6.8 MB</div>
+        <div class="cv-stat-label">PDF Size</div>
+      </div>
+    </div>
+    <div class="cv-foot">
+      <div class="cv-foot-block">
+        <p class="cv-foot-label">Authored by</p>
+        <p class="cv-foot-value">Rutik Pimpale</p>
+      </div>
+      <div class="cv-foot-block right">
+        <p class="cv-foot-label">Updated</p>
+        <p class="cv-foot-value">Apr 2025</p>
+      </div>
+    </div>
   </div>
-  <div class="cover-tags">
-    <span>.NET 8</span>
-    <span>C# 12</span>
-    <span>ASP.NET Core</span>
-    <span>EF Core</span>
-    <span>Web API</span>
-    <span>Clean Architecture</span>
-  </div>
-  <div class="cover-footer">© 2026 · All Rights Reserved</div>
 </div>
 
 <div class="toc-page">

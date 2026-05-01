@@ -103,30 +103,34 @@ function buildToc(md) {
       });
     }
   }
-  return `<div class="toc-page">
-    <div class="toc-head">
-      <div class="toc-kicker">Navigation</div>
-      <h1 class="toc-title">Table of Contents</h1>
-      <div class="toc-rule"></div>
-      <p class="toc-sub">Click any entry to jump to the section</p>
-    </div>
-    <div class="toc-grid">
-      ${topics.map((t, i) => {
-        const num = String(i + 1).padStart(2, '0');
-        return `<div class="toc-card">
-          <a class="toc-topic" href="#${t.slug}">
-            <span class="toc-num">${num}</span>
-            <span class="toc-topic-title">${t.title}</span>
-          </a>
-          <ul class="toc-qs">
-            ${t.questions.map((q) =>
-              `<li><a href="#${q.slug}"><span class="toc-dot"></span><span class="toc-q-text">${q.title}</span>${q.important ? '<span class="toc-imp">★</span>' : ''}</a></li>`
-            ).join('\n            ')}
-          </ul>
-        </div>`;
-      }).join('\n      ')}
-    </div>
-  </div>`;
+  // IMPORTANT: emit FLUSH-LEFT HTML on every line. marked.js treats any
+  // line indented by 4+ spaces as a code block, and treats whitespace-only
+  // lines as blank-line breaks out of HTML mode — both will silently corrupt
+  // the rendered TOC and leak the toc-grid's column-count: 2 into the body.
+  const cards = topics.map((t, i) => {
+    const num = String(i + 1).padStart(2, '0');
+    const items = t.questions.map((q) =>
+      `<li><a href="#${q.slug}"><span class="toc-dot"></span><span class="toc-q-text">${q.title}</span>${q.important ? '<span class="toc-imp">★</span>' : ''}</a></li>`
+    ).join('');
+    return [
+      `<div class="toc-card">`,
+      `<a class="toc-topic" href="#${t.slug}"><span class="toc-num">${num}</span><span class="toc-topic-title">${t.title}</span></a>`,
+      `<ul class="toc-qs">${items}</ul>`,
+      `</div>`,
+    ].join('');
+  }).join('');
+
+  return [
+    `<div class="toc-page">`,
+    `<div class="toc-head">`,
+    `<div class="toc-kicker">Navigation</div>`,
+    `<h1 class="toc-title">Table of Contents</h1>`,
+    `<div class="toc-rule"></div>`,
+    `<p class="toc-sub">Click any entry to jump to the section</p>`,
+    `</div>`,
+    `<div class="toc-grid">${cards}</div>`,
+    `</div>`,
+  ].join('');
 }
 
 // ---------- per-note generation ----------
@@ -187,7 +191,12 @@ ${bodyHtml}
   const headerLeft = cfg.headerLeft || cfg.title || 'Premium Notes';
   const headerRight = cfg.headerRight || 'Premium Edition';
   const footerName = cfg.author || 'Rutik Pimpale';
+  const accent = cfg.accent || '#DC2626';
 
+  // NOTE: no `margin` option here — that would override CSS @page rules.
+  // Without it, Puppeteer honors `@page` (default margins) AND `@page :first
+  // { margin: 0 }` from styles.css, which makes the cover page full-bleed
+  // with NO header/footer slot, while content pages keep their margins.
   await page.pdf({
     path: pdfOut,
     format: 'A4',
@@ -196,16 +205,27 @@ ${bodyHtml}
     displayHeaderFooter: true,
     scale: 1,
     headerTemplate: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;font-size:8pt;color:#1E3A8A;width:100%;padding:6px 15mm 0 15mm;display:flex;justify-content:space-between;align-items:center;-webkit-print-color-adjust:exact;">
-        <span style="font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#DC2626;">${escapeHtml(headerLeft)}</span>
-        <span style="color:#1E3A8A;font-weight:600;">${escapeHtml(headerRight)}</span>
+      <div style="font-family:'Inter','Segoe UI',Arial,sans-serif;font-size:7.5pt;color:#0F172A;width:100%;padding:0 15mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:4mm 0 3mm 0;border-bottom:1px solid rgba(15,23,42,0.10);">
+          <span style="display:inline-flex;align-items:center;gap:7px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:${accent};">
+            <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${accent};box-shadow:0 0 6px ${accent};"></span>
+            ${escapeHtml(headerLeft)}
+          </span>
+          <span style="font-family:'JetBrains Mono','Inter',monospace;font-size:7pt;color:#64748B;font-weight:500;letter-spacing:0.20em;text-transform:uppercase;">${escapeHtml(headerRight)}</span>
+        </div>
       </div>`,
     footerTemplate: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;font-size:8.5pt;color:#0F172A;width:100%;padding:4px 15mm 6px 15mm;border-top:1px solid #CBD5E1;display:flex;justify-content:space-between;align-items:center;-webkit-print-color-adjust:exact;">
-        <span style="font-weight:700;letter-spacing:0.3px;"><span style="color:#DC2626;">@</span><span style="color:#1E3A8A;">${escapeHtml(footerName)}</span></span>
-        <span style="font-weight:700;color:#0F172A;">Page <span class="pageNumber"></span> / <span class="totalPages"></span></span>
+      <div style="font-family:'Inter','Segoe UI',Arial,sans-serif;font-size:8pt;color:#0F172A;width:100%;padding:0 15mm;-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:4mm 0;border-top:1px solid rgba(15,23,42,0.10);">
+          <span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;color:#0F172A;">
+            <span style="display:inline-block;width:18px;height:1px;background:linear-gradient(90deg,${accent},#0F172A);"></span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:0.22em;text-transform:uppercase;color:#64748B;">@${escapeHtml(footerName)}</span>
+          </span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:7pt;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:#64748B;">
+            Page <span style="color:${accent};font-weight:700;" class="pageNumber"></span><span style="margin:0 4px;color:#CBD5E1;">/</span><span class="totalPages"></span>
+          </span>
+        </div>
       </div>`,
-    margin: { top: '20mm', bottom: '22mm', left: '15mm', right: '15mm' },
   });
 
   await browser.close();

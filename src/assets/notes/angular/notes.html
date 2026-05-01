@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Premium Notes</title>
+<title>Angular Interview Roadmap</title>
 <style>/* ============================================================
    PREMIUM PDF STYLES
    Scalable — works with any markdown that uses ##, ###, code, tables
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700;900&family=Sora:wght@400;500;600;700;800&display=swap');
 
 :root {
   --brand-red: #DC2626;
@@ -62,186 +62,322 @@ html, body {
   print-color-adjust: exact;
 }
 
-/* ================ COVER PAGE ================ */
-/* Fits the puppeteer printable area (210mm A4 minus 15mm side margins,
-   minus 20mm/22mm top/bottom margins) so it never overflows and never
-   shows the white print-margin band on the right edge. */
+/* ================ COVER PAGE — PREMIUM A4 ================ */
+/* Full-bleed first page (paired with @page :first { margin: 0; }).
+   Theme is driven by CSS variables set inline on .cover-page in each
+   notes.md, so a single block of CSS serves all 3 covers.            */
 .cover-page {
   page-break-after: always;
   break-after: page;
-  width: 100%;
-  min-height: 255mm;
+  width: 210mm;
+  height: 297mm;
   margin: 0;
   padding: 0;
   position: relative;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(220,38,38,0.42), transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(59,130,246,0.38), transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(234,88,12,0.12), transparent 60%),
-    linear-gradient(135deg, #020617 0%, #0F172A 45%, #1E293B 100%);
+  overflow: hidden;
   color: #fff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
+  /* default theme — overridden inline per cover */
+  --cv-bg-a: #08020a;
+  --cv-bg-b: #2a0410;
+  --cv-bg-c: #4a0512;
+  --cv-bg-d: #110205;
+  --cv-glow-pri: rgba(255,45,135,0.55);
+  --cv-glow-sec: rgba(221,0,49,0.55);
+  --cv-foil-color: #ff2d87;
+  --cv-accent-light: #ff8fbb;
+  --cv-accent-mid: #ff2d87;
+  --cv-accent-dark: #dd0031;
+  --cv-glow-shadow-1: rgba(221,0,49,0.45);
+  --cv-glow-shadow-2: rgba(255,45,135,0.22);
+
+  background:
+    radial-gradient(85% 60% at 100% 0%, var(--cv-glow-pri), transparent 60%),
+    radial-gradient(75% 60% at 0% 100%, var(--cv-glow-sec), transparent 60%),
+    linear-gradient(170deg,
+      var(--cv-bg-a) 0%,
+      var(--cv-bg-b) 35%,
+      var(--cv-bg-c) 65%,
+      var(--cv-bg-d) 100%);
+}
+
+/* foil sheen along top edge */
+.cover-page .cv-foil {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0) 5%,
+    rgba(255,255,255,0.55) 35%,
+    var(--cv-foil-color) 50%,
+    rgba(255,255,255,0.55) 65%,
+    rgba(255,255,255,0) 95%,
+    transparent 100%);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* faded grid backdrop */
+.cover-page .cv-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 70% 35%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(ellipse 80% 60% at 70% 35%, #000 30%, transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* paper grain for premium depth (no blur) */
+.cover-page .cv-grain {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1.5px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* shell — content padding */
+.cover-page .cv-shell {
+  position: relative;
+  z-index: 2;
+  padding: 22mm 22mm 18mm 22mm;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+/* header */
+.cover-page .cv-header {
+  display: flex;
   align-items: center;
-  text-align: center;
-  overflow: hidden;
+  justify-content: space-between;
+  margin-bottom: 18mm;
 }
-.cover-page::before {
-  content: '';
-  position: absolute;
-  inset: 14mm;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  background: linear-gradient(135deg, rgba(220,38,38,0.6), rgba(234,88,12,0.4), rgba(59,130,246,0.6)) border-box;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
+.cover-page .cv-mark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.cover-page::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-}
-.cover-inner { position: relative; z-index: 2; }
-.cover-badge {
-  display: inline-block;
-  padding: 8px 22px;
-  background: linear-gradient(135deg, #DC2626, #EA580C, #F59E0B);
+.cover-page .cv-badge {
+  width: 50px; height: 50px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-size: 26pt;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
   color: #fff;
-  font-size: 9pt;
-  font-weight: 800;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  border-radius: 30px;
-  margin-bottom: 44px;
-  box-shadow: 0 10px 30px rgba(220,38,38,0.5), 0 0 0 1px rgba(255,255,255,0.15) inset;
-  position: relative;
-  z-index: 2;
+  background: linear-gradient(140deg,
+    var(--cv-accent-light) 0%,
+    var(--cv-accent-mid) 60%,
+    var(--cv-accent-dark) 100%);
+  box-shadow:
+    0 18px 36px -12px var(--cv-glow-shadow-1),
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -2px 0 rgba(0,0,0,0.35);
 }
-.cover-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 62pt;
-  font-weight: 900;
-  line-height: 1.02;
-  margin: 0 0 18px 0;
-  background: linear-gradient(135deg, #ffffff 0%, #E0E7FF 45%, #FECACA 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -1.5px;
-  text-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  position: relative;
-  z-index: 2;
-}
-.cover-subtitle {
-  font-size: 13pt;
-  font-weight: 500;
-  color: #CBD5E1;
-  margin: 0 0 10px 0;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 2;
-}
-.cover-exp {
-  display: inline-block;
-  font-size: 9.5pt;
-  font-weight: 600;
-  color: #FBBF24;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border: 1px solid rgba(251,191,36,0.35);
-  border-radius: 20px;
-  margin-bottom: 30px;
-  background: rgba(251,191,36,0.08);
-  position: relative;
-  z-index: 2;
-}
-.cover-divider {
-  width: 100px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #EA580C, #60A5FA, transparent);
-  border-radius: 2px;
-  margin: 0 auto 40px auto;
-  position: relative;
-  z-index: 2;
-}
-.cover-meta {
-  margin-bottom: 50px;
-  padding: 18px 40px;
-  background: rgba(15,23,42,0.55);
-  border: 1px solid rgba(148,163,184,0.15);
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 2;
-}
-.cover-prepared {
+.cover-page .cv-initials {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  padding: 5px 11px;
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 8.5pt;
-  color: #64748B;
-  letter-spacing: 4px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.88);
   text-transform: uppercase;
-  margin: 0 0 8px 0;
 }
-.cover-author {
-  font-size: 24pt;
+.cover-page .cv-series {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.62);
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+.cover-page .cv-level {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.88);
+  text-transform: uppercase;
+}
+
+/* volume rail */
+.cover-page .cv-rail {
+  display: flex; align-items: center; gap: 12px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+.cover-page .cv-rail-line {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, var(--cv-accent-mid), var(--cv-accent-dark));
+}
+.cover-page .cv-rail-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* title */
+.cover-page .cv-title {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-size: 64pt;
   font-weight: 800;
-  background: linear-gradient(135deg, #FCA5A5, #FFFFFF, #93C5FD);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
   margin: 0;
-  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.10),
+    0 0 24px var(--cv-glow-shadow-1),
+    0 0 60px var(--cv-glow-shadow-2);
 }
-.cover-tags {
+.cover-page .cv-title-accent {
+  background: linear-gradient(135deg,
+    var(--cv-accent-light) 0%,
+    var(--cv-accent-mid) 50%,
+    var(--cv-accent-dark) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}
+
+/* subtitle / tagline */
+.cover-page .cv-subtitle {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-size: 16pt;
+  font-weight: 500;
+  color: rgba(255,255,255,0.92);
+  margin: 22px 0 0 0;
+  letter-spacing: -0.005em;
+}
+.cover-page .cv-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 11pt;
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.55;
+  margin: 9px 0 0 0;
+  max-width: 130mm;
+}
+
+/* topic chips */
+.cover-page .cv-topics {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  max-width: 440px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+  gap: 6px;
+  margin-top: 16mm;
+  max-width: 145mm;
 }
-.cover-tags span {
-  padding: 6px 14px;
-  background: linear-gradient(135deg, rgba(220,38,38,0.15), rgba(59,130,246,0.15));
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 20px;
-  font-size: 9pt;
-  font-weight: 600;
-  color: #F1F5F9;
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 2;
-}
-.cover-footer {
-  position: absolute;
-  bottom: 20mm;
-  left: 0;
-  right: 0;
+.cover-page .cv-chip {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  padding: 5px 11px;
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 8.5pt;
-  color: #64748B;
-  letter-spacing: 2px;
-  z-index: 2;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.85);
 }
-.cover-footer::before,
-.cover-footer::after {
-  content: '◆';
-  color: #DC2626;
-  margin: 0 10px;
-  font-size: 7pt;
-  vertical-align: middle;
+
+/* spacer pushes stats + footer to bottom */
+.cover-page .cv-spacer { flex: 1; min-height: 8mm; }
+
+/* premium stat row */
+.cover-page .cv-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  position: relative;
+  padding-top: 16px;
+  margin-bottom: 12mm;
+}
+.cover-page .cv-stats::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22) 25%, rgba(255,255,255,0.22) 75%, transparent);
+}
+.cover-page .cv-stat {
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.cover-page .cv-stat-num {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32pt;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg,
+    var(--cv-accent-light) 0%,
+    var(--cv-accent-mid) 50%,
+    var(--cv-accent-dark) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.cover-page .cv-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-top: 6px;
+}
+.cover-page .cv-stat-divider {
+  width: 1px; align-self: stretch;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.18), transparent);
+}
+
+/* footer */
+.cover-page .cv-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 7mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.cover-page .cv-foot-block { line-height: 1.2; }
+.cover-page .cv-foot-block.right { text-align: right; }
+.cover-page .cv-foot-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  margin: 0;
+}
+.cover-page .cv-foot-value {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16pt;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin: 4px 0 0 0;
 }
 
 /* ================ TOC PAGE ================ */
@@ -626,236 +762,175 @@ hr {
 /* ================ PAGE-BREAK HELPERS ================ */
 .page-break { page-break-after: always; break-after: page; }
 .avoid-break { page-break-inside: avoid; break-inside: avoid; }
+
+/* ============================================================
+   SCREEN-ONLY (HTML preview in browser/iframe)
+   Does NOT affect print/PDF output — wrapped in @media screen.
+   Three breakpoints: mobile <600px · tablet 601-1024px · laptop >1024px.
+   ============================================================ */
+@media screen {
+  html { scrollbar-width: thin; scrollbar-color: rgba(15,23,42,0.3) transparent; }
+
+  body {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 36px 64px;
+    background: #fafafa;
+  }
+
+  /* Modern minimal scrollbar (WebKit) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.25);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background 0.2s ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(15, 23, 42, 0.55);
+    background-clip: padding-box;
+  }
+
+  /* Code & tables: never let them blow out horizontally on screen */
+  pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+}
+
+/* ─── TABLET (601-1024px) ─── */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  body { padding: 24px 22px 50px; }
+  .toc-title { font-size: 28pt; }
+}
+
+/* ─── MOBILE (≤600px) ─── */
+@media screen and (max-width: 600px) {
+  body { padding: 14px 14px 48px; max-width: 100%; }
+
+  /* TOC */
+  .toc-page { padding: 0; }
+  .toc-grid { column-count: 1; column-gap: 0; }
+  .toc-title { font-size: 20pt; }
+  .toc-kicker { font-size: 7pt; letter-spacing: 3px; padding: 3px 12px; }
+  .toc-sub { font-size: 7.5pt; padding: 0 8px; }
+  .toc-card { margin-bottom: 12px; padding: 12px; }
+  .toc-num { width: 24px; height: 24px; font-size: 9pt; }
+  .toc-topic-title { font-size: 9pt; }
+  .toc-qs li a { font-size: 8pt; line-height: 1.4; }
+
+  /* HEADINGS */
+  h1 { font-size: 18pt; padding-bottom: 8px; margin-bottom: 12px; }
+  h2 {
+    font-size: 11.5pt;
+    padding: 10px 14px;
+    letter-spacing: 0.5px;
+    margin: 24px 0 16px;
+  }
+  h3 { font-size: 11pt; padding: 9px 12px; margin: 20px 0 12px; line-height: 1.35; }
+  h4 { font-size: 10pt; }
+
+  /* CODE BLOCKS — keep on one line, scroll horizontally instead of breaking */
+  pre { font-size: 7.8pt; padding: 26px 14px 12px; border-radius: 6px; }
+  pre code { white-space: pre; word-break: normal; font-size: 7.8pt; }
+
+  /* Inline code on mobile: WRAP instead of nowrap so long identifiers
+     like StringBuilder.AppendFormat don't overflow the right edge. */
+  code {
+    font-size: 8.4pt;
+    padding: 1px 5px;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* Soften the highlighter background on small screens — solid colored
+     chips on every <strong> looks busy on mobile. */
+  strong { background: linear-gradient(180deg, transparent 75%, rgba(234,88,12,0.10) 75%); }
+
+  /* TABLES */
+  table { font-size: 8.5pt; }
+  th, td { white-space: nowrap; padding: 6px 10px; }
+
+  /* TYPOGRAPHY — better breathing room on mobile */
+  p { text-align: left; hyphens: manual; line-height: 1.7; margin-bottom: 12px; }
+  ul, ol { padding-left: 18px; }
+  li { line-height: 1.65; margin: 5px 0; }
+  blockquote { padding: 10px 14px; margin: 14px 0; }
+}
 </style>
 </head>
 <body>
-<div class="cover-page">
-  <div class="cover-badge">PREMIUM EDITION</div>
-  <h1 class="cover-title">ANGULAR<br/>INTERVIEW ROADMAP</h1>
-  <p class="cover-subtitle">Senior-Level Notes for Developers</p>
-  <div class="cover-divider"></div>
-  <div class="cover-meta">
-    <p class="cover-prepared">Prepared By</p>
-    <p class="cover-author">Rutik Pimpale</p>
+<div class="cover-page" style="
+  --cv-bg-a:#08020a; --cv-bg-b:#2a0410; --cv-bg-c:#4a0512; --cv-bg-d:#110205;
+  --cv-glow-pri:rgba(255,45,135,0.55);
+  --cv-glow-sec:rgba(221,0,49,0.55);
+  --cv-foil-color:#ff2d87;
+  --cv-accent-light:#ff8fbb;
+  --cv-accent-mid:#ff2d87;
+  --cv-accent-dark:#dd0031;
+  --cv-glow-shadow-1:rgba(221,0,49,0.45);
+  --cv-glow-shadow-2:rgba(255,45,135,0.22);
+">
+  <div class="cv-foil"></div>
+  <div class="cv-grid"></div>
+  <div class="cv-grain"></div>
+  <div class="cv-shell">
+    <div class="cv-header">
+      <div class="cv-mark">
+        <div class="cv-badge">A</div>
+        <span class="cv-initials">NG</span>
+        <span class="cv-series">RP // Interview Series</span>
+      </div>
+      <span class="cv-level">Junior → Senior</span>
+    </div>
+    <div class="cv-rail">
+      <span class="cv-rail-line"></span>
+      <span class="cv-rail-text">Vol 01 · Frontend Interview</span>
+    </div>
+    <h1 class="cv-title">Angular<br/><span class="cv-title-accent">Interview</span><br/>Roadmap.</h1>
+    <p class="cv-subtitle">Junior → Senior</p>
+    <p class="cv-tagline">For Angular developers preparing for product-company interviews — concepts, patterns, and the answers that get you hired.</p>
+    <div class="cv-topics">
+      <span class="cv-chip">Signals</span>
+      <span class="cv-chip">Change Detection</span>
+      <span class="cv-chip">RxJS</span>
+      <span class="cv-chip">NgRx</span>
+      <span class="cv-chip">SSR</span>
+      <span class="cv-chip">Performance</span>
+      <span class="cv-chip">Testing</span>
+    </div>
+    <div class="cv-spacer"></div>
+    <div class="cv-stats">
+      <div class="cv-stat">
+        <div class="cv-stat-num">130+</div>
+        <div class="cv-stat-label">Pages</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">90+</div>
+        <div class="cv-stat-label">Questions</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">8 MB</div>
+        <div class="cv-stat-label">PDF Size</div>
+      </div>
+    </div>
+    <div class="cv-foot">
+      <div class="cv-foot-block">
+        <p class="cv-foot-label">Authored by</p>
+        <p class="cv-foot-value">Rutik Pimpale</p>
+      </div>
+      <div class="cv-foot-block right">
+        <p class="cv-foot-label">Updated</p>
+        <p class="cv-foot-value">Apr 2025</p>
+      </div>
+    </div>
   </div>
-  <div class="cover-tags">
-    <span>Angular 17+</span>
-    <span>RxJS</span>
-    <span>TypeScript</span>
-    <span>Signals</span>
-    <span>Performance</span>
-  </div>
-  <div class="cover-footer">© 2025 · All Rights Reserved</div>
 </div>
 
-<div class="toc-page">
-  <div class="toc-head">
-    <div class="toc-kicker">Navigation</div>
-    <h1 class="toc-title">Table of Contents</h1>
-    <div class="toc-rule"></div>
-    <p class="toc-sub">Click any entry to jump to the section</p>
-  </div>
-  <div class="toc-grid">
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-1-angular-basics">
-            <span class="toc-num">01</span>
-            <span class="toc-topic-title">TOPIC 1: ANGULAR BASICS</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-typescript-and-why-does-angular-use-it"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is TypeScript and why does Angular use it?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-is-the-difference-between-jit-and-aot-compilation"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is the difference between JIT and AOT compilation?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-what-are-the-main-building-blocks-of-angular"><span class="toc-dot"></span><span class="toc-q-text">Q4: What are the main building blocks of Angular?</span></a></li>
-            <li><a href="#q5-what-is-angular-cli-name-some-common-commands"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is Angular CLI? Name some common commands.</span></a></li>
-            <li><a href="#q6-what-is-the-difference-between-var-let-and-const"><span class="toc-dot"></span><span class="toc-q-text">Q6: What is the difference between var, let, and const?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-2-components-data-binding">
-            <span class="toc-num">02</span>
-            <span class="toc-topic-title">TOPIC 2: COMPONENTS & DATA BINDING</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-a-component-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is a Component in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-data-binding-what-are-its-types"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is Data Binding? What are its types?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-how-do-you-pass-data-between-components"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you pass data between components?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-what-is-component-decorator"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is @Component decorator?</span></a></li>
-            <li><a href="#q5-what-is-string-interpolation"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is String Interpolation?</span></a></li>
-            <li><a href="#q6-what-are-smart-and-dumb-components"><span class="toc-dot"></span><span class="toc-q-text">Q6: What are Smart and Dumb Components?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-3-directives">
-            <span class="toc-num">03</span>
-            <span class="toc-topic-title">TOPIC 3: DIRECTIVES</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-are-directives-in-angular-what-are-the-types"><span class="toc-dot"></span><span class="toc-q-text">Q1: What are Directives in Angular? What are the types?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-the-difference-between-ngif-and-hidden"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is the difference between ngIf and [hidden]?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-how-does-ngfor-work-what-is-trackby"><span class="toc-dot"></span><span class="toc-q-text">Q3: How does ngFor work? What is trackBy?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-what-is-ngclass-and-ngstyle"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is ngClass and ngStyle?</span></a></li>
-            <li><a href="#q5-what-is-ng-template-ng-container-and-ng-content"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is ng-template, ng-container, and ng-content?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-4-pipes">
-            <span class="toc-num">04</span>
-            <span class="toc-topic-title">TOPIC 4: PIPES</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-a-pipe-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is a Pipe in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-how-do-you-create-a-custom-pipe"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you create a Custom Pipe?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-is-the-difference-between-pure-and-impure-pipes"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is the difference between Pure and Impure Pipes?</span></a></li>
-            <li><a href="#q4-what-is-the-async-pipe"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is the Async Pipe?</span><span class="toc-imp">★</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-5-services-dependency-injection">
-            <span class="toc-num">05</span>
-            <span class="toc-topic-title">TOPIC 5: SERVICES & DEPENDENCY INJECTION</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-a-service-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is a Service in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-dependency-injection-di"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is Dependency Injection (DI)?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-is-injectable-what-does-providedin-root-mean"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is @Injectable()? What does providedIn: 'root' mean?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-what-is-the-difference-between-providedin-root-and-adding-to-providers-array"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is the difference between providedIn: 'root' and adding to providers array?</span></a></li>
-            <li><a href="#q5-how-do-you-share-data-between-unrelated-components-using-a-service"><span class="toc-dot"></span><span class="toc-q-text">Q5: How do you share data between unrelated components using a Service?</span></a></li>
-            <li><a href="#q6-how-does-angulars-dependency-injection-hierarchy-work"><span class="toc-dot"></span><span class="toc-q-text">Q6: How does Angular's Dependency Injection Hierarchy work?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-6-routing">
-            <span class="toc-num">06</span>
-            <span class="toc-topic-title">TOPIC 6: ROUTING</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-routing-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is Routing in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-lazy-loading-how-do-you-implement-it"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is Lazy Loading? How do you implement it?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-are-route-guards"><span class="toc-dot"></span><span class="toc-q-text">Q3: What are Route Guards?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-how-do-you-pass-data-between-routes"><span class="toc-dot"></span><span class="toc-q-text">Q4: How do you pass data between routes?</span></a></li>
-            <li><a href="#q5-what-is-a-resolver"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is a Resolver?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-7-forms-template-driven-reactive">
-            <span class="toc-num">07</span>
-            <span class="toc-topic-title">TOPIC 7: FORMS (TEMPLATE-DRIVEN + REACTIVE)</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-the-difference-between-template-driven-and-reactive-forms"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is the difference between Template-driven and Reactive Forms?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-how-do-you-create-a-reactive-form"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you create a Reactive Form?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-is-formgroup-formcontrol-and-formarray"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is FormGroup, FormControl, and FormArray?</span></a></li>
-            <li><a href="#q4-how-do-you-handle-form-validation"><span class="toc-dot"></span><span class="toc-q-text">Q4: How do you handle form validation?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q5-what-is-ngmodel-and-two-way-binding"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is ngModel and two-way binding?</span></a></li>
-            <li><a href="#q6-how-do-angular-forms-work-internally"><span class="toc-dot"></span><span class="toc-q-text">Q6: How do Angular Forms work internally?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-8-http-api-handling">
-            <span class="toc-num">08</span>
-            <span class="toc-topic-title">TOPIC 8: HTTP & API HANDLING</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-how-do-you-make-http-requests-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: How do you make HTTP requests in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-are-http-interceptors"><span class="toc-dot"></span><span class="toc-q-text">Q2: What are HTTP Interceptors?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-how-do-you-handle-errors-in-http-calls"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you handle errors in HTTP calls?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-what-is-the-difference-between-rest-api-and-soap-api"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is the difference between REST API and SOAP API?</span></a></li>
-            <li><a href="#q5-how-do-you-implement-caching-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q5: How do you implement caching in Angular?</span></a></li>
-            <li><a href="#q6-how-do-you-handle-multiple-api-calls"><span class="toc-dot"></span><span class="toc-q-text">Q6: How do you handle multiple API calls?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-9-rxjs-basics">
-            <span class="toc-num">09</span>
-            <span class="toc-topic-title">TOPIC 9: RxJS BASICS</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-rxjs-and-why-is-it-used-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is RxJS and why is it used in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-the-difference-between-observable-and-promise"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is the difference between Observable and Promise?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-are-commonly-used-rxjs-operators"><span class="toc-dot"></span><span class="toc-q-text">Q3: What are commonly used RxJS operators?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-explain-switchmap-with-a-real-example"><span class="toc-dot"></span><span class="toc-q-text">Q4: Explain switchMap with a real example.</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q5-what-is-subject-and-behaviorsubject"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is Subject and BehaviorSubject?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q6-when-should-you-unsubscribe-from-observables-and-why"><span class="toc-dot"></span><span class="toc-q-text">Q6: When should you unsubscribe from Observables and why?</span></a></li>
-            <li><a href="#q7-how-do-you-optimize-api-calls-with-rxjs"><span class="toc-dot"></span><span class="toc-q-text">Q7: How do you optimize API calls with RxJS?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-10-lifecycle-hooks">
-            <span class="toc-num">10</span>
-            <span class="toc-topic-title">TOPIC 10: LIFECYCLE HOOKS</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-are-lifecycle-hooks-name-the-important-ones"><span class="toc-dot"></span><span class="toc-q-text">Q1: What are Lifecycle Hooks? Name the important ones.</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-the-difference-between-constructor-and-ngoninit"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is the difference between constructor and ngOnInit?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-is-ngondestroy-why-is-it-important"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is ngOnDestroy? Why is it important?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-what-is-ngonchanges-when-does-it-fire"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is ngOnChanges? When does it fire?</span></a></li>
-            <li><a href="#q5-what-is-ngafterviewinit"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is ngAfterViewInit?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-11-state-management-basic">
-            <span class="toc-num">11</span>
-            <span class="toc-topic-title">TOPIC 11: STATE MANAGEMENT (BASIC)</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-what-is-state-management-why-do-we-need-it"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is State Management? Why do we need it?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-how-do-you-manage-state-using-services"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you manage state using Services?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-what-is-ngrx-when-would-you-use-it"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is NgRx? When would you use it?</span></a></li>
-            <li><a href="#q4-what-are-angular-signals-angular-16"><span class="toc-dot"></span><span class="toc-q-text">Q4: What are Angular Signals? (Angular 16+)</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-12-performance-optimization">
-            <span class="toc-num">12</span>
-            <span class="toc-topic-title">TOPIC 12: PERFORMANCE OPTIMIZATION</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-how-do-you-improve-angular-app-performance"><span class="toc-dot"></span><span class="toc-q-text">Q1: How do you improve Angular app performance?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-what-is-onpush-change-detection-how-does-it-help"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is OnPush Change Detection? How does it help?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-how-do-you-handle-memory-leaks-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you handle memory leaks in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-what-is-virtual-scrolling"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is Virtual Scrolling?</span></a></li>
-            <li><a href="#q5-what-is-tree-shaking"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is Tree Shaking?</span></a></li>
-            <li><a href="#q6-what-is-change-detection-and-how-does-it-work-internally"><span class="toc-dot"></span><span class="toc-q-text">Q6: What is Change Detection and how does it work internally?</span></a></li>
-            <li><a href="#q7-what-is-zonejs-and-what-role-does-it-play-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q7: What is Zone.js and what role does it play in Angular?</span></a></li>
-            <li><a href="#q8-how-do-you-reduce-the-bundle-size-of-an-angular-app"><span class="toc-dot"></span><span class="toc-q-text">Q8: How do you reduce the bundle size of an Angular app?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#topic-13-angular-interview-scenario-questions">
-            <span class="toc-num">13</span>
-            <span class="toc-topic-title">TOPIC 13: ANGULAR INTERVIEW SCENARIO QUESTIONS</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-tell-me-about-a-challenging-problem-you-solved-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: Tell me about a challenging problem you solved in Angular.</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-how-do-you-structure-a-large-angular-application"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you structure a large Angular application?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-how-do-you-handle-authentication-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you handle authentication in Angular?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q4-how-do-you-handle-errors-globally-in-your-app"><span class="toc-dot"></span><span class="toc-q-text">Q4: How do you handle errors globally in your app?</span></a></li>
-            <li><a href="#q5-explain-a-situation-where-you-optimized-performance"><span class="toc-dot"></span><span class="toc-q-text">Q5: Explain a situation where you optimized performance.</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q6-what-is-the-difference-between-viewchild-and-contentchild"><span class="toc-dot"></span><span class="toc-q-text">Q6: What is the difference between ViewChild and ContentChild?</span></a></li>
-            <li><a href="#q7-what-are-standalone-components-angular-15"><span class="toc-dot"></span><span class="toc-q-text">Q7: What are Standalone Components? (Angular 15+)</span></a></li>
-            <li><a href="#q8-what-is-the-new-control-flow-syntax-in-angular-17"><span class="toc-dot"></span><span class="toc-q-text">Q8: What is the new Control Flow syntax in Angular 17+?</span></a></li>
-            <li><a href="#q9-how-do-you-improve-angular-app-scalability"><span class="toc-dot"></span><span class="toc-q-text">Q9: How do you improve Angular app scalability?</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#quick-revision-cheat-sheet">
-            <span class="toc-num">14</span>
-            <span class="toc-topic-title">QUICK REVISION CHEAT SHEET</span>
-          </a>
-          <ul class="toc-qs">
-            
-<pre class="hljs"><code class="language-plaintext">      &lt;/ul&gt;
-    &lt;/div&gt;
-&lt;div class=&quot;toc-card&quot;&gt;
-      &lt;a class=&quot;toc-topic&quot; href=&quot;#interview-tips&quot;&gt;
-        &lt;span class=&quot;toc-num&quot;&gt;15&lt;/span&gt;
-        &lt;span class=&quot;toc-topic-title&quot;&gt;INTERVIEW TIPS&lt;/span&gt;
-      &lt;/a&gt;
-      &lt;ul class=&quot;toc-qs&quot;&gt;
-        
-      &lt;/ul&gt;
-    &lt;/div&gt;</code></pre>  </div>
-</div>
+<div class="toc-page"><div class="toc-head"><div class="toc-kicker">Navigation</div><h1 class="toc-title">Table of Contents</h1><div class="toc-rule"></div><p class="toc-sub">Click any entry to jump to the section</p></div><div class="toc-grid"><div class="toc-card"><a class="toc-topic" href="#topic-1-angular-basics"><span class="toc-num">01</span><span class="toc-topic-title">TOPIC 1: ANGULAR BASICS</span></a><ul class="toc-qs"><li><a href="#q1-what-is-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-typescript-and-why-does-angular-use-it"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is TypeScript and why does Angular use it?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-is-the-difference-between-jit-and-aot-compilation"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is the difference between JIT and AOT compilation?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-what-are-the-main-building-blocks-of-angular"><span class="toc-dot"></span><span class="toc-q-text">Q4: What are the main building blocks of Angular?</span></a></li><li><a href="#q5-what-is-angular-cli-name-some-common-commands"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is Angular CLI? Name some common commands.</span></a></li><li><a href="#q6-what-is-the-difference-between-var-let-and-const"><span class="toc-dot"></span><span class="toc-q-text">Q6: What is the difference between var, let, and const?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-2-components-data-binding"><span class="toc-num">02</span><span class="toc-topic-title">TOPIC 2: COMPONENTS & DATA BINDING</span></a><ul class="toc-qs"><li><a href="#q1-what-is-a-component-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is a Component in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-data-binding-what-are-its-types"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is Data Binding? What are its types?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-how-do-you-pass-data-between-components"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you pass data between components?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-what-is-component-decorator"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is @Component decorator?</span></a></li><li><a href="#q5-what-is-string-interpolation"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is String Interpolation?</span></a></li><li><a href="#q6-what-are-smart-and-dumb-components"><span class="toc-dot"></span><span class="toc-q-text">Q6: What are Smart and Dumb Components?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-3-directives"><span class="toc-num">03</span><span class="toc-topic-title">TOPIC 3: DIRECTIVES</span></a><ul class="toc-qs"><li><a href="#q1-what-are-directives-in-angular-what-are-the-types"><span class="toc-dot"></span><span class="toc-q-text">Q1: What are Directives in Angular? What are the types?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-the-difference-between-ngif-and-hidden"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is the difference between ngIf and [hidden]?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-how-does-ngfor-work-what-is-trackby"><span class="toc-dot"></span><span class="toc-q-text">Q3: How does ngFor work? What is trackBy?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-what-is-ngclass-and-ngstyle"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is ngClass and ngStyle?</span></a></li><li><a href="#q5-what-is-ng-template-ng-container-and-ng-content"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is ng-template, ng-container, and ng-content?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-4-pipes"><span class="toc-num">04</span><span class="toc-topic-title">TOPIC 4: PIPES</span></a><ul class="toc-qs"><li><a href="#q1-what-is-a-pipe-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is a Pipe in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-how-do-you-create-a-custom-pipe"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you create a Custom Pipe?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-is-the-difference-between-pure-and-impure-pipes"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is the difference between Pure and Impure Pipes?</span></a></li><li><a href="#q4-what-is-the-async-pipe"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is the Async Pipe?</span><span class="toc-imp">★</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-5-services-dependency-injection"><span class="toc-num">05</span><span class="toc-topic-title">TOPIC 5: SERVICES & DEPENDENCY INJECTION</span></a><ul class="toc-qs"><li><a href="#q1-what-is-a-service-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is a Service in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-dependency-injection-di"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is Dependency Injection (DI)?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-is-injectable-what-does-providedin-root-mean"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is @Injectable()? What does providedIn: 'root' mean?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-what-is-the-difference-between-providedin-root-and-adding-to-providers-array"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is the difference between providedIn: 'root' and adding to providers array?</span></a></li><li><a href="#q5-how-do-you-share-data-between-unrelated-components-using-a-service"><span class="toc-dot"></span><span class="toc-q-text">Q5: How do you share data between unrelated components using a Service?</span></a></li><li><a href="#q6-how-does-angulars-dependency-injection-hierarchy-work"><span class="toc-dot"></span><span class="toc-q-text">Q6: How does Angular's Dependency Injection Hierarchy work?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-6-routing"><span class="toc-num">06</span><span class="toc-topic-title">TOPIC 6: ROUTING</span></a><ul class="toc-qs"><li><a href="#q1-what-is-routing-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is Routing in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-lazy-loading-how-do-you-implement-it"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is Lazy Loading? How do you implement it?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-are-route-guards"><span class="toc-dot"></span><span class="toc-q-text">Q3: What are Route Guards?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-how-do-you-pass-data-between-routes"><span class="toc-dot"></span><span class="toc-q-text">Q4: How do you pass data between routes?</span></a></li><li><a href="#q5-what-is-a-resolver"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is a Resolver?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-7-forms-template-driven-reactive"><span class="toc-num">07</span><span class="toc-topic-title">TOPIC 7: FORMS (TEMPLATE-DRIVEN + REACTIVE)</span></a><ul class="toc-qs"><li><a href="#q1-what-is-the-difference-between-template-driven-and-reactive-forms"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is the difference between Template-driven and Reactive Forms?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-how-do-you-create-a-reactive-form"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you create a Reactive Form?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-is-formgroup-formcontrol-and-formarray"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is FormGroup, FormControl, and FormArray?</span></a></li><li><a href="#q4-how-do-you-handle-form-validation"><span class="toc-dot"></span><span class="toc-q-text">Q4: How do you handle form validation?</span><span class="toc-imp">★</span></a></li><li><a href="#q5-what-is-ngmodel-and-two-way-binding"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is ngModel and two-way binding?</span></a></li><li><a href="#q6-how-do-angular-forms-work-internally"><span class="toc-dot"></span><span class="toc-q-text">Q6: How do Angular Forms work internally?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-8-http-api-handling"><span class="toc-num">08</span><span class="toc-topic-title">TOPIC 8: HTTP & API HANDLING</span></a><ul class="toc-qs"><li><a href="#q1-how-do-you-make-http-requests-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: How do you make HTTP requests in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-are-http-interceptors"><span class="toc-dot"></span><span class="toc-q-text">Q2: What are HTTP Interceptors?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-how-do-you-handle-errors-in-http-calls"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you handle errors in HTTP calls?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-what-is-the-difference-between-rest-api-and-soap-api"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is the difference between REST API and SOAP API?</span></a></li><li><a href="#q5-how-do-you-implement-caching-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q5: How do you implement caching in Angular?</span></a></li><li><a href="#q6-how-do-you-handle-multiple-api-calls"><span class="toc-dot"></span><span class="toc-q-text">Q6: How do you handle multiple API calls?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-9-rxjs-basics"><span class="toc-num">09</span><span class="toc-topic-title">TOPIC 9: RxJS BASICS</span></a><ul class="toc-qs"><li><a href="#q1-what-is-rxjs-and-why-is-it-used-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is RxJS and why is it used in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-the-difference-between-observable-and-promise"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is the difference between Observable and Promise?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-are-commonly-used-rxjs-operators"><span class="toc-dot"></span><span class="toc-q-text">Q3: What are commonly used RxJS operators?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-explain-switchmap-with-a-real-example"><span class="toc-dot"></span><span class="toc-q-text">Q4: Explain switchMap with a real example.</span><span class="toc-imp">★</span></a></li><li><a href="#q5-what-is-subject-and-behaviorsubject"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is Subject and BehaviorSubject?</span><span class="toc-imp">★</span></a></li><li><a href="#q6-when-should-you-unsubscribe-from-observables-and-why"><span class="toc-dot"></span><span class="toc-q-text">Q6: When should you unsubscribe from Observables and why?</span></a></li><li><a href="#q7-how-do-you-optimize-api-calls-with-rxjs"><span class="toc-dot"></span><span class="toc-q-text">Q7: How do you optimize API calls with RxJS?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-10-lifecycle-hooks"><span class="toc-num">10</span><span class="toc-topic-title">TOPIC 10: LIFECYCLE HOOKS</span></a><ul class="toc-qs"><li><a href="#q1-what-are-lifecycle-hooks-name-the-important-ones"><span class="toc-dot"></span><span class="toc-q-text">Q1: What are Lifecycle Hooks? Name the important ones.</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-the-difference-between-constructor-and-ngoninit"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is the difference between constructor and ngOnInit?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-is-ngondestroy-why-is-it-important"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is ngOnDestroy? Why is it important?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-what-is-ngonchanges-when-does-it-fire"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is ngOnChanges? When does it fire?</span></a></li><li><a href="#q5-what-is-ngafterviewinit"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is ngAfterViewInit?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-11-state-management-basic"><span class="toc-num">11</span><span class="toc-topic-title">TOPIC 11: STATE MANAGEMENT (BASIC)</span></a><ul class="toc-qs"><li><a href="#q1-what-is-state-management-why-do-we-need-it"><span class="toc-dot"></span><span class="toc-q-text">Q1: What is State Management? Why do we need it?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-how-do-you-manage-state-using-services"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you manage state using Services?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-what-is-ngrx-when-would-you-use-it"><span class="toc-dot"></span><span class="toc-q-text">Q3: What is NgRx? When would you use it?</span></a></li><li><a href="#q4-what-are-angular-signals-angular-16"><span class="toc-dot"></span><span class="toc-q-text">Q4: What are Angular Signals? (Angular 16+)</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-12-performance-optimization"><span class="toc-num">12</span><span class="toc-topic-title">TOPIC 12: PERFORMANCE OPTIMIZATION</span></a><ul class="toc-qs"><li><a href="#q1-how-do-you-improve-angular-app-performance"><span class="toc-dot"></span><span class="toc-q-text">Q1: How do you improve Angular app performance?</span><span class="toc-imp">★</span></a></li><li><a href="#q2-what-is-onpush-change-detection-how-does-it-help"><span class="toc-dot"></span><span class="toc-q-text">Q2: What is OnPush Change Detection? How does it help?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-how-do-you-handle-memory-leaks-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you handle memory leaks in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-what-is-virtual-scrolling"><span class="toc-dot"></span><span class="toc-q-text">Q4: What is Virtual Scrolling?</span></a></li><li><a href="#q5-what-is-tree-shaking"><span class="toc-dot"></span><span class="toc-q-text">Q5: What is Tree Shaking?</span></a></li><li><a href="#q6-what-is-change-detection-and-how-does-it-work-internally"><span class="toc-dot"></span><span class="toc-q-text">Q6: What is Change Detection and how does it work internally?</span></a></li><li><a href="#q7-what-is-zonejs-and-what-role-does-it-play-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q7: What is Zone.js and what role does it play in Angular?</span></a></li><li><a href="#q8-how-do-you-reduce-the-bundle-size-of-an-angular-app"><span class="toc-dot"></span><span class="toc-q-text">Q8: How do you reduce the bundle size of an Angular app?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#topic-13-angular-interview-scenario-questions"><span class="toc-num">13</span><span class="toc-topic-title">TOPIC 13: ANGULAR INTERVIEW SCENARIO QUESTIONS</span></a><ul class="toc-qs"><li><a href="#q1-tell-me-about-a-challenging-problem-you-solved-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q1: Tell me about a challenging problem you solved in Angular.</span><span class="toc-imp">★</span></a></li><li><a href="#q2-how-do-you-structure-a-large-angular-application"><span class="toc-dot"></span><span class="toc-q-text">Q2: How do you structure a large Angular application?</span><span class="toc-imp">★</span></a></li><li><a href="#q3-how-do-you-handle-authentication-in-angular"><span class="toc-dot"></span><span class="toc-q-text">Q3: How do you handle authentication in Angular?</span><span class="toc-imp">★</span></a></li><li><a href="#q4-how-do-you-handle-errors-globally-in-your-app"><span class="toc-dot"></span><span class="toc-q-text">Q4: How do you handle errors globally in your app?</span></a></li><li><a href="#q5-explain-a-situation-where-you-optimized-performance"><span class="toc-dot"></span><span class="toc-q-text">Q5: Explain a situation where you optimized performance.</span><span class="toc-imp">★</span></a></li><li><a href="#q6-what-is-the-difference-between-viewchild-and-contentchild"><span class="toc-dot"></span><span class="toc-q-text">Q6: What is the difference between ViewChild and ContentChild?</span></a></li><li><a href="#q7-what-are-standalone-components-angular-15"><span class="toc-dot"></span><span class="toc-q-text">Q7: What are Standalone Components? (Angular 15+)</span></a></li><li><a href="#q8-what-is-the-new-control-flow-syntax-in-angular-17"><span class="toc-dot"></span><span class="toc-q-text">Q8: What is the new Control Flow syntax in Angular 17+?</span></a></li><li><a href="#q9-how-do-you-improve-angular-app-scalability"><span class="toc-dot"></span><span class="toc-q-text">Q9: How do you improve Angular app scalability?</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#quick-revision-cheat-sheet"><span class="toc-num">14</span><span class="toc-topic-title">QUICK REVISION CHEAT SHEET</span></a><ul class="toc-qs"></ul></div><div class="toc-card"><a class="toc-topic" href="#interview-tips"><span class="toc-num">15</span><span class="toc-topic-title">INTERVIEW TIPS</span></a><ul class="toc-qs"></ul></div></div></div>
 
 <hr>
 <h2 id="topic-1-angular-basics">TOPIC 1: ANGULAR BASICS</h2>

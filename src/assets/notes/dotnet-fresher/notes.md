@@ -1,22 +1,70 @@
-<div class="cover-page">
-  <div class="cover-badge">PREMIUM EDITION</div>
-  <h1 class="cover-title">.NET &amp; C#<br/>INTERVIEW ROADMAP</h1>
-  <p class="cover-subtitle">Fresher to Mid-Level · 75+ Modern, Tricky &amp; Most-Asked Questions</p>
-  <div class="cover-divider"></div>
-  <div class="cover-meta">
-    <p class="cover-prepared">Prepared By</p>
-    <p class="cover-author">Rutik Pimpale</p>
+<div class="cover-page" style="
+  --cv-bg-a:#02100a; --cv-bg-b:#032b1c; --cv-bg-c:#054b34; --cv-bg-d:#03150d;
+  --cv-glow-pri:rgba(16,185,129,0.55);
+  --cv-glow-sec:rgba(5,150,105,0.55);
+  --cv-foil-color:#34d399;
+  --cv-accent-light:#86efac;
+  --cv-accent-mid:#34d399;
+  --cv-accent-dark:#10b981;
+  --cv-glow-shadow-1:rgba(16,185,129,0.48);
+  --cv-glow-shadow-2:rgba(5,150,105,0.25);
+">
+  <div class="cv-foil"></div>
+  <div class="cv-grid"></div>
+  <div class="cv-grain"></div>
+  <div class="cv-shell">
+    <div class="cv-header">
+      <div class="cv-mark">
+        <div class="cv-badge">?</div>
+        <span class="cv-initials">C#</span>
+        <span class="cv-series">RP // Interview Series</span>
+      </div>
+      <span class="cv-level">Fresher → Mid-Level</span>
+    </div>
+    <div class="cv-rail">
+      <span class="cv-rail-line"></span>
+      <span class="cv-rail-text">Vol 03 · Q&amp;A Pack</span>
+    </div>
+    <h1 class="cv-title">.NET &amp; C#<br/><span class="cv-title-accent">Interview</span><br/>Q&amp;A.</h1>
+    <p class="cv-subtitle">Fresher → Mid-Level</p>
+    <p class="cv-tagline">Fast-paced Q&amp;A pack designed for fresher and mid-level interviews — language internals, patterns, and the tricky questions.</p>
+    <div class="cv-topics">
+      <span class="cv-chip">C# Fundamentals</span>
+      <span class="cv-chip">OOP</span>
+      <span class="cv-chip">LINQ</span>
+      <span class="cv-chip">Async</span>
+      <span class="cv-chip">EF Core</span>
+      <span class="cv-chip">Web API</span>
+      <span class="cv-chip">Tricky Qs</span>
+    </div>
+    <div class="cv-spacer"></div>
+    <div class="cv-stats">
+      <div class="cv-stat">
+        <div class="cv-stat-num">90+</div>
+        <div class="cv-stat-label">Pages</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">75+</div>
+        <div class="cv-stat-label">Questions</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">5.6 MB</div>
+        <div class="cv-stat-label">PDF Size</div>
+      </div>
+    </div>
+    <div class="cv-foot">
+      <div class="cv-foot-block">
+        <p class="cv-foot-label">Authored by</p>
+        <p class="cv-foot-value">Rutik Pimpale</p>
+      </div>
+      <div class="cv-foot-block right">
+        <p class="cv-foot-label">Updated</p>
+        <p class="cv-foot-value">Apr 2025</p>
+      </div>
+    </div>
   </div>
-  <div class="cover-tags">
-    <span>C# 12</span>
-    <span>.NET 8</span>
-    <span>ASP.NET Core</span>
-    <span>EF Core</span>
-    <span>Async</span>
-    <span>LINQ</span>
-    <span>Web API</span>
-  </div>
-  <div class="cover-footer">© 2026 · All Rights Reserved</div>
 </div>
 
 <div class="toc-page">

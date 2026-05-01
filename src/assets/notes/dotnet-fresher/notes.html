@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>.NET Interview Roadmap</title>
+<title>.NET & C# Interview Q&A</title>
 <style>/* ============================================================
    PREMIUM PDF STYLES
    Scalable — works with any markdown that uses ##, ###, code, tables
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@700;900&family=Sora:wght@400;500;600;700;800&display=swap');
 
 :root {
   --brand-red: #DC2626;
@@ -62,186 +62,322 @@ html, body {
   print-color-adjust: exact;
 }
 
-/* ================ COVER PAGE ================ */
-/* Fits the puppeteer printable area (210mm A4 minus 15mm side margins,
-   minus 20mm/22mm top/bottom margins) so it never overflows and never
-   shows the white print-margin band on the right edge. */
+/* ================ COVER PAGE — PREMIUM A4 ================ */
+/* Full-bleed first page (paired with @page :first { margin: 0; }).
+   Theme is driven by CSS variables set inline on .cover-page in each
+   notes.md, so a single block of CSS serves all 3 covers.            */
 .cover-page {
   page-break-after: always;
   break-after: page;
-  width: 100%;
-  min-height: 255mm;
+  width: 210mm;
+  height: 297mm;
   margin: 0;
   padding: 0;
   position: relative;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(220,38,38,0.42), transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(59,130,246,0.38), transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(234,88,12,0.12), transparent 60%),
-    linear-gradient(135deg, #020617 0%, #0F172A 45%, #1E293B 100%);
+  overflow: hidden;
   color: #fff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
+  /* default theme — overridden inline per cover */
+  --cv-bg-a: #08020a;
+  --cv-bg-b: #2a0410;
+  --cv-bg-c: #4a0512;
+  --cv-bg-d: #110205;
+  --cv-glow-pri: rgba(255,45,135,0.55);
+  --cv-glow-sec: rgba(221,0,49,0.55);
+  --cv-foil-color: #ff2d87;
+  --cv-accent-light: #ff8fbb;
+  --cv-accent-mid: #ff2d87;
+  --cv-accent-dark: #dd0031;
+  --cv-glow-shadow-1: rgba(221,0,49,0.45);
+  --cv-glow-shadow-2: rgba(255,45,135,0.22);
+
+  background:
+    radial-gradient(85% 60% at 100% 0%, var(--cv-glow-pri), transparent 60%),
+    radial-gradient(75% 60% at 0% 100%, var(--cv-glow-sec), transparent 60%),
+    linear-gradient(170deg,
+      var(--cv-bg-a) 0%,
+      var(--cv-bg-b) 35%,
+      var(--cv-bg-c) 65%,
+      var(--cv-bg-d) 100%);
+}
+
+/* foil sheen along top edge */
+.cover-page .cv-foil {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0) 5%,
+    rgba(255,255,255,0.55) 35%,
+    var(--cv-foil-color) 50%,
+    rgba(255,255,255,0.55) 65%,
+    rgba(255,255,255,0) 95%,
+    transparent 100%);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* faded grid backdrop */
+.cover-page .cv-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 70% 35%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(ellipse 80% 60% at 70% 35%, #000 30%, transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* paper grain for premium depth (no blur) */
+.cover-page .cv-grain {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1.5px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* shell — content padding */
+.cover-page .cv-shell {
+  position: relative;
+  z-index: 2;
+  padding: 22mm 22mm 18mm 22mm;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+/* header */
+.cover-page .cv-header {
+  display: flex;
   align-items: center;
-  text-align: center;
-  overflow: hidden;
+  justify-content: space-between;
+  margin-bottom: 18mm;
 }
-.cover-page::before {
-  content: '';
-  position: absolute;
-  inset: 14mm;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  background: linear-gradient(135deg, rgba(220,38,38,0.6), rgba(234,88,12,0.4), rgba(59,130,246,0.6)) border-box;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) padding-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
+.cover-page .cv-mark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.cover-page::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-}
-.cover-inner { position: relative; z-index: 2; }
-.cover-badge {
-  display: inline-block;
-  padding: 8px 22px;
-  background: linear-gradient(135deg, #DC2626, #EA580C, #F59E0B);
+.cover-page .cv-badge {
+  width: 50px; height: 50px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-size: 26pt;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
   color: #fff;
-  font-size: 9pt;
-  font-weight: 800;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  border-radius: 30px;
-  margin-bottom: 44px;
-  box-shadow: 0 10px 30px rgba(220,38,38,0.5), 0 0 0 1px rgba(255,255,255,0.15) inset;
-  position: relative;
-  z-index: 2;
+  background: linear-gradient(140deg,
+    var(--cv-accent-light) 0%,
+    var(--cv-accent-mid) 60%,
+    var(--cv-accent-dark) 100%);
+  box-shadow:
+    0 18px 36px -12px var(--cv-glow-shadow-1),
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -2px 0 rgba(0,0,0,0.35);
 }
-.cover-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 62pt;
-  font-weight: 900;
-  line-height: 1.02;
-  margin: 0 0 18px 0;
-  background: linear-gradient(135deg, #ffffff 0%, #E0E7FF 45%, #FECACA 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -1.5px;
-  text-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  position: relative;
-  z-index: 2;
-}
-.cover-subtitle {
-  font-size: 13pt;
-  font-weight: 500;
-  color: #CBD5E1;
-  margin: 0 0 10px 0;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 2;
-}
-.cover-exp {
-  display: inline-block;
-  font-size: 9.5pt;
-  font-weight: 600;
-  color: #FBBF24;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border: 1px solid rgba(251,191,36,0.35);
-  border-radius: 20px;
-  margin-bottom: 30px;
-  background: rgba(251,191,36,0.08);
-  position: relative;
-  z-index: 2;
-}
-.cover-divider {
-  width: 100px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #EA580C, #60A5FA, transparent);
-  border-radius: 2px;
-  margin: 0 auto 40px auto;
-  position: relative;
-  z-index: 2;
-}
-.cover-meta {
-  margin-bottom: 50px;
-  padding: 18px 40px;
-  background: rgba(15,23,42,0.55);
-  border: 1px solid rgba(148,163,184,0.15);
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 2;
-}
-.cover-prepared {
+.cover-page .cv-initials {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  padding: 5px 11px;
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 8.5pt;
-  color: #64748B;
-  letter-spacing: 4px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.88);
   text-transform: uppercase;
-  margin: 0 0 8px 0;
 }
-.cover-author {
-  font-size: 24pt;
+.cover-page .cv-series {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.62);
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+.cover-page .cv-level {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.88);
+  text-transform: uppercase;
+}
+
+/* volume rail */
+.cover-page .cv-rail {
+  display: flex; align-items: center; gap: 12px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+.cover-page .cv-rail-line {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, var(--cv-accent-mid), var(--cv-accent-dark));
+}
+.cover-page .cv-rail-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* title */
+.cover-page .cv-title {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-size: 64pt;
   font-weight: 800;
-  background: linear-gradient(135deg, #FCA5A5, #FFFFFF, #93C5FD);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
   margin: 0;
-  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.10),
+    0 0 24px var(--cv-glow-shadow-1),
+    0 0 60px var(--cv-glow-shadow-2);
 }
-.cover-tags {
+.cover-page .cv-title-accent {
+  background: linear-gradient(135deg,
+    var(--cv-accent-light) 0%,
+    var(--cv-accent-mid) 50%,
+    var(--cv-accent-dark) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}
+
+/* subtitle / tagline */
+.cover-page .cv-subtitle {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-size: 16pt;
+  font-weight: 500;
+  color: rgba(255,255,255,0.92);
+  margin: 22px 0 0 0;
+  letter-spacing: -0.005em;
+}
+.cover-page .cv-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 11pt;
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.55;
+  margin: 9px 0 0 0;
+  max-width: 130mm;
+}
+
+/* topic chips */
+.cover-page .cv-topics {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  max-width: 440px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+  gap: 6px;
+  margin-top: 16mm;
+  max-width: 145mm;
 }
-.cover-tags span {
-  padding: 6px 14px;
-  background: linear-gradient(135deg, rgba(220,38,38,0.15), rgba(59,130,246,0.15));
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 20px;
-  font-size: 9pt;
-  font-weight: 600;
-  color: #F1F5F9;
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 2;
-}
-.cover-footer {
-  position: absolute;
-  bottom: 20mm;
-  left: 0;
-  right: 0;
+.cover-page .cv-chip {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  padding: 5px 11px;
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 8.5pt;
-  color: #64748B;
-  letter-spacing: 2px;
-  z-index: 2;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.85);
 }
-.cover-footer::before,
-.cover-footer::after {
-  content: '◆';
-  color: #DC2626;
-  margin: 0 10px;
-  font-size: 7pt;
-  vertical-align: middle;
+
+/* spacer pushes stats + footer to bottom */
+.cover-page .cv-spacer { flex: 1; min-height: 8mm; }
+
+/* premium stat row */
+.cover-page .cv-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  position: relative;
+  padding-top: 16px;
+  margin-bottom: 12mm;
+}
+.cover-page .cv-stats::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22) 25%, rgba(255,255,255,0.22) 75%, transparent);
+}
+.cover-page .cv-stat {
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.cover-page .cv-stat-num {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32pt;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg,
+    var(--cv-accent-light) 0%,
+    var(--cv-accent-mid) 50%,
+    var(--cv-accent-dark) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.cover-page .cv-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-top: 6px;
+}
+.cover-page .cv-stat-divider {
+  width: 1px; align-self: stretch;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.18), transparent);
+}
+
+/* footer */
+.cover-page .cv-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 7mm;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.cover-page .cv-foot-block { line-height: 1.2; }
+.cover-page .cv-foot-block.right { text-align: right; }
+.cover-page .cv-foot-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  margin: 0;
+}
+.cover-page .cv-foot-value {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16pt;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin: 4px 0 0 0;
 }
 
 /* ================ TOC PAGE ================ */
@@ -626,184 +762,175 @@ hr {
 /* ================ PAGE-BREAK HELPERS ================ */
 .page-break { page-break-after: always; break-after: page; }
 .avoid-break { page-break-inside: avoid; break-inside: avoid; }
+
+/* ============================================================
+   SCREEN-ONLY (HTML preview in browser/iframe)
+   Does NOT affect print/PDF output — wrapped in @media screen.
+   Three breakpoints: mobile <600px · tablet 601-1024px · laptop >1024px.
+   ============================================================ */
+@media screen {
+  html { scrollbar-width: thin; scrollbar-color: rgba(15,23,42,0.3) transparent; }
+
+  body {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 36px 64px;
+    background: #fafafa;
+  }
+
+  /* Modern minimal scrollbar (WebKit) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.25);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background 0.2s ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(15, 23, 42, 0.55);
+    background-clip: padding-box;
+  }
+
+  /* Code & tables: never let them blow out horizontally on screen */
+  pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+}
+
+/* ─── TABLET (601-1024px) ─── */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  body { padding: 24px 22px 50px; }
+  .toc-title { font-size: 28pt; }
+}
+
+/* ─── MOBILE (≤600px) ─── */
+@media screen and (max-width: 600px) {
+  body { padding: 14px 14px 48px; max-width: 100%; }
+
+  /* TOC */
+  .toc-page { padding: 0; }
+  .toc-grid { column-count: 1; column-gap: 0; }
+  .toc-title { font-size: 20pt; }
+  .toc-kicker { font-size: 7pt; letter-spacing: 3px; padding: 3px 12px; }
+  .toc-sub { font-size: 7.5pt; padding: 0 8px; }
+  .toc-card { margin-bottom: 12px; padding: 12px; }
+  .toc-num { width: 24px; height: 24px; font-size: 9pt; }
+  .toc-topic-title { font-size: 9pt; }
+  .toc-qs li a { font-size: 8pt; line-height: 1.4; }
+
+  /* HEADINGS */
+  h1 { font-size: 18pt; padding-bottom: 8px; margin-bottom: 12px; }
+  h2 {
+    font-size: 11.5pt;
+    padding: 10px 14px;
+    letter-spacing: 0.5px;
+    margin: 24px 0 16px;
+  }
+  h3 { font-size: 11pt; padding: 9px 12px; margin: 20px 0 12px; line-height: 1.35; }
+  h4 { font-size: 10pt; }
+
+  /* CODE BLOCKS — keep on one line, scroll horizontally instead of breaking */
+  pre { font-size: 7.8pt; padding: 26px 14px 12px; border-radius: 6px; }
+  pre code { white-space: pre; word-break: normal; font-size: 7.8pt; }
+
+  /* Inline code on mobile: WRAP instead of nowrap so long identifiers
+     like StringBuilder.AppendFormat don't overflow the right edge. */
+  code {
+    font-size: 8.4pt;
+    padding: 1px 5px;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* Soften the highlighter background on small screens — solid colored
+     chips on every <strong> looks busy on mobile. */
+  strong { background: linear-gradient(180deg, transparent 75%, rgba(234,88,12,0.10) 75%); }
+
+  /* TABLES */
+  table { font-size: 8.5pt; }
+  th, td { white-space: nowrap; padding: 6px 10px; }
+
+  /* TYPOGRAPHY — better breathing room on mobile */
+  p { text-align: left; hyphens: manual; line-height: 1.7; margin-bottom: 12px; }
+  ul, ol { padding-left: 18px; }
+  li { line-height: 1.65; margin: 5px 0; }
+  blockquote { padding: 10px 14px; margin: 14px 0; }
+}
 </style>
 </head>
 <body>
-<div class="cover-page">
-  <div class="cover-badge">PREMIUM EDITION</div>
-  <h1 class="cover-title">.NET &amp; C#<br/>INTERVIEW ROADMAP</h1>
-  <p class="cover-subtitle">Fresher to Mid-Level · 75+ Modern, Tricky &amp; Most-Asked Questions</p>
-  <div class="cover-divider"></div>
-  <div class="cover-meta">
-    <p class="cover-prepared">Prepared By</p>
-    <p class="cover-author">Rutik Pimpale</p>
+<div class="cover-page" style="
+  --cv-bg-a:#02100a; --cv-bg-b:#032b1c; --cv-bg-c:#054b34; --cv-bg-d:#03150d;
+  --cv-glow-pri:rgba(16,185,129,0.55);
+  --cv-glow-sec:rgba(5,150,105,0.55);
+  --cv-foil-color:#34d399;
+  --cv-accent-light:#86efac;
+  --cv-accent-mid:#34d399;
+  --cv-accent-dark:#10b981;
+  --cv-glow-shadow-1:rgba(16,185,129,0.48);
+  --cv-glow-shadow-2:rgba(5,150,105,0.25);
+">
+  <div class="cv-foil"></div>
+  <div class="cv-grid"></div>
+  <div class="cv-grain"></div>
+  <div class="cv-shell">
+    <div class="cv-header">
+      <div class="cv-mark">
+        <div class="cv-badge">?</div>
+        <span class="cv-initials">C#</span>
+        <span class="cv-series">RP // Interview Series</span>
+      </div>
+      <span class="cv-level">Fresher → Mid-Level</span>
+    </div>
+    <div class="cv-rail">
+      <span class="cv-rail-line"></span>
+      <span class="cv-rail-text">Vol 03 · Q&amp;A Pack</span>
+    </div>
+    <h1 class="cv-title">.NET &amp; C#<br/><span class="cv-title-accent">Interview</span><br/>Q&amp;A.</h1>
+    <p class="cv-subtitle">Fresher → Mid-Level</p>
+    <p class="cv-tagline">Fast-paced Q&amp;A pack designed for fresher and mid-level interviews — language internals, patterns, and the tricky questions.</p>
+    <div class="cv-topics">
+      <span class="cv-chip">C# Fundamentals</span>
+      <span class="cv-chip">OOP</span>
+      <span class="cv-chip">LINQ</span>
+      <span class="cv-chip">Async</span>
+      <span class="cv-chip">EF Core</span>
+      <span class="cv-chip">Web API</span>
+      <span class="cv-chip">Tricky Qs</span>
+    </div>
+    <div class="cv-spacer"></div>
+    <div class="cv-stats">
+      <div class="cv-stat">
+        <div class="cv-stat-num">90+</div>
+        <div class="cv-stat-label">Pages</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">75+</div>
+        <div class="cv-stat-label">Questions</div>
+      </div>
+      <div class="cv-stat-divider"></div>
+      <div class="cv-stat">
+        <div class="cv-stat-num">5.6 MB</div>
+        <div class="cv-stat-label">PDF Size</div>
+      </div>
+    </div>
+    <div class="cv-foot">
+      <div class="cv-foot-block">
+        <p class="cv-foot-label">Authored by</p>
+        <p class="cv-foot-value">Rutik Pimpale</p>
+      </div>
+      <div class="cv-foot-block right">
+        <p class="cv-foot-label">Updated</p>
+        <p class="cv-foot-value">Apr 2025</p>
+      </div>
+    </div>
   </div>
-  <div class="cover-tags">
-    <span>C# 12</span>
-    <span>.NET 8</span>
-    <span>ASP.NET Core</span>
-    <span>EF Core</span>
-    <span>Async</span>
-    <span>LINQ</span>
-    <span>Web API</span>
-  </div>
-  <div class="cover-footer">© 2026 · All Rights Reserved</div>
 </div>
 
-<div class="toc-page">
-  <div class="toc-head">
-    <div class="toc-kicker">Navigation</div>
-    <h1 class="toc-title">Table of Contents</h1>
-    <div class="toc-rule"></div>
-    <p class="toc-sub">Click any entry to jump to the section</p>
-  </div>
-  <div class="toc-grid">
-    <div class="toc-card">
-          <a class="toc-topic" href="#category-1-c-core-fundamentals">
-            <span class="toc-num">01</span>
-            <span class="toc-topic-title">CATEGORY 1: C# CORE FUNDAMENTALS</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q1-value-types-vs-reference-types-stack-vs-heap"><span class="toc-dot"></span><span class="toc-q-text">Q1: Value Types vs. Reference Types — Stack vs. Heap</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q2-boxing-and-unboxing-performance-cost"><span class="toc-dot"></span><span class="toc-q-text">Q2: Boxing and Unboxing — Performance Cost</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q3-struct-vs-class-when-to-choose-a-struct"><span class="toc-dot"></span><span class="toc-q-text">Q3: struct vs. class — When to Choose a struct?</span></a></li>
-            <li><a href="#q4-const-vs-readonly-vs-static-readonly-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q4: const vs. readonly vs. static readonly (TRICKY)</span></a></li>
-            <li><a href="#q5-why-are-strings-immutable-in-c"><span class="toc-dot"></span><span class="toc-q-text">Q5: Why Are Strings Immutable in C#?</span></a></li>
-            <li><a href="#q6-string-vs-stringbuilder-when-to-use-which"><span class="toc-dot"></span><span class="toc-q-text">Q6: String vs. StringBuilder — When to Use Which?</span></a></li>
-            <li><a href="#q7-var-vs-dynamic-vs-object-common-confusion-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q7: var vs. dynamic vs. object — Common Confusion (TRICKY)</span></a></li>
-            <li><a href="#q8-nullable-types-and-the-operator"><span class="toc-dot"></span><span class="toc-q-text">Q8: Nullable Types and the ?? Operator</span></a></li>
-            <li><a href="#q9-ref-vs-out-vs-in-parameters"><span class="toc-dot"></span><span class="toc-q-text">Q9: ref vs. out vs. in Parameters</span></a></li>
-            <li><a href="#q10-the-using-statement-and-idisposable"><span class="toc-dot"></span><span class="toc-q-text">Q10: The using Statement and IDisposable</span></a></li>
-            <li><a href="#q11-pattern-matching-in-c-modern"><span class="toc-dot"></span><span class="toc-q-text">Q11: Pattern Matching in C# (MODERN)</span></a></li>
-            <li><a href="#q12-init-only-properties-and-required-members-modern"><span class="toc-dot"></span><span class="toc-q-text">Q12: Init-Only Properties and Required Members (MODERN)</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#category-2-object-oriented-programming">
-            <span class="toc-num">02</span>
-            <span class="toc-topic-title">CATEGORY 2: OBJECT-ORIENTED PROGRAMMING</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q13-the-4-pillars-of-oop"><span class="toc-dot"></span><span class="toc-q-text">Q13: The 4 Pillars of OOP</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q14-interface-vs-abstract-class-when-to-use-what"><span class="toc-dot"></span><span class="toc-q-text">Q14: Interface vs. Abstract Class — When to Use What?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q15-method-overloading-vs-method-overriding"><span class="toc-dot"></span><span class="toc-q-text">Q15: Method Overloading vs. Method Overriding</span></a></li>
-            <li><a href="#q16-virtual-vs-abstract-vs-sealed-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q16: virtual vs. abstract vs. sealed (TRICKY)</span></a></li>
-            <li><a href="#q17-constructor-chaining-this-and-base"><span class="toc-dot"></span><span class="toc-q-text">Q17: Constructor Chaining — `this()` and `base()`</span></a></li>
-            <li><a href="#q18-static-vs-instance-members"><span class="toc-dot"></span><span class="toc-q-text">Q18: Static vs. Instance Members</span></a></li>
-            <li><a href="#q19-composition-over-inheritance"><span class="toc-dot"></span><span class="toc-q-text">Q19: Composition over Inheritance</span></a></li>
-            <li><a href="#q20-deep-copy-vs-shallow-copy"><span class="toc-dot"></span><span class="toc-q-text">Q20: Deep Copy vs. Shallow Copy</span></a></li>
-            <li><a href="#q21-solid-principles"><span class="toc-dot"></span><span class="toc-q-text">Q21: SOLID Principles</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q22-encapsulation-in-the-real-world"><span class="toc-dot"></span><span class="toc-q-text">Q22: Encapsulation in the Real World</span></a></li>
-            <li><a href="#q23-the-base-keyword"><span class="toc-dot"></span><span class="toc-q-text">Q23: The base Keyword</span></a></li>
-            <li><a href="#q24-multiple-inheritance-in-c-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q24: Multiple Inheritance in C# (TRICKY)</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#category-3-collections-linq">
-            <span class="toc-num">03</span>
-            <span class="toc-topic-title">CATEGORY 3: COLLECTIONS & LINQ</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q25-array-vs-arraylist-vs-listt"><span class="toc-dot"></span><span class="toc-q-text">Q25: Array vs. ArrayList vs. List<T></span></a></li>
-            <li><a href="#q26-ienumerable-vs-iqueryable-which-filters-at-the-db"><span class="toc-dot"></span><span class="toc-q-text">Q26: IEnumerable vs. IQueryable — Which Filters at the DB?</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q27-deferred-execution-in-linq"><span class="toc-dot"></span><span class="toc-q-text">Q27: Deferred Execution in LINQ</span></a></li>
-            <li><a href="#q28-how-does-dictionary-handle-collisions"><span class="toc-dot"></span><span class="toc-q-text">Q28: How Does Dictionary Handle Collisions?</span></a></li>
-            <li><a href="#q29-yield-return-custom-lazy-iteration"><span class="toc-dot"></span><span class="toc-q-text">Q29: yield return — Custom Lazy Iteration</span></a></li>
-            <li><a href="#q30-any-vs-count-0-which-is-faster-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q30: Any() vs. Count() > 0 — Which Is Faster? (TRICKY)</span></a></li>
-            <li><a href="#q31-select-vs-selectmany"><span class="toc-dot"></span><span class="toc-q-text">Q31: Select vs. SelectMany</span></a></li>
-            <li><a href="#q32-first-vs-firstordefault-vs-single-vs-singleordefault-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q32: First vs. FirstOrDefault vs. Single vs. SingleOrDefault (TRICKY)</span></a></li>
-            <li><a href="#q33-groupby-in-linq"><span class="toc-dot"></span><span class="toc-q-text">Q33: GroupBy in LINQ</span></a></li>
-            <li><a href="#q34-icollection-vs-ilist-vs-ireadonlylist"><span class="toc-dot"></span><span class="toc-q-text">Q34: ICollection vs. IList vs. IReadOnlyList</span></a></li>
-            <li><a href="#q35-hashset-vs-list-when-to-use-hashset-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q35: HashSet vs. List — When to Use HashSet (TRICKY)</span></a></li>
-            <li><a href="#q36-linq-method-syntax-vs-query-syntax"><span class="toc-dot"></span><span class="toc-q-text">Q36: LINQ Method Syntax vs. Query Syntax</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#category-4-async-multithreading-parallelism">
-            <span class="toc-num">04</span>
-            <span class="toc-topic-title">CATEGORY 4: ASYNC, MULTITHREADING & PARALLELISM</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q37-process-vs-thread-vs-task"><span class="toc-dot"></span><span class="toc-q-text">Q37: Process vs. Thread vs. Task</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q38-async-and-await-how-they-work"><span class="toc-dot"></span><span class="toc-q-text">Q38: async and await — How They Work</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q39-task-vs-thread-when-to-use-which"><span class="toc-dot"></span><span class="toc-q-text">Q39: Task vs. Thread — When to Use Which?</span></a></li>
-            <li><a href="#q40-taskrun-vs-taskfactorystartnew"><span class="toc-dot"></span><span class="toc-q-text">Q40: Task.Run vs. Task.Factory.StartNew</span></a></li>
-            <li><a href="#q41-deadlocks-result-vs-await"><span class="toc-dot"></span><span class="toc-q-text">Q41: Deadlocks — `.Result` vs. `await`</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q42-cancellationtoken-stopping-long-running-work"><span class="toc-dot"></span><span class="toc-q-text">Q42: CancellationToken — Stopping Long-Running Work</span></a></li>
-            <li><a href="#q43-valuetask-vs-task"><span class="toc-dot"></span><span class="toc-q-text">Q43: ValueTask vs. Task</span></a></li>
-            <li><a href="#q44-configureawaitfalse-why-it-matters"><span class="toc-dot"></span><span class="toc-q-text">Q44: ConfigureAwait(false) — Why It Matters</span></a></li>
-            <li><a href="#q45-lock-vs-monitor-vs-semaphoreslim"><span class="toc-dot"></span><span class="toc-q-text">Q45: lock vs. Monitor vs. SemaphoreSlim</span></a></li>
-            <li><a href="#q46-taskwhenall-vs-taskwhenany"><span class="toc-dot"></span><span class="toc-q-text">Q46: Task.WhenAll vs. Task.WhenAny</span></a></li>
-            <li><a href="#q47-async-streams-iasyncenumerablet-modern"><span class="toc-dot"></span><span class="toc-q-text">Q47: Async Streams — IAsyncEnumerable<T> (MODERN)</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#category-5-aspnet-core-net-core">
-            <span class="toc-num">05</span>
-            <span class="toc-topic-title">CATEGORY 5: ASP.NET CORE & .NET CORE</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q48-net-framework-vs-net-core-vs-net-5"><span class="toc-dot"></span><span class="toc-q-text">Q48: .NET Framework vs .NET Core vs .NET 5+</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q49-dependency-injection-transient-scoped-singleton"><span class="toc-dot"></span><span class="toc-q-text">Q49: Dependency Injection — Transient, Scoped, Singleton</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q50-middleware-pipeline-in-aspnet-core"><span class="toc-dot"></span><span class="toc-q-text">Q50: Middleware Pipeline in ASP.NET Core</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q51-filters-action-result-exception-authorization"><span class="toc-dot"></span><span class="toc-q-text">Q51: Filters — Action, Result, Exception, Authorization</span></a></li>
-            <li><a href="#q52-garbage-collection-generations-0-1-2"><span class="toc-dot"></span><span class="toc-q-text">Q52: Garbage Collection — Generations 0, 1, 2</span></a></li>
-            <li><a href="#q53-ihttpclientfactory-why-not-new-httpclient"><span class="toc-dot"></span><span class="toc-q-text">Q53: IHttpClientFactory — Why Not new HttpClient()?</span></a></li>
-            <li><a href="#q54-ioptions-pattern-strongly-typed-config"><span class="toc-dot"></span><span class="toc-q-text">Q54: IOptions Pattern — Strongly Typed Config</span></a></li>
-            <li><a href="#q55-appsettingsjson-and-configuration-hierarchy"><span class="toc-dot"></span><span class="toc-q-text">Q55: appsettings.json and Configuration Hierarchy</span></a></li>
-            <li><a href="#q56-hosted-services-and-backgroundservice"><span class="toc-dot"></span><span class="toc-q-text">Q56: Hosted Services and BackgroundService</span></a></li>
-            <li><a href="#q57-logging-with-ilogger"><span class="toc-dot"></span><span class="toc-q-text">Q57: Logging with ILogger</span></a></li>
-            <li><a href="#q58-minimal-apis-vs-controllers-modern"><span class="toc-dot"></span><span class="toc-q-text">Q58: Minimal APIs vs. Controllers (MODERN)</span></a></li>
-            <li><a href="#q59-authentication-vs-authorization"><span class="toc-dot"></span><span class="toc-q-text">Q59: Authentication vs. Authorization</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q60-jwt-tokens-in-aspnet-core-modern"><span class="toc-dot"></span><span class="toc-q-text">Q60: JWT Tokens in ASP.NET Core (MODERN)</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#category-6-entity-framework-core">
-            <span class="toc-num">06</span>
-            <span class="toc-topic-title">CATEGORY 6: ENTITY FRAMEWORK CORE</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q61-ef-core-vs-adonet-vs-dapper"><span class="toc-dot"></span><span class="toc-q-text">Q61: EF Core vs. ADO.NET vs. Dapper</span></a></li>
-            <li><a href="#q62-code-first-vs-database-first"><span class="toc-dot"></span><span class="toc-q-text">Q62: Code First vs. Database First</span><span class="toc-imp">★</span></a></li>
-            <li><a href="#q63-ef-core-migrations"><span class="toc-dot"></span><span class="toc-q-text">Q63: EF Core Migrations</span></a></li>
-            <li><a href="#q64-asnotracking-vs-tracking-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q64: AsNoTracking vs. Tracking (TRICKY)</span></a></li>
-            <li><a href="#q65-lazy-vs-eager-vs-explicit-loading"><span class="toc-dot"></span><span class="toc-q-text">Q65: Lazy vs. Eager vs. Explicit Loading</span></a></li>
-            <li><a href="#q66-include-vs-theninclude"><span class="toc-dot"></span><span class="toc-q-text">Q66: Include vs. ThenInclude</span></a></li>
-            <li><a href="#q67-transactions-in-ef-core"><span class="toc-dot"></span><span class="toc-q-text">Q67: Transactions in EF Core</span></a></li>
-            <li><a href="#q68-stored-procedures-with-ef-core"><span class="toc-dot"></span><span class="toc-q-text">Q68: Stored Procedures with EF Core</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#category-7-modern-net-advanced-concepts">
-            <span class="toc-num">07</span>
-            <span class="toc-topic-title">CATEGORY 7: MODERN .NET & ADVANCED CONCEPTS</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#q69-reflection-what-it-is-and-why-its-slow"><span class="toc-dot"></span><span class="toc-q-text">Q69: Reflection — What It Is and Why It's Slow</span></a></li>
-            <li><a href="#q70-delegates-vs-events"><span class="toc-dot"></span><span class="toc-q-text">Q70: Delegates vs. Events</span></a></li>
-            <li><a href="#q71-func-vs-action-vs-predicate-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q71: Func vs. Action vs. Predicate (TRICKY)</span></a></li>
-            <li><a href="#q72-custom-attributes"><span class="toc-dot"></span><span class="toc-q-text">Q72: Custom Attributes</span></a></li>
-            <li><a href="#q73-exception-handling-throw-vs-throw-ex-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q73: Exception Handling — throw vs. throw ex (TRICKY)</span></a></li>
-            <li><a href="#q74-records-vs-class-vs-struct-modern"><span class="toc-dot"></span><span class="toc-q-text">Q74: Records vs. Class vs. Struct (MODERN)</span></a></li>
-            <li><a href="#q75-top-level-statements-modern"><span class="toc-dot"></span><span class="toc-q-text">Q75: Top-Level Statements (MODERN)</span></a></li>
-            <li><a href="#q76-global-usings-and-file-scoped-namespaces-modern"><span class="toc-dot"></span><span class="toc-q-text">Q76: Global Usings and File-Scoped Namespaces (MODERN)</span></a></li>
-            <li><a href="#q77-spant-and-memoryt-modern"><span class="toc-dot"></span><span class="toc-q-text">Q77: Span<T> and Memory<T> (MODERN)</span></a></li>
-            <li><a href="#q78-source-generators-modern"><span class="toc-dot"></span><span class="toc-q-text">Q78: Source Generators (MODERN)</span></a></li>
-          </ul>
-        </div>
-    <div class="toc-card">
-          <a class="toc-topic" href="#appendix">
-            <span class="toc-num">08</span>
-            <span class="toc-topic-title">APPENDIX</span>
-          </a>
-          <ul class="toc-qs">
-            <li><a href="#quick-revision-cheat-sheet"><span class="toc-dot"></span><span class="toc-q-text">Quick Revision Cheat Sheet</span></a></li>
-            <li><a href="#interview-tips"><span class="toc-dot"></span><span class="toc-q-text">Interview Tips</span></a></li>
-          </ul>
-        </div>
-  </div>
-</div>
+<div class="toc-page"><div class="toc-head"><div class="toc-kicker">Navigation</div><h1 class="toc-title">Table of Contents</h1><div class="toc-rule"></div><p class="toc-sub">Click any entry to jump to the section</p></div><div class="toc-grid"><div class="toc-card"><a class="toc-topic" href="#category-1-c-core-fundamentals"><span class="toc-num">01</span><span class="toc-topic-title">CATEGORY 1: C# CORE FUNDAMENTALS</span></a><ul class="toc-qs"><li><a href="#q1-value-types-vs-reference-types-stack-vs-heap"><span class="toc-dot"></span><span class="toc-q-text">Q1: Value Types vs. Reference Types — Stack vs. Heap</span><span class="toc-imp">★</span></a></li><li><a href="#q2-boxing-and-unboxing-performance-cost"><span class="toc-dot"></span><span class="toc-q-text">Q2: Boxing and Unboxing — Performance Cost</span><span class="toc-imp">★</span></a></li><li><a href="#q3-struct-vs-class-when-to-choose-a-struct"><span class="toc-dot"></span><span class="toc-q-text">Q3: struct vs. class — When to Choose a struct?</span></a></li><li><a href="#q4-const-vs-readonly-vs-static-readonly-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q4: const vs. readonly vs. static readonly (TRICKY)</span></a></li><li><a href="#q5-why-are-strings-immutable-in-c"><span class="toc-dot"></span><span class="toc-q-text">Q5: Why Are Strings Immutable in C#?</span></a></li><li><a href="#q6-string-vs-stringbuilder-when-to-use-which"><span class="toc-dot"></span><span class="toc-q-text">Q6: String vs. StringBuilder — When to Use Which?</span></a></li><li><a href="#q7-var-vs-dynamic-vs-object-common-confusion-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q7: var vs. dynamic vs. object — Common Confusion (TRICKY)</span></a></li><li><a href="#q8-nullable-types-and-the-operator"><span class="toc-dot"></span><span class="toc-q-text">Q8: Nullable Types and the ?? Operator</span></a></li><li><a href="#q9-ref-vs-out-vs-in-parameters"><span class="toc-dot"></span><span class="toc-q-text">Q9: ref vs. out vs. in Parameters</span></a></li><li><a href="#q10-the-using-statement-and-idisposable"><span class="toc-dot"></span><span class="toc-q-text">Q10: The using Statement and IDisposable</span></a></li><li><a href="#q11-pattern-matching-in-c-modern"><span class="toc-dot"></span><span class="toc-q-text">Q11: Pattern Matching in C# (MODERN)</span></a></li><li><a href="#q12-init-only-properties-and-required-members-modern"><span class="toc-dot"></span><span class="toc-q-text">Q12: Init-Only Properties and Required Members (MODERN)</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#category-2-object-oriented-programming"><span class="toc-num">02</span><span class="toc-topic-title">CATEGORY 2: OBJECT-ORIENTED PROGRAMMING</span></a><ul class="toc-qs"><li><a href="#q13-the-4-pillars-of-oop"><span class="toc-dot"></span><span class="toc-q-text">Q13: The 4 Pillars of OOP</span><span class="toc-imp">★</span></a></li><li><a href="#q14-interface-vs-abstract-class-when-to-use-what"><span class="toc-dot"></span><span class="toc-q-text">Q14: Interface vs. Abstract Class — When to Use What?</span><span class="toc-imp">★</span></a></li><li><a href="#q15-method-overloading-vs-method-overriding"><span class="toc-dot"></span><span class="toc-q-text">Q15: Method Overloading vs. Method Overriding</span></a></li><li><a href="#q16-virtual-vs-abstract-vs-sealed-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q16: virtual vs. abstract vs. sealed (TRICKY)</span></a></li><li><a href="#q17-constructor-chaining-this-and-base"><span class="toc-dot"></span><span class="toc-q-text">Q17: Constructor Chaining — `this()` and `base()`</span></a></li><li><a href="#q18-static-vs-instance-members"><span class="toc-dot"></span><span class="toc-q-text">Q18: Static vs. Instance Members</span></a></li><li><a href="#q19-composition-over-inheritance"><span class="toc-dot"></span><span class="toc-q-text">Q19: Composition over Inheritance</span></a></li><li><a href="#q20-deep-copy-vs-shallow-copy"><span class="toc-dot"></span><span class="toc-q-text">Q20: Deep Copy vs. Shallow Copy</span></a></li><li><a href="#q21-solid-principles"><span class="toc-dot"></span><span class="toc-q-text">Q21: SOLID Principles</span><span class="toc-imp">★</span></a></li><li><a href="#q22-encapsulation-in-the-real-world"><span class="toc-dot"></span><span class="toc-q-text">Q22: Encapsulation in the Real World</span></a></li><li><a href="#q23-the-base-keyword"><span class="toc-dot"></span><span class="toc-q-text">Q23: The base Keyword</span></a></li><li><a href="#q24-multiple-inheritance-in-c-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q24: Multiple Inheritance in C# (TRICKY)</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#category-3-collections-linq"><span class="toc-num">03</span><span class="toc-topic-title">CATEGORY 3: COLLECTIONS & LINQ</span></a><ul class="toc-qs"><li><a href="#q25-array-vs-arraylist-vs-listt"><span class="toc-dot"></span><span class="toc-q-text">Q25: Array vs. ArrayList vs. List<T></span></a></li><li><a href="#q26-ienumerable-vs-iqueryable-which-filters-at-the-db"><span class="toc-dot"></span><span class="toc-q-text">Q26: IEnumerable vs. IQueryable — Which Filters at the DB?</span><span class="toc-imp">★</span></a></li><li><a href="#q27-deferred-execution-in-linq"><span class="toc-dot"></span><span class="toc-q-text">Q27: Deferred Execution in LINQ</span></a></li><li><a href="#q28-how-does-dictionary-handle-collisions"><span class="toc-dot"></span><span class="toc-q-text">Q28: How Does Dictionary Handle Collisions?</span></a></li><li><a href="#q29-yield-return-custom-lazy-iteration"><span class="toc-dot"></span><span class="toc-q-text">Q29: yield return — Custom Lazy Iteration</span></a></li><li><a href="#q30-any-vs-count-0-which-is-faster-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q30: Any() vs. Count() > 0 — Which Is Faster? (TRICKY)</span></a></li><li><a href="#q31-select-vs-selectmany"><span class="toc-dot"></span><span class="toc-q-text">Q31: Select vs. SelectMany</span></a></li><li><a href="#q32-first-vs-firstordefault-vs-single-vs-singleordefault-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q32: First vs. FirstOrDefault vs. Single vs. SingleOrDefault (TRICKY)</span></a></li><li><a href="#q33-groupby-in-linq"><span class="toc-dot"></span><span class="toc-q-text">Q33: GroupBy in LINQ</span></a></li><li><a href="#q34-icollection-vs-ilist-vs-ireadonlylist"><span class="toc-dot"></span><span class="toc-q-text">Q34: ICollection vs. IList vs. IReadOnlyList</span></a></li><li><a href="#q35-hashset-vs-list-when-to-use-hashset-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q35: HashSet vs. List — When to Use HashSet (TRICKY)</span></a></li><li><a href="#q36-linq-method-syntax-vs-query-syntax"><span class="toc-dot"></span><span class="toc-q-text">Q36: LINQ Method Syntax vs. Query Syntax</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#category-4-async-multithreading-parallelism"><span class="toc-num">04</span><span class="toc-topic-title">CATEGORY 4: ASYNC, MULTITHREADING & PARALLELISM</span></a><ul class="toc-qs"><li><a href="#q37-process-vs-thread-vs-task"><span class="toc-dot"></span><span class="toc-q-text">Q37: Process vs. Thread vs. Task</span><span class="toc-imp">★</span></a></li><li><a href="#q38-async-and-await-how-they-work"><span class="toc-dot"></span><span class="toc-q-text">Q38: async and await — How They Work</span><span class="toc-imp">★</span></a></li><li><a href="#q39-task-vs-thread-when-to-use-which"><span class="toc-dot"></span><span class="toc-q-text">Q39: Task vs. Thread — When to Use Which?</span></a></li><li><a href="#q40-taskrun-vs-taskfactorystartnew"><span class="toc-dot"></span><span class="toc-q-text">Q40: Task.Run vs. Task.Factory.StartNew</span></a></li><li><a href="#q41-deadlocks-result-vs-await"><span class="toc-dot"></span><span class="toc-q-text">Q41: Deadlocks — `.Result` vs. `await`</span><span class="toc-imp">★</span></a></li><li><a href="#q42-cancellationtoken-stopping-long-running-work"><span class="toc-dot"></span><span class="toc-q-text">Q42: CancellationToken — Stopping Long-Running Work</span></a></li><li><a href="#q43-valuetask-vs-task"><span class="toc-dot"></span><span class="toc-q-text">Q43: ValueTask vs. Task</span></a></li><li><a href="#q44-configureawaitfalse-why-it-matters"><span class="toc-dot"></span><span class="toc-q-text">Q44: ConfigureAwait(false) — Why It Matters</span></a></li><li><a href="#q45-lock-vs-monitor-vs-semaphoreslim"><span class="toc-dot"></span><span class="toc-q-text">Q45: lock vs. Monitor vs. SemaphoreSlim</span></a></li><li><a href="#q46-taskwhenall-vs-taskwhenany"><span class="toc-dot"></span><span class="toc-q-text">Q46: Task.WhenAll vs. Task.WhenAny</span></a></li><li><a href="#q47-async-streams-iasyncenumerablet-modern"><span class="toc-dot"></span><span class="toc-q-text">Q47: Async Streams — IAsyncEnumerable<T> (MODERN)</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#category-5-aspnet-core-net-core"><span class="toc-num">05</span><span class="toc-topic-title">CATEGORY 5: ASP.NET CORE & .NET CORE</span></a><ul class="toc-qs"><li><a href="#q48-net-framework-vs-net-core-vs-net-5"><span class="toc-dot"></span><span class="toc-q-text">Q48: .NET Framework vs .NET Core vs .NET 5+</span><span class="toc-imp">★</span></a></li><li><a href="#q49-dependency-injection-transient-scoped-singleton"><span class="toc-dot"></span><span class="toc-q-text">Q49: Dependency Injection — Transient, Scoped, Singleton</span><span class="toc-imp">★</span></a></li><li><a href="#q50-middleware-pipeline-in-aspnet-core"><span class="toc-dot"></span><span class="toc-q-text">Q50: Middleware Pipeline in ASP.NET Core</span><span class="toc-imp">★</span></a></li><li><a href="#q51-filters-action-result-exception-authorization"><span class="toc-dot"></span><span class="toc-q-text">Q51: Filters — Action, Result, Exception, Authorization</span></a></li><li><a href="#q52-garbage-collection-generations-0-1-2"><span class="toc-dot"></span><span class="toc-q-text">Q52: Garbage Collection — Generations 0, 1, 2</span></a></li><li><a href="#q53-ihttpclientfactory-why-not-new-httpclient"><span class="toc-dot"></span><span class="toc-q-text">Q53: IHttpClientFactory — Why Not new HttpClient()?</span></a></li><li><a href="#q54-ioptions-pattern-strongly-typed-config"><span class="toc-dot"></span><span class="toc-q-text">Q54: IOptions Pattern — Strongly Typed Config</span></a></li><li><a href="#q55-appsettingsjson-and-configuration-hierarchy"><span class="toc-dot"></span><span class="toc-q-text">Q55: appsettings.json and Configuration Hierarchy</span></a></li><li><a href="#q56-hosted-services-and-backgroundservice"><span class="toc-dot"></span><span class="toc-q-text">Q56: Hosted Services and BackgroundService</span></a></li><li><a href="#q57-logging-with-ilogger"><span class="toc-dot"></span><span class="toc-q-text">Q57: Logging with ILogger</span></a></li><li><a href="#q58-minimal-apis-vs-controllers-modern"><span class="toc-dot"></span><span class="toc-q-text">Q58: Minimal APIs vs. Controllers (MODERN)</span></a></li><li><a href="#q59-authentication-vs-authorization"><span class="toc-dot"></span><span class="toc-q-text">Q59: Authentication vs. Authorization</span><span class="toc-imp">★</span></a></li><li><a href="#q60-jwt-tokens-in-aspnet-core-modern"><span class="toc-dot"></span><span class="toc-q-text">Q60: JWT Tokens in ASP.NET Core (MODERN)</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#category-6-entity-framework-core"><span class="toc-num">06</span><span class="toc-topic-title">CATEGORY 6: ENTITY FRAMEWORK CORE</span></a><ul class="toc-qs"><li><a href="#q61-ef-core-vs-adonet-vs-dapper"><span class="toc-dot"></span><span class="toc-q-text">Q61: EF Core vs. ADO.NET vs. Dapper</span></a></li><li><a href="#q62-code-first-vs-database-first"><span class="toc-dot"></span><span class="toc-q-text">Q62: Code First vs. Database First</span><span class="toc-imp">★</span></a></li><li><a href="#q63-ef-core-migrations"><span class="toc-dot"></span><span class="toc-q-text">Q63: EF Core Migrations</span></a></li><li><a href="#q64-asnotracking-vs-tracking-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q64: AsNoTracking vs. Tracking (TRICKY)</span></a></li><li><a href="#q65-lazy-vs-eager-vs-explicit-loading"><span class="toc-dot"></span><span class="toc-q-text">Q65: Lazy vs. Eager vs. Explicit Loading</span></a></li><li><a href="#q66-include-vs-theninclude"><span class="toc-dot"></span><span class="toc-q-text">Q66: Include vs. ThenInclude</span></a></li><li><a href="#q67-transactions-in-ef-core"><span class="toc-dot"></span><span class="toc-q-text">Q67: Transactions in EF Core</span></a></li><li><a href="#q68-stored-procedures-with-ef-core"><span class="toc-dot"></span><span class="toc-q-text">Q68: Stored Procedures with EF Core</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#category-7-modern-net-advanced-concepts"><span class="toc-num">07</span><span class="toc-topic-title">CATEGORY 7: MODERN .NET & ADVANCED CONCEPTS</span></a><ul class="toc-qs"><li><a href="#q69-reflection-what-it-is-and-why-its-slow"><span class="toc-dot"></span><span class="toc-q-text">Q69: Reflection — What It Is and Why It's Slow</span></a></li><li><a href="#q70-delegates-vs-events"><span class="toc-dot"></span><span class="toc-q-text">Q70: Delegates vs. Events</span></a></li><li><a href="#q71-func-vs-action-vs-predicate-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q71: Func vs. Action vs. Predicate (TRICKY)</span></a></li><li><a href="#q72-custom-attributes"><span class="toc-dot"></span><span class="toc-q-text">Q72: Custom Attributes</span></a></li><li><a href="#q73-exception-handling-throw-vs-throw-ex-tricky"><span class="toc-dot"></span><span class="toc-q-text">Q73: Exception Handling — throw vs. throw ex (TRICKY)</span></a></li><li><a href="#q74-records-vs-class-vs-struct-modern"><span class="toc-dot"></span><span class="toc-q-text">Q74: Records vs. Class vs. Struct (MODERN)</span></a></li><li><a href="#q75-top-level-statements-modern"><span class="toc-dot"></span><span class="toc-q-text">Q75: Top-Level Statements (MODERN)</span></a></li><li><a href="#q76-global-usings-and-file-scoped-namespaces-modern"><span class="toc-dot"></span><span class="toc-q-text">Q76: Global Usings and File-Scoped Namespaces (MODERN)</span></a></li><li><a href="#q77-spant-and-memoryt-modern"><span class="toc-dot"></span><span class="toc-q-text">Q77: Span<T> and Memory<T> (MODERN)</span></a></li><li><a href="#q78-source-generators-modern"><span class="toc-dot"></span><span class="toc-q-text">Q78: Source Generators (MODERN)</span></a></li></ul></div><div class="toc-card"><a class="toc-topic" href="#appendix"><span class="toc-num">08</span><span class="toc-topic-title">APPENDIX</span></a><ul class="toc-qs"><li><a href="#quick-revision-cheat-sheet"><span class="toc-dot"></span><span class="toc-q-text">Quick Revision Cheat Sheet</span></a></li><li><a href="#interview-tips"><span class="toc-dot"></span><span class="toc-q-text">Interview Tips</span></a></li></ul></div></div></div>
 
 <hr>
 <h2 id="category-1-c-core-fundamentals">CATEGORY 1: C# CORE FUNDAMENTALS</h2>

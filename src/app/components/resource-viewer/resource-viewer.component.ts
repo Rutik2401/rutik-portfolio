@@ -186,24 +186,10 @@ export class ResourceViewerComponent implements OnInit, AfterViewInit, OnDestroy
       }
       @media screen and (min-width: 601px) and (max-width: 1024px) {
         body { padding: 24px 22px 50px; }
-        .cover-title { font-size: 48pt; }
-        .cover-subtitle { font-size: 11pt; }
         .toc-title { font-size: 28pt; }
       }
       @media screen and (max-width: 600px) {
         body { padding: 14px 14px 48px; max-width: 100%; }
-        .cover-page { min-height: auto; padding: 40px 14px 64px; }
-        .cover-page::before { inset: 7mm; border-radius: 6px; }
-        .cover-badge { font-size: 7.5pt; letter-spacing: 2.5px; padding: 5px 14px; margin-bottom: 22px; }
-        .cover-title { font-size: 32pt; letter-spacing: -0.8px; margin-bottom: 12px; word-break: break-word; overflow-wrap: anywhere; line-height: 1; }
-        .cover-subtitle { font-size: 8.5pt; letter-spacing: 1px; margin-bottom: 8px; padding: 0 8px; }
-        .cover-divider { margin: 0 auto 22px; }
-        .cover-meta { padding: 12px 22px; margin-bottom: 22px; }
-        .cover-prepared { font-size: 7pt; letter-spacing: 2.5px; }
-        .cover-author { font-size: 17pt; }
-        .cover-tags { gap: 5px; max-width: 100%; padding: 0 8px; }
-        .cover-tags span { font-size: 7.5pt; padding: 4px 9px; }
-        .cover-footer { bottom: 12mm; font-size: 7pt; letter-spacing: 1px; }
         .toc-page { padding: 0; }
         .toc-grid { column-count: 1; column-gap: 0; }
         .toc-title { font-size: 20pt; }
