@@ -68,12 +68,26 @@
           </button>
         </div>
 
-        <button type="button" (click)="download()" class="download-btn">
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
-          </svg>
-          <span>PDF</span>
+        <button
+          type="button"
+          (click)="download()"
+          class="download-btn"
+          [disabled]="supabase.downloadingSlug() === r.slug"
+          [attr.aria-busy]="supabase.downloadingSlug() === r.slug"
+        >
+          @if (supabase.downloadingSlug() === r.slug) {
+            <svg class="spin" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" stroke-width="2" stroke-opacity="0.2"/>
+              <path stroke-linecap="round" stroke-width="2" d="M21 12a9 9 0 0 0-9-9"/>
+            </svg>
+            <span>WAIT…</span>
+          } @else {
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            <span>PDF</span>
+          }
         </button>
       </div>
 
@@ -94,12 +108,26 @@
 
         <div class="viewer-foot">
           <p class="foot-text">Found this useful? Share or grab the PDF for offline reading.</p>
-          <button type="button" (click)="download()" class="download-btn primary">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
-            </svg>
-            <span>DOWNLOAD FULL PDF</span>
+          <button
+            type="button"
+            (click)="download()"
+            class="download-btn primary"
+            [disabled]="supabase.downloadingSlug() === r.slug"
+            [attr.aria-busy]="supabase.downloadingSlug() === r.slug"
+          >
+            @if (supabase.downloadingSlug() === r.slug) {
+              <svg class="spin" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" stroke-width="2" stroke-opacity="0.2"/>
+                <path stroke-linecap="round" stroke-width="2" d="M21 12a9 9 0 0 0-9-9"/>
+              </svg>
+              <span>SIGNING YOU IN…</span>
+            } @else {
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+              <span>DOWNLOAD FULL PDF</span>
+            }
           </button>
         </div>
       }
@@ -143,12 +171,26 @@
               </svg>
               <span>Open full window</span>
             </a>
-            <button type="button" (click)="download()" class="action-btn primary">
-              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
-              </svg>
-              <span>Download PDF</span>
+            <button
+              type="button"
+              (click)="download()"
+              class="action-btn primary"
+              [disabled]="supabase.downloadingSlug() === r.slug"
+              [attr.aria-busy]="supabase.downloadingSlug() === r.slug"
+            >
+              @if (supabase.downloadingSlug() === r.slug) {
+                <svg class="spin" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" stroke-width="2" stroke-opacity="0.2"/>
+                  <path stroke-linecap="round" stroke-width="2" d="M21 12a9 9 0 0 0-9-9"/>
+                </svg>
+                <span>Signing you in…</span>
+              } @else {
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
+                </svg>
+                <span>Download PDF</span>
+              }
             </button>
           </div>
         </div>

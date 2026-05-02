@@ -766,6 +766,11 @@ hr {
 @media screen {
   html { scrollbar-width: thin; scrollbar-color: rgba(15,23,42,0.3) transparent; }
 
+  /* Containing block must clip the scaled cover so it never produces
+     horizontal scroll on narrow viewports. `clip` is preferred over
+     `hidden` because it does not establish a scroll container. */
+  html, body { overflow-x: clip; }
+
   body {
     max-width: 920px;
     margin: 0 auto;
@@ -791,17 +796,58 @@ hr {
   /* Code & tables: never let them blow out horizontally on screen */
   pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+
+  /* ─── COVER PAGE — premium digital artifact look on screen ───
+     A4 dimensions (210×297mm) are sacred for PDF, but on screen we
+     wrap the whole cover in a soft rounded card with depth shadow so
+     it reads as a digital document, not a print page. The cover keeps
+     its native 794×1123px box at desktop widths. */
+  .cover-page {
+    border-radius: 14px;
+    box-shadow:
+      0 24px 60px -22px rgba(15, 23, 42, 0.55),
+      0 6px 16px rgba(15, 23, 42, 0.16),
+      0 0 0 1px rgba(15, 23, 42, 0.04);
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* ─── TABLET (601-1024px) ─── */
 @media screen and (min-width: 601px) and (max-width: 1024px) {
   body { padding: 24px 22px 50px; }
   .toc-title { font-size: 28pt; }
+
+  /* Cover scales fluidly to fit the tablet content area while keeping
+     A4 ratio. body has 22px each-side padding → avail = 100vw - 44px.
+     Capped at 1 so it never scales UP past native A4. */
+  .cover-page {
+    transform-origin: top left;
+    --_cv-scale: min(1, calc((100vw - 44px) / 794px));
+    transform: scale(var(--_cv-scale));
+    margin-bottom: calc(1123px * var(--_cv-scale) - 1123px);
+    border-radius: 14px;
+  }
 }
 
 /* ─── MOBILE (≤600px) ─── */
 @media screen and (max-width: 600px) {
   body { padding: 14px 14px 48px; max-width: 100%; }
+
+  /* Cover scales fluidly to fit the mobile content area.
+     body has 14px each-side padding → avail = 100vw - 28px.
+     Transform preserves all internal mm/pt units so the cover looks
+     identical to the printed PDF, just smaller. */
+  .cover-page {
+    transform-origin: top left;
+    --_cv-scale: calc((100vw - 28px) / 794px);
+    transform: scale(var(--_cv-scale));
+    margin-bottom: calc(1123px * var(--_cv-scale) - 1123px);
+    border-radius: 12px;
+    box-shadow:
+      0 18px 40px -18px rgba(15, 23, 42, 0.55),
+      0 4px 10px rgba(15, 23, 42, 0.18);
+  }
 
   /* TOC */
   .toc-page { padding: 0; }

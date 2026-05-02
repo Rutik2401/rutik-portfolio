@@ -19,20 +19,20 @@
       </h1>
       <p class="hero-sub reveal" data-reveal-delay="160">
         Battle-tested roadmaps I built while preparing for and giving interviews
-        at product companies. Read online or download the full PDF — no signup.
+        at product companies. Read online free, or grab the PDF with one Google sign-in.
       </p>
 
       <div class="hero-meta reveal" data-reveal-delay="240">
         <div class="meta-pill">
-          <span class="meta-num">3</span>
+          <span class="meta-num">4</span>
           <span class="meta-key">Notes</span>
         </div>
         <div class="meta-pill">
-          <span class="meta-num">355+</span>
+          <span class="meta-num">475+</span>
           <span class="meta-key">Pages</span>
         </div>
         <div class="meta-pill">
-          <span class="meta-num">245+</span>
+          <span class="meta-num">275+</span>
           <span class="meta-key">Questions</span>
         </div>
         <div class="meta-pill is-free">
@@ -122,12 +122,22 @@
                 type="button"
                 (click)="download(r, $event)"
                 class="cta cta-icon"
+                [class.is-loading]="supabase.downloadingSlug() === r.slug"
+                [disabled]="supabase.downloadingSlug() === r.slug"
                 [attr.aria-label]="'Download ' + r.title + ' PDF'"
+                [attr.aria-busy]="supabase.downloadingSlug() === r.slug"
               >
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
-                </svg>
+                @if (supabase.downloadingSlug() === r.slug) {
+                  <svg class="spin" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" stroke-width="2" stroke-opacity="0.2"/>
+                    <path stroke-linecap="round" stroke-width="2" d="M21 12a9 9 0 0 0-9-9"/>
+                  </svg>
+                } @else {
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
+                  </svg>
+                }
               </button>
             </div>
           </div>

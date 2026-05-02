@@ -13,6 +13,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MarkdownModule } from 'ngx-markdown';
 import { LenisScrollService } from '../../services/lenis-scroll.service';
+import { SupabaseService } from '../../services/supabase.service';
 
 interface ResourceMeta {
   slug: string;
@@ -62,6 +63,17 @@ const RESOURCES: Record<string, ResourceMeta> = {
     accentColor: '#34d399',
     icon: '?',
   },
+  react: {
+    slug: 'react',
+    title: 'React Interview Roadmap',
+    shortName: 'react-roadmap',
+    category: 'REACT · 0 – 3 YRS · SENIOR-STYLE',
+    mdPath: 'assets/notes/react/notes.md',
+    pdfPath: 'assets/notes/react/notes.pdf',
+    htmlPath: 'assets/notes/react/notes.html',
+    accentColor: '#22d3ee',
+    icon: '⚛',
+  },
 };
 
 @Component({
@@ -88,6 +100,7 @@ export class ResourceViewerComponent implements OnInit, AfterViewInit, OnDestroy
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private lenisScroll: LenisScrollService,
+    public supabase: SupabaseService,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
@@ -159,9 +172,13 @@ export class ResourceViewerComponent implements OnInit, AfterViewInit, OnDestroy
     style.id = 'rutik-screen-overlay';
     // Same rules as tools/notes-generator/styles.css @media screen blocks.
     // Wrapped so PDF generation is never touched. Three breakpoints.
+    // Mirrors the @media screen rules in tools/notes-generator/styles.css.
+    // Appended last so it overrides any older inline copy in pre-existing
+    // notes.html files (those generated before the cover-page screen fix).
     style.textContent = `
       @media screen {
         html { scrollbar-width: thin; scrollbar-color: rgba(15,23,42,0.3) transparent; }
+        html, body { overflow-x: clip; }
         body {
           max-width: 920px;
           margin: 0 auto;
@@ -183,10 +200,31 @@ export class ResourceViewerComponent implements OnInit, AfterViewInit, OnDestroy
         }
         pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
         table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+
+        /* Cover stays at native A4 (794x1123px) on desktop, gains a
+           rounded "digital artifact" frame so it reads as a doc, not
+           a print page. */
+        .cover-page {
+          border-radius: 14px;
+          box-shadow:
+            0 24px 60px -22px rgba(15, 23, 42, 0.55),
+            0 6px 16px rgba(15, 23, 42, 0.16),
+            0 0 0 1px rgba(15, 23, 42, 0.04);
+          margin-left: auto;
+          margin-right: auto;
+        }
       }
       @media screen and (min-width: 601px) and (max-width: 1024px) {
         body { padding: 24px 22px 50px; }
         .toc-title { font-size: 28pt; }
+
+        .cover-page {
+          transform-origin: top left;
+          --_cv-scale: min(1, calc((100vw - 44px) / 794px));
+          transform: scale(var(--_cv-scale));
+          margin-bottom: calc(1123px * var(--_cv-scale) - 1123px);
+          border-radius: 14px;
+        }
       }
       @media screen and (max-width: 600px) {
         body { padding: 14px 14px 48px; max-width: 100%; }
@@ -217,6 +255,20 @@ export class ResourceViewerComponent implements OnInit, AfterViewInit, OnDestroy
         ul, ol { padding-left: 18px; }
         li { line-height: 1.65; margin: 5px 0; }
         blockquote { padding: 10px 14px; margin: 14px 0; }
+
+        /* Cover scales fluidly to fit mobile width while preserving A4
+           ratio and all internal mm/pt sizing — looks identical to the
+           printed PDF, just smaller. */
+        .cover-page {
+          transform-origin: top left;
+          --_cv-scale: calc((100vw - 28px) / 794px);
+          transform: scale(var(--_cv-scale));
+          margin-bottom: calc(1123px * var(--_cv-scale) - 1123px);
+          border-radius: 12px;
+          box-shadow:
+            0 18px 40px -18px rgba(15, 23, 42, 0.55),
+            0 4px 10px rgba(15, 23, 42, 0.18);
+        }
       }
     `;
     doc.head.appendChild(style);
@@ -229,15 +281,10 @@ export class ResourceViewerComponent implements OnInit, AfterViewInit, OnDestroy
     this.readingProgress.set(pct);
   }
 
-  download(): void {
+  async download(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     const r = this.resource();
     if (!r) return;
-    const a = document.createElement('a');
-    a.href = r.pdfPath;
-    a.download = `${r.shortName}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    await this.supabase.gatedDownload(r.slug, r.pdfPath, `${r.shortName}.pdf`);
   }
 }
