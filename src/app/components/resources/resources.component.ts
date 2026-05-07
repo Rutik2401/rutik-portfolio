@@ -28,6 +28,39 @@ interface Resource {
   };
 }
 
+interface RoadmapPhase {
+  index: string;
+  title: string;
+  weeks: string;
+}
+
+interface Roadmap {
+  slug: string;
+  title: string;
+  tagline: string;
+  shortName: string;
+  badge: string;
+  badgeTone: 'new' | 'senior' | 'fresher';
+  level: string;
+  audience: string;
+  description: string;
+  duration: string;
+  phaseCount: string;
+  updated: string;
+  externalUrl: string;
+  hostname: string;
+  stack: string[];
+  highlights: string[];
+  phases: RoadmapPhase[];
+  cover: {
+    icon: string;
+    initials: string;
+    gradientFrom: string;
+    gradientTo: string;
+    accent: string;
+  };
+}
+
 @Component({
   selector: 'app-resources',
   standalone: true,
@@ -131,6 +164,52 @@ export class ResourcesComponent implements OnInit, AfterViewInit {
         gradientFrom: '#0891b2',
         gradientTo: '#062c3a',
         accent: '#22d3ee',
+      },
+    },
+  ];
+
+  roadmaps: Roadmap[] = [
+    {
+      slug: 'dotnet-roadmap',
+      title: '.NET Developer Roadmap',
+      tagline: 'Zero to Hero — Interview Focused',
+      shortName: 'dotnet-roadmap',
+      badge: 'LIVE · STANDALONE SITE',
+      badgeTone: 'senior',
+      level: 'Fresher → Job-ready',
+      audience:
+        'A week-by-week study plan to clear product-company .NET interviews — every phase is a topic-by-topic explainer with code, output, Q&A, follow-ups and pro tips.',
+      description:
+        'Interview-focused roadmap covering OOP, C#, ASP.NET Core, EF Core, system design, DevOps and portfolio projects, ending with mock interviews.',
+      duration: '6–7 months',
+      phaseCount: '9 phases',
+      updated: 'May 2026',
+      externalUrl: 'https://dotnet-zero-to-heroo.vercel.app/',
+      hostname: 'dotnet-zero-to-heroo.vercel.app',
+      stack: ['Angular 19', 'Signals', 'highlight.js', 'Vercel'],
+      highlights: [
+        '9-section structure per topic',
+        'Indian-English explainers',
+        'Real Swiggy/Flipkart examples',
+        'Rapid-fire follow-up Qs',
+      ],
+      phases: [
+        { index: '0', title: 'Fundamentals + OOP', weeks: 'Wk 1–2' },
+        { index: '1', title: 'C# Deep Dive', weeks: 'Wk 3–5' },
+        { index: '2', title: '.NET Core & Web API', weeks: 'Wk 6–10' },
+        { index: '3', title: 'SQL + EF Core', weeks: 'Wk 11–13' },
+        { index: '4', title: 'Advanced + System Design', weeks: 'Wk 14–18' },
+        { index: '5', title: 'Modern Angular', weeks: 'Wk 19–20' },
+        { index: '6', title: 'DevOps + Deployment', weeks: 'Wk 21–24' },
+        { index: '7', title: 'Portfolio Projects', weeks: 'Parallel' },
+        { index: '8', title: 'Interview Prep', weeks: 'Last 3–4 wk' },
+      ],
+      cover: {
+        icon: '→',
+        initials: '.NET',
+        gradientFrom: '#7c3aed',
+        gradientTo: '#1e1065',
+        accent: '#c4b5fd',
       },
     },
   ];
