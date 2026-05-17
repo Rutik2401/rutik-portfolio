@@ -1,4 +1,4 @@
-<section class="resources-section">
+<section class="resources-section section-padding">
 
   <!-- Ambient background -->
   <div class="bg-grid" aria-hidden="true"></div>
@@ -9,316 +9,64 @@
 
     <!-- ─── HERO ─── -->
     <header class="resources-hero">
-      <span class="hero-eyebrow reveal">
-        <span class="eyebrow-dot"></span>
-        Premium · Free for now
-      </span>
+      <span class="section-label reveal">Learn Hub · Roadmaps + Notes</span>
+
       <h1 class="hero-title reveal" data-reveal-delay="80">
-        Interview notes
-        <span class="hero-title-grad">that actually got me hired.</span>
+        Everything lives on
+        <span class="gradient-text">Learn Hub.</span>
       </h1>
+
       <p class="hero-sub reveal" data-reveal-delay="160">
-        Battle-tested roadmaps I built while preparing for and giving interviews
-        at product companies. Read online free, or grab the PDF with one Google sign-in.
+        Roadmaps for .NET, Angular and React, plus all four interview PDFs — moved into a single
+        dedicated site so each subject deploys and updates independently.
       </p>
 
-      <div class="hero-meta reveal" data-reveal-delay="240">
-        <div class="meta-pill">
-          <span class="meta-num">4</span>
-          <span class="meta-key">Notes</span>
-        </div>
-        <div class="meta-pill">
-          <span class="meta-num">1</span>
-          <span class="meta-key">Roadmap</span>
-        </div>
-        <div class="meta-pill">
-          <span class="meta-num">475+</span>
-          <span class="meta-key">Pages</span>
-        </div>
-        <div class="meta-pill">
-          <span class="meta-num">275+</span>
-          <span class="meta-key">Questions</span>
-        </div>
-        <div class="meta-pill is-free">
-          <span class="meta-num">$0</span>
-          <span class="meta-key">For now</span>
-        </div>
+      <div class="hero-cta reveal" data-reveal-delay="240">
+        <a class="btn-primary"
+           [href]="hubUrl"
+           target="_blank"
+           rel="noopener">
+          Open Learn Hub
+          <span aria-hidden="true">→</span>
+        </a>
       </div>
     </header>
 
-    <!-- ─── SECTION HEADER · NOTES ─── -->
-    <div class="section-head reveal" data-reveal-delay="320">
-      <div class="section-head-meta">
-        <span class="section-tag">/ 01</span>
-        <h2 class="section-title">Interview Notes</h2>
-      </div>
-      <p class="section-sub">Battle-tested PDF roadmaps with Q&amp;A, code, and senior-style answers.</p>
-    </div>
+    <!-- ─── UNIFIED CARD GRID ─── -->
+    <div class="hub-grid">
+      @for (c of cards; track c.slug; let i = $index) {
+        <a class="hub-card glass glass-hover reveal"
+           [class.is-soon]="!c.ready"
+           [attr.data-reveal-delay]="320 + i * 80"
+           [href]="c.externalUrl"
+           target="_blank"
+           rel="noopener">
+          <div class="hub-cover"
+               [style.background]="'linear-gradient(135deg, ' + c.cover.gradientFrom + ' 0%, ' + c.cover.gradientTo + ' 100%)'">
+            <span class="hub-cover-text">{{ c.cover.initials }}</span>
+            <span class="hub-cover-glow" aria-hidden="true"></span>
+          </div>
 
-    <!-- ─── CARD GRID · NOTES ─── -->
-    <div class="resources-grid">
-      @for (r of resources; track r.slug; let i = $index) {
-        <article
-          class="card reveal"
-          [attr.data-reveal-delay]="160 + i * 100"
-          [style.--accent]="r.cover.accent"
-        >
-          <!-- Cover -->
-          <a
-            [routerLink]="['/resources', r.slug]"
-            class="card-cover"
-            [style.background]="'radial-gradient(circle at 30% 20%, ' + r.cover.gradientFrom + ', ' + r.cover.gradientTo + ' 70%)'"
-          >
-            <div class="cover-grid"></div>
-            <div class="cover-shine"></div>
+          <div class="hub-body">
+            <div class="hub-meta">
+              <span class="hub-tagline">{{ c.tagline }}</span>
+              <span class="tag-badge" [attr.data-tone]="c.badgeTone">{{ c.badge }}</span>
+            </div>
 
-            <span class="cover-badge" [attr.data-tone]="r.badgeTone">
-              <span class="badge-dot"></span>
-              {{ r.badge }}
+            <h3 class="hub-title">{{ c.title }}</h3>
+            <p class="hub-desc">{{ c.description }}</p>
+
+            <span class="hub-cta">
+              @if (c.ready) { Open <span aria-hidden="true">→</span> }
+              @else        { Preview <span aria-hidden="true">→</span> }
             </span>
-
-            <div class="cover-mark">
-              <span class="cover-symbol">{{ r.cover.icon }}</span>
-              <span class="cover-initials">{{ r.cover.initials }}</span>
-            </div>
-
-            <div class="cover-foot">
-              <span class="cover-foot-key">/ READ_ONLINE</span>
-              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-              </svg>
-            </div>
-          </a>
-
-          <!-- Body -->
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="meta-level">{{ r.level }}</span>
-              <span class="meta-divider">·</span>
-              <span class="meta-updated">Updated {{ r.updated }}</span>
-            </div>
-
-            <h2 class="card-title">{{ r.title }}</h2>
-            <p class="card-audience">{{ r.audience }}</p>
-
-            <ul class="card-topics">
-              @for (t of r.topics; track t) {
-                <li class="card-topic">{{ t }}</li>
-              }
-            </ul>
-
-            <div class="card-stats">
-              <div class="stat">
-                <span class="stat-val">{{ r.pages }}</span>
-                <span class="stat-key">Pages</span>
-              </div>
-              <div class="stat">
-                <span class="stat-val">{{ r.questions }}</span>
-                <span class="stat-key">Questions</span>
-              </div>
-              <div class="stat">
-                <span class="stat-val">{{ r.pdfSize }}</span>
-                <span class="stat-key">PDF size</span>
-              </div>
-            </div>
-
-            <div class="card-actions">
-              <a [routerLink]="['/resources', r.slug]" class="cta cta-primary">
-                <span>Read online</span>
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
-              </a>
-              <button
-                type="button"
-                (click)="download(r, $event)"
-                class="cta cta-icon"
-                [class.is-loading]="supabase.downloadingSlug() === r.slug"
-                [disabled]="supabase.downloadingSlug() === r.slug"
-                [attr.aria-label]="'Download ' + r.title + ' PDF'"
-                [attr.aria-busy]="supabase.downloadingSlug() === r.slug"
-              >
-                @if (supabase.downloadingSlug() === r.slug) {
-                  <svg class="spin" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9" stroke-width="2" stroke-opacity="0.2"/>
-                    <path stroke-linecap="round" stroke-width="2" d="M21 12a9 9 0 0 0-9-9"/>
-                  </svg>
-                } @else {
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
-                  </svg>
-                }
-              </button>
-            </div>
           </div>
-        </article>
+        </a>
       }
     </div>
 
-    <!-- ─── SECTION HEADER · ROADMAPS ─── -->
-    <div class="section-head section-head-roadmap reveal" data-reveal-delay="380">
-      <div class="section-head-meta">
-        <span class="section-tag">/ 02</span>
-        <h2 class="section-title">
-          Developer Roadmaps
-          <span class="section-title-grad">— Zero to Hero</span>
-        </h2>
-      </div>
-    </div>
-
-    <!-- ─── CARD GRID · ROADMAPS ─── -->
-    <div class="roadmap-grid">
-      @for (rm of roadmaps; track rm.slug; let i = $index) {
-        <article
-          class="rm-feature reveal"
-          [attr.data-reveal-delay]="420 + i * 100"
-          [style.--accent]="rm.cover.accent"
-        >
-          <!-- Glow layer -->
-          <div class="rm-glow" aria-hidden="true"
-               [style.background]="'radial-gradient(60% 80% at 100% 0%, ' + rm.cover.gradientFrom + '40, transparent 70%)'"></div>
-
-          <!-- Left rail · brand + meta + CTA -->
-          <div class="rm-rail">
-            <div class="rm-rail-top">
-              <span class="rm-badge" [attr.data-tone]="rm.badgeTone">
-                <span class="rm-badge-dot"></span>
-                {{ rm.badge }}
-              </span>
-
-              <div class="rm-brand"
-                   [style.background]="'linear-gradient(135deg, ' + rm.cover.gradientFrom + ', ' + rm.cover.gradientTo + ')'">
-                <span class="rm-brand-mark">{{ rm.cover.icon }}</span>
-                <span class="rm-brand-tag">{{ rm.cover.initials }}</span>
-              </div>
-
-              <p class="rm-tagline">{{ rm.tagline }}</p>
-              <h3 class="rm-title">{{ rm.title }}</h3>
-              <p class="rm-audience">{{ rm.audience }}</p>
-
-              <dl class="rm-stat-row">
-                <div class="rm-stat">
-                  <dt>Duration</dt>
-                  <dd>{{ rm.duration }}</dd>
-                </div>
-                <div class="rm-stat">
-                  <dt>Phases</dt>
-                  <dd>{{ rm.phaseCount }}</dd>
-                </div>
-                <div class="rm-stat">
-                  <dt>Updated</dt>
-                  <dd>{{ rm.updated }}</dd>
-                </div>
-              </dl>
-
-              <ul class="rm-highlights">
-                @for (h of rm.highlights; track h) {
-                  <li class="rm-highlight">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M5 13l4 4L19 7"/>
-                    </svg>
-                    <span>{{ h }}</span>
-                  </li>
-                }
-              </ul>
-            </div>
-
-            <a
-              [href]="rm.externalUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="rm-cta"
-            >
-              <span class="rm-cta-text">
-                <span class="rm-cta-label">Visit live roadmap</span>
-                <span class="rm-cta-host">{{ rm.hostname }}</span>
-              </span>
-              <span class="rm-cta-icon" aria-hidden="true">
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7 17L17 7M9 7h8v8"/>
-                </svg>
-              </span>
-            </a>
-          </div>
-
-          <!-- Right canvas · mock browser preview -->
-          <div class="rm-canvas">
-            <div class="rm-browser">
-              <div class="rm-browser-bar">
-                <span class="rm-dot rm-dot-r"></span>
-                <span class="rm-dot rm-dot-y"></span>
-                <span class="rm-dot rm-dot-g"></span>
-                <span class="rm-url">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/>
-                  </svg>
-                  {{ rm.hostname }}
-                </span>
-                <span class="rm-tab-stack">
-                  <span class="rm-tab-bit"></span>
-                  <span class="rm-tab-bit"></span>
-                  <span class="rm-tab-bit"></span>
-                </span>
-              </div>
-
-              <div class="rm-stage">
-                <div class="rm-stage-head">
-                  <span class="rm-stage-eyebrow">// PHASE-BY-PHASE</span>
-                  <h4 class="rm-stage-title">
-                    Become a <span class="rm-stage-accent">job-ready</span> .NET dev in 6–7 months.
-                  </h4>
-                  <div class="rm-stack">
-                    @for (s of rm.stack; track s) {
-                      <span class="rm-stack-pill">{{ s }}</span>
-                    }
-                  </div>
-                </div>
-
-                <ol class="rm-phase-list">
-                  @for (p of rm.phases; track p.index; let pi = $index) {
-                    <li
-                      class="rm-phase"
-                      [style.--phase-i]="pi"
-                      [style.animation-delay]="(pi * 60) + 'ms'"
-                    >
-                      <span class="rm-phase-num">{{ p.index }}</span>
-                      <span class="rm-phase-meta">
-                        <span class="rm-phase-title">{{ p.title }}</span>
-                        <span class="rm-phase-week">{{ p.weeks }}</span>
-                      </span>
-                      <span class="rm-phase-bar" aria-hidden="true">
-                        <span class="rm-phase-bar-fill"></span>
-                      </span>
-                    </li>
-                  }
-                </ol>
-              </div>
-            </div>
-          </div>
-        </article>
-      }
-    </div>
-
-    <!-- ─── COMING SOON STRIP ─── -->
-    <div class="coming-soon reveal" data-reveal-delay="600">
-      <div class="cs-icon">✦</div>
-      <div class="cs-copy">
-        <h3 class="cs-title">More notes shipping soon</h3>
-        <p class="cs-sub">RxJS deep-dive · System Design · DSA in C# · React Hooks · Spring Boot.</p>
-      </div>
-      <a href="https://github.com/Rutik2401" target="_blank" rel="noopener noreferrer"
-         class="cs-cta">
-        <span>Follow on GitHub</span>
-        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-        </svg>
-      </a>
-    </div>
-
+    <p class="hub-foot reveal" data-reveal-delay="800">
+      Each subject lazy-loads independently on Learn Hub — visiting one doesn't download the others.
+    </p>
   </div>
 </section>

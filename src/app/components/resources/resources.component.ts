@@ -1,222 +1,88 @@
 import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { RevealService } from '../../services/reveal.service';
-import { SupabaseService } from '../../services/supabase.service';
 
-interface Resource {
-  slug: string;
-  title: string;
-  shortName: string;
-  badge: string;
-  badgeTone: 'new' | 'senior' | 'fresher';
-  level: string;
-  audience: string;
-  description: string;
-  topics: string[];
-  pages: string;
-  questions: string;
-  updated: string;
-  pdfPath: string;
-  pdfSize: string;
-  cover: {
-    icon: string;
-    initials: string;
-    gradientFrom: string;
-    gradientTo: string;
-    accent: string;
-  };
-}
-
-interface RoadmapPhase {
-  index: string;
-  title: string;
-  weeks: string;
-}
-
-interface Roadmap {
+interface HubCard {
   slug: string;
   title: string;
   tagline: string;
-  shortName: string;
-  badge: string;
-  badgeTone: 'new' | 'senior' | 'fresher';
-  level: string;
-  audience: string;
   description: string;
-  duration: string;
-  phaseCount: string;
-  updated: string;
+  badge: string;
+  badgeTone: 'live' | 'soon' | 'notes';
+  ready: boolean;
   externalUrl: string;
-  hostname: string;
-  stack: string[];
-  highlights: string[];
-  phases: RoadmapPhase[];
   cover: {
-    icon: string;
     initials: string;
     gradientFrom: string;
     gradientTo: string;
-    accent: string;
   };
 }
+
+const LEARN_HUB_BASE = 'https://dotnet-zero-to-heroo.vercel.app';
 
 @Component({
   selector: 'app-resources',
   standalone: true,
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './resources.component.html',
   styleUrl: './resources.component.scss',
 })
 export class ResourcesComponent implements OnInit, AfterViewInit {
-  resources: Resource[] = [
+  readonly hubUrl = LEARN_HUB_BASE;
+
+  cards: HubCard[] = [
+    {
+      slug: 'dotnet',
+      title: '.NET Roadmap',
+      tagline: 'Backend · 9 phases',
+      description:
+        'Zero-to-hero .NET interview roadmap — C#, ASP.NET Core, EF Core, system design, DevOps. Real examples in Indian English, phase-by-phase.',
+      badge: 'LIVE',
+      badgeTone: 'live',
+      ready: true,
+      externalUrl: `${LEARN_HUB_BASE}/dotnet`,
+      cover: { initials: '.NET', gradientFrom: '#512BD4', gradientTo: '#8B5CF6' },
+    },
     {
       slug: 'angular',
-      title: 'Angular Interview Roadmap',
-      shortName: 'angular-roadmap',
-      badge: 'BEST SELLER',
-      badgeTone: 'new',
-      level: 'Junior → Senior',
-      audience: 'For Angular developers preparing for product-company interviews.',
+      title: 'Angular Roadmap',
+      tagline: 'Frontend · Modern',
       description:
-        'A complete Angular 17/18 interview prep — covers signals, change detection internals, RxJS patterns, NgRx, lazy-loading, SSR, and architectural questions asked at top product companies.',
-      topics: ['Signals', 'Change Detection', 'RxJS', 'NgRx', 'SSR', 'Performance', 'Testing'],
-      pages: '130+',
-      questions: '90+',
-      updated: 'Apr 2025',
-      pdfPath: 'assets/notes/angular/notes.pdf',
-      pdfSize: '8 MB',
-      cover: {
-        icon: 'A',
-        initials: 'NG',
-        gradientFrom: '#dd0031',
-        gradientTo: '#7d0019',
-        accent: '#ff5577',
-      },
-    },
-    {
-      slug: 'dotnet-senior',
-      title: '.NET Interview Roadmap',
-      shortName: 'dotnet-senior',
-      badge: 'LATEST',
-      badgeTone: 'senior',
-      level: '0 – 2.5 years experience',
-      audience: 'Senior-style answers tuned for the 0–2.5 years experience window.',
-      description:
-        'Premium edition with senior-style answers covering C# 12, .NET 8, ASP.NET Core internals, EF Core, Clean Architecture, and the trickiest follow-ups asked in product-company interviews.',
-      topics: ['C# 12', '.NET 8', 'ASP.NET Core', 'EF Core', 'Clean Arch.', 'Web API', 'SOLID'],
-      pages: '135+',
-      questions: '80+',
-      updated: 'Apr 2025',
-      pdfPath: 'assets/notes/dotnet-senior/notes.pdf',
-      pdfSize: '6.8 MB',
-      cover: {
-        icon: '#',
-        initials: '.NET',
-        gradientFrom: '#512bd4',
-        gradientTo: '#1f0d63',
-        accent: '#a78bfa',
-      },
-    },
-    {
-      slug: 'dotnet-fresher',
-      title: '.NET & C# Interview Q&A',
-      shortName: 'dotnet-fresher',
-      badge: 'FRESHER FRIENDLY',
-      badgeTone: 'fresher',
-      level: 'Fresher → Mid-level',
-      audience: 'Fast-paced Q&A pack designed for fresher and mid-level interviews.',
-      description:
-        '75+ modern, tricky and most-asked C# / .NET questions with crisp direct answers, key points, code snippets and follow-up Qs — designed for quick revision before interviews.',
-      topics: ['C# Fundamentals', 'OOP', 'LINQ', 'Async', 'EF Core', 'Web API', 'Tricky Qs'],
-      pages: '90+',
-      questions: '75+',
-      updated: 'Apr 2025',
-      pdfPath: 'assets/notes/dotnet-fresher/notes.pdf',
-      pdfSize: '5.6 MB',
-      cover: {
-        icon: '?',
-        initials: 'C#',
-        gradientFrom: '#10b981',
-        gradientTo: '#064e3b',
-        accent: '#34d399',
-      },
+        'Angular 19+ — standalone components, signals, control flow, RxJS deep-dive, OnPush strategy, modern routing and SSR.',
+      badge: 'SOON',
+      badgeTone: 'soon',
+      ready: false,
+      externalUrl: `${LEARN_HUB_BASE}/angular`,
+      cover: { initials: 'NG', gradientFrom: '#DD0031', gradientTo: '#C3002F' },
     },
     {
       slug: 'react',
-      title: 'React Interview Roadmap',
-      shortName: 'react-roadmap',
-      badge: 'NEW',
-      badgeTone: 'new',
-      level: '0 – 3 years experience',
-      audience: 'Senior-style React answers — hooks, internals, performance, RSC.',
+      title: 'React Roadmap',
+      tagline: 'Frontend · Next.js',
       description:
-        '30+ deep-dive React questions — JSX & VDOM, hooks pitfalls, reconciliation & keys, React 18/19 concurrent features, RSC, and the tricky follow-ups asked at product companies.',
-      topics: ['React 18/19', 'Hooks', 'Reconciliation', 'Performance', 'Suspense', 'RSC', 'Patterns'],
-      pages: '120+',
-      questions: '30+',
-      updated: 'May 2026',
-      pdfPath: 'assets/notes/react/notes.pdf',
-      pdfSize: '5.4 MB',
-      cover: {
-        icon: '⚛',
-        initials: 'REACT',
-        gradientFrom: '#0891b2',
-        gradientTo: '#062c3a',
-        accent: '#22d3ee',
-      },
+        'Hooks, Context, Redux Toolkit, React Query, Next.js App Router, Server Components and streaming — the modern React stack.',
+      badge: 'SOON',
+      badgeTone: 'soon',
+      ready: false,
+      externalUrl: `${LEARN_HUB_BASE}/react`,
+      cover: { initials: 'REACT', gradientFrom: '#61DAFB', gradientTo: '#0EA5E9' },
     },
-  ];
-
-  roadmaps: Roadmap[] = [
     {
-      slug: 'dotnet-roadmap',
-      title: '.NET Developer Roadmap',
-      tagline: 'Zero to Hero — Interview Focused',
-      shortName: 'dotnet-roadmap',
-      badge: 'LIVE · STANDALONE SITE',
-      badgeTone: 'senior',
-      level: 'Fresher → Job-ready',
-      audience:
-        'A week-by-week study plan to clear product-company .NET interviews — every phase is a topic-by-topic explainer with code, output, Q&A, follow-ups and pro tips.',
+      slug: 'notes',
+      title: 'Notes & PDFs',
+      tagline: 'Premium · Interview Prep',
       description:
-        'Interview-focused roadmap covering OOP, C#, ASP.NET Core, EF Core, system design, DevOps and portfolio projects, ending with mock interviews.',
-      duration: '6–7 months',
-      phaseCount: '9 phases',
-      updated: 'May 2026',
-      externalUrl: 'https://dotnet-zero-to-heroo.vercel.app/',
-      hostname: 'dotnet-zero-to-heroo.vercel.app',
-      stack: ['Angular 19', 'Signals', 'highlight.js', 'Vercel'],
-      highlights: [
-        '9-section structure per topic',
-        'Indian-English explainers',
-        'Real Swiggy/Flipkart examples',
-        'Rapid-fire follow-up Qs',
-      ],
-      phases: [
-        { index: '0', title: 'Fundamentals + OOP', weeks: 'Wk 1–2' },
-        { index: '1', title: 'C# Deep Dive', weeks: 'Wk 3–5' },
-        { index: '2', title: '.NET Core & Web API', weeks: 'Wk 6–10' },
-        { index: '3', title: 'SQL + EF Core', weeks: 'Wk 11–13' },
-        { index: '4', title: 'Advanced + System Design', weeks: 'Wk 14–18' },
-        { index: '5', title: 'Modern Angular', weeks: 'Wk 19–20' },
-        { index: '6', title: 'DevOps + Deployment', weeks: 'Wk 21–24' },
-        { index: '7', title: 'Portfolio Projects', weeks: 'Parallel' },
-        { index: '8', title: 'Interview Prep', weeks: 'Last 3–4 wk' },
-      ],
-      cover: {
-        icon: '→',
-        initials: '.NET',
-        gradientFrom: '#7c3aed',
-        gradientTo: '#1e1065',
-        accent: '#c4b5fd',
-      },
+        '4 interview-ready PDFs — Angular, .NET Senior, .NET Fresher, React. Direct download, read on screen or print.',
+      badge: 'NEW',
+      badgeTone: 'notes',
+      ready: true,
+      externalUrl: `${LEARN_HUB_BASE}/notes`,
+      cover: { initials: 'PDF', gradientFrom: '#F59E0B', gradientTo: '#DC2626' },
     },
   ];
 
   constructor(
     private reveal: RevealService,
-    public supabase: SupabaseService,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
@@ -229,15 +95,5 @@ export class ResourcesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     this.reveal.init();
-  }
-
-  async download(resource: Resource, ev?: Event): Promise<void> {
-    ev?.preventDefault();
-    if (!isPlatformBrowser(this.platformId)) return;
-    await this.supabase.gatedDownload(
-      resource.slug,
-      resource.pdfPath,
-      `${resource.shortName}.pdf`,
-    );
   }
 }
